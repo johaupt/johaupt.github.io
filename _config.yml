@@ -7,12 +7,11 @@
 
 # Site settings
 title: Data Science HQ
-email: joh.haupt [at] gmail.com
+email: joh.haupt+blog [at] gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Exploring data science and machine learning one step at a time.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://github.com/the-head/the-head.github.io" # the base hostname & protocol for your site
-twitter_username: jekyllrb
 github_username:  the-head
 
 # Build settings

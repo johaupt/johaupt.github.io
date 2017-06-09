@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
-
+	{% if jekyll.environment == 'production' %}
+	{% include analytics.html %}
+	{% endif %}
   {% include head.html %}
 
   <body>
@@ -14,7 +16,8 @@
     </div>
 
     {% include footer.html %}
-
+    
+    
   </body>
 
 </html>
