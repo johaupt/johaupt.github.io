@@ -16,3 +16,6 @@ github_username:  the-head
 
 # Build settings
 markdown: kramdown
+
+# Google services
+google_analytics: UA-100815065-1
