@@ -130,7 +130,7 @@ $(document).ready(function () {
 <p>Since it processes the input data line-by-line, we’ll have to open a connection to the file that we want to load.</p>
 <pre class="r"><code># do the same with the file with reviews
 connection_reviews &lt;- file(&quot;./data/reviews_ed.txt&quot;)</code></pre>
-<p>We can then use function <strong>stream_in()</strong> to process the file. Loading the data for 46000 reviews takes a few seconds.</p>
+<p>We can then use function <strong>stream_in()</strong> to process the file. Loading the data for a subset of the data with 46000 reviews takes a few seconds.</p>
 <pre class="r"><code>library(jsonlite)
 # Use stream_in instead of fromJSON
 reviews &lt;- stream_in(connection_reviews)</code></pre>
