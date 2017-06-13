@@ -124,8 +124,6 @@ $(document).ready(function () {
 </div>
 
 
-<div id="the-lda-topic-modeling-process-r-example" class="section level1">
-<h1>The LDA topic modeling process (R example)</h1>
 <div id="the-setting" class="section level2">
 <h2>The setting</h2>
 <p>Latent Dirichlet Allocation (LDA) is a text mining approach made popular by David Blei. I find it easiest to understand as clustering for words. The idea is that each document in a corpus is made up by a words belonging to a fixed number of topics. These topics are unobserved/latent, but if we could estimate them, we could describe and relate the documents by their topics instead of their raw text.</p>
@@ -189,7 +187,7 @@ test &lt;- replicate(10000, sample_from(c(10, 10, 80)))
 table(test)</code></pre>
 <pre><code>## test
 ##    1    2    3 
-##  980 1010 8010</code></pre>
+##  981  970 8049</code></pre>
 <p>The weights describe how often we expect to see this word in this document. Our guess on this chance depends on two things:</p>
 <ol style="list-style-type: decimal">
 <li>how often the word appears for each topic and</li>
@@ -388,8 +386,13 @@ for(i in seq(length(documents))){
           i, # ... the user name,...
           paste(documents[[i]], collapse = &quot;, &quot;), # ... her interests...,
           # ... and aggregated topics in order together with an importance count.
-          paste(paste(topic_names[topicRanking], round(topic_mixture_per_document_final[i,],2)[topicRanking], sep = &quot;: &quot;), collapse = &quot;, &quot;)
-  ), &quot;\n\n&quot;)
+          paste(
+            paste(topic_names[topicRanking], 
+                  round(topic_mixture_per_document_final[i,],2)[topicRanking], 
+                  sep = &quot;: &quot;), 
+            collapse = &quot;, &quot;)
+  ), 
+  &quot;\n\n&quot;)
 }</code></pre>
 <pre><code>## User 1: 
 ##  Hadoop, Big Data, HBase, Java, Spark, Storm, Cassandra 
@@ -450,7 +453,6 @@ for(i in seq(length(documents))){
 ## User 15: 
 ##  libsvm, regression, support vector machines 
 ##  machine learning: 0.67, artificial intelligence: 0.16, data engineering: 0.13, statistical programming: 0.04</code></pre>
-</div>
 </div>
 
 
