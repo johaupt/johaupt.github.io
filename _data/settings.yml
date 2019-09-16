@@ -7,8 +7,8 @@ disqus:
 google-ID: 'UA-100815065-1'
 
 menu:
-- {name: 'About', path: 'menu', url: 'about.html'}
-#- {name: 'Blog', path: 'menu', url: 'blog.html'}
+#- {name: 'About', path: 'menu', url: 'about.html'}
+- {name: 'Blog', path: 'menu', url: 'blog.html'}
 - {name: 'Research', path: 'menu', url: 'research.html'}
 - {name: 'Contact', path: 'menu', url: 'contact.html'}
 
