@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title:
 ---
 
 I'm a researcher and PhD student [at Humboldt-University](https://www.wiwi.hu-berlin.de/de/professuren/bwl/wi/personen/johannes-haupt). I work and post on profit-driven modeling and causal machine learning/uplift modeling. 
