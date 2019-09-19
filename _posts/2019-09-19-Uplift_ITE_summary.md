@@ -42,7 +42,7 @@ These studies compare at least a subset of the methods in a structured setting:
 The following approaches can be classified as *direct methods*:    
 
 # Linear Additive Treatment Variable 
-**(S-Learner)**
+**(S-Learner)**    
 Include treatment indicator into the model
 Advantages:
 - Single model
@@ -72,7 +72,7 @@ Y^*_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
 ## Double Robust Estimation 
 The transformed outcome including treatment propensity correction and conditional mean centering is:
 
-# R-Learner
+## R-Learner
 Nie, X., & Wager, S. (2017). Quasi-Oracle Estimation of Heterogeneous Treatment Effects. ArXiv:1712.04912. Retrieved from http://arxiv.org/abs/1712.04912
 
 
@@ -97,10 +97,10 @@ Athey, S., Tibshirani, J., & Wager, S. (2019). Generalized random forests. The A
 # Bagged Causal MARS
 Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
 
-The following approaches can be classified as *Indirect Models | Multi-model Approaches | Metalearners*:    
+The following approaches can be classified as *Indirect Models, Multi-model Approaches or Metalearners*:    
 
 ## Difference in Conditional Means 
-**(K-Model approach | T-Learner | Conditional Mean Regressions)**
+**(K-Model approach | T-Learner | Conditional Mean Regressions)**    
 Estimate an outcome model for each treatment group separately and calculate the treatment effect as the difference between the estimated outcomes.
 The outcome models (*base learners*) can take any form.
 
@@ -115,8 +115,11 @@ Farrell, M. H., Liang, T., & Misra, S. (2018). Deep Neural Networks for Estimati
 ### DragonNet
 Correct for violation of the overlap assumption through joint prediction of conditional means and treatment propensity in a multi-output neural network
 
+Shi, C., Blei, D. M., & Veitch, V. (2019). Adapting Neural Networks for the Estimation of Treatment Effects. ArXiv:1906.02120 [Cs, Stat]. Retrieved from http://arxiv.org/abs/1906.02120
+
+
 # Treatment Effect Projection 
-**(X-Learner)**
+**(X-Learner)**    
 Use a single model to estimate the ITE as estimated by any method above. The second-stage model can be a linear regression for interpretability or any single model to replace several models in the first stage. 
 Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences, 116(10), 4156–4165.
 
