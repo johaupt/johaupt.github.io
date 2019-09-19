@@ -79,16 +79,13 @@ hr {
   Site container
 */
 
-/*
+
 .container {
   margin-left: auto;
   margin-right: auto;
   width: 615px;
 }
-*/
-.container {
-  width: auto;
-}
+
 
 /*48em*/
 
@@ -145,6 +142,8 @@ hr {
 
 .post-container {
   margin-bottom: 4rem;
+  max-width: 727.98px;
+  min-width: 552px;
 }
 
 .posts {
