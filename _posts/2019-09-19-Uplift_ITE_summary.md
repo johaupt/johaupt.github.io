@@ -57,7 +57,7 @@ Include interaction effects between treatment indicator and each covariate
 
 
 # Outcome Transformation 
-**(Modified Outcome Method | Class Variable Transformation | Generalized Weighted Uplift Method)**   
+**(Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**   
 The transformed outcome is:
 
 \\[
