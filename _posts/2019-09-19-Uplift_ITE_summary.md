@@ -42,9 +42,10 @@ Include interaction effects between treatment indicator and each covariate
 
 ### Outcome Transformation (Modified Outcome Method | Class Variable Transformation | Generalized Weighted Uplift Method)
 The transformed outcome (including propensity weights $e(X)$) is:
-$$
+
+\\[
 Y^*_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
-$$
+\\]
 #### Double Robust Estimation 
 
 #### Pollienated transformed-outcome Tree/Forest
