@@ -25,7 +25,8 @@ Unfortunately, research in different fields is fractured, with different termini
 Covariates for individual *i*: \\( X_i \\)   
 Treatment **G**roup Indicator: \\(G\\)   
 (Potential) Outcome *Y* for individual *i* under group assignment *G*: \\( Y_i(G)\\)   
-Propensity score \\( e(X) = P(G|X) \\)   
+(Estimated) Propensity score \\( e(X) = P(G|X) \\)
+(Estimated) Conditional outcome under group assignment *G*: \\( \mu(X_i, G_i) \\)
 
 # Benchmark studies
 These studies compare at least a subset of the methods in a structured setting:
@@ -51,21 +52,34 @@ Disadvantages:
 - Treatment effect typically small relative to other effects
 - Model might ignore treatment variable
 
-## Treatment Interaction Effects (Covariate Transformation)
+# Modified Covariate Method (Covariate Transformation)
 Include interaction effects between treatment indicator and each covariate
 
 
 # Outcome Transformation 
 **(Modified Outcome Method | Class Variable Transformation | Generalized Weighted Uplift Method)**   
-The transformed outcome (including propensity weights $e(X)$) is:
+The transformed outcome is:
+
+\\[
+Y^*_i = W_i Y_i(1) - (1-W_i) Y_i(0)
+\\]
+
+The transformed outcome including treatment propensity correction is:
 
 \\[
 Y^*_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
 \\]
 ## Double Robust Estimation 
+The transformed outcome including treatment propensity correction and conditional mean centering is:
+
+# R-Learner
+Nie, X., & Wager, S. (2017). Quasi-Oracle Estimation of Heterogeneous Treatment Effects. ArXiv:1712.04912. Retrieved from http://arxiv.org/abs/1712.04912
+
 
 ## Pollienated transformed-outcome Tree/Forest
 Build trees on the transfored outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\).
+
+Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
 
 
 # Causal Tree
