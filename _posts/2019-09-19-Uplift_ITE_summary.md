@@ -21,6 +21,13 @@ Research into estimating treatment effects from observed outcomes goes far into 
 
 Unfortunately, research in different fields is fractured, with different termini and notation. The following list is meant as an incomplete, but comprehensive collection of methods from bioinformatics, computer science, econometrics and business studies to estimate individualized treatment effects.
 
+Notational remarks are at the very end. 
+
+# Notation
+Covariates for individual *i*: \\( X_i \\)
+Treatment **G**roup Indicator: \\(G\\)
+(Potential) Outcome *Y* for individual *i* under group assignment *G*: \\( Y_i(G)\\)
+Propensity score \\( e(X) = P(G|X) \\)
 
 # Direct Treatment Effect Models
 
@@ -38,7 +45,8 @@ Disadvantages:
 Include interaction effects between treatment indicator and each covariate
 
 
-## Outcome Transformation (Modified Outcome Method | Class Variable Transformation | Generalized Weighted Uplift Method)
+## Outcome Transformation 
+**(Modified Outcome Method | Class Variable Transformation | Generalized Weighted Uplift Method)**
 The transformed outcome (including propensity weights $e(X)$) is:
 
 \\[
@@ -47,7 +55,7 @@ Y^*_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
 ### Double Robust Estimation 
 
 ### Pollienated transformed-outcome Tree/Forest
-Build trees on the transfored outcome, but replace the leaf estimates with $\bar{Y}(1) - \bar{Y}(0)$.
+Build trees on the transfored outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\).
 
 
 ## Causal Tree
@@ -67,7 +75,8 @@ Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshira
 
 # Indirect Models | Multi-model Approaches | Metalearners 
 
-## Difference in Conditional Means (K-Model approach | T-Learner | Conditional Mean Regressions)
+## Difference in Conditional Means 
+**(K-Model approach | T-Learner | Conditional Mean Regressions)**
 Estimate an outcome model for each treatment group separately and calculate the treatment effect as the difference between the estimated outcomes.
 The outcome models (*base learners*) can take any form.
 
@@ -82,7 +91,8 @@ Farrell, M. H., Liang, T., & Misra, S. (2018). Deep Neural Networks for Estimati
 ### DragonNet
 Correct for violation of the overlap assumption through joint prediction of conditional means and treatment propensity in a multi-output neural network
 
-# Treatment Effect Projection (X-Learner)
+# Treatment Effect Projection 
+**(X-Learner)**
 Use a single model to estimate the ITE as estimated by any method above. The second-stage model can be a linear regression for interpretability or any single model to replace several models in the first stage. 
 Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences, 116(10), 4156–4165.
 
@@ -93,3 +103,6 @@ Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for 
 - Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences, 116(10), 4156–4165.
 - Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
 - Wendling, T., Jung, K., Callahan, A., Schuler, A., Shah, N. H., & Gallego, B. (2018). Comparing methods for estimation of heterogeneous treatment effects using observational data from health care databases. Statistics in Medicine, 37, 3309–3324. https://doi.org/10.1002/sim.7820
+
+
+
