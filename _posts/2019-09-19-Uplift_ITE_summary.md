@@ -12,8 +12,11 @@ categories:
 0. [Notation](#notation)
 0. [Notation](#Notation)
 1. [Linear Additive Treatment Variable](#linearadditivetreatmentvariable)
-2. [DragonNet](###dragonnet)
-3. [DragonNet](#dragonnet)
+1. [Linear Additive Treatment Variable](#linear_additive_treatment_variable)
+1. [Linear Additive Treatment Variable](#linear)
+1. [Linear Additive Treatment Variable](#linear additive treatment variable)
+  - [DragonNet](#dragonnet)
+    - [DragonNet](#dragonnet)
 
 The estimation of treatment effects on the individual level has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in information systems. 
 
