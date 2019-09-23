@@ -14,7 +14,7 @@ categories:
 0. [Outcome Transformation](#outcome-transformation)
     0. [Double Robust Estimation](#double-robust-estimation)
     0. [R-Learner](#r-learner)
-    0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree)
+    0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree-forest)
 0. [Causal Tree](#causal-tree)
     0. [Boosted causal trees](#boosted-causal-trees)
     0. [Generalized random forest](#generalized-random-forest)
