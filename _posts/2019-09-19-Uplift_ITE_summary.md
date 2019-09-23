@@ -18,6 +18,15 @@ categories:
   - [DragonNet](#dragonnet)
     - [DragonNet](#dragonnet)
 
+# Table of Contents
+1. [Example](#example)
+2. [Example2](#example2)
+3. [Third Example](#third-example)
+
+## Example [](#){name=example}
+## Example2 [](#){name=example2}
+## [Third Example](#){name=third-example}
+
 The estimation of treatment effects on the individual level has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in information systems. 
 
 The idea is generally to estimate the effect that a conceivable treatment will have on an individual. Treatment is a general term that can mean anything from a mail catalog to earlier starting time for class to medication. Example questions and treatments are:
