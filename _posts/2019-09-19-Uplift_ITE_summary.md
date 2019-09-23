@@ -14,7 +14,7 @@ categories:
 0. [Outcome Transformation](#outcome-transformation)
     0. [Double Robust Estimation](#double-robust-estimation)
     0. [R-Learner](#r-learner)
-    0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree-forest)
+    0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree)
 0. [Causal Tree](#causal-tree)
     0. [Boosted causal trees](#boosted-causal-trees)
     0. [Generalized random forest](#generalized-random-forest)
@@ -61,7 +61,7 @@ The following approaches can be classified as *direct methods*:
 
 # Linear Additive Treatment Variable 
 **(S-Learner)**    
-Include treatment indicator into the model
+Include treatment indicator into the model    
 Advantages:
 - Single model
 - Interpretable
@@ -76,7 +76,9 @@ Include interaction effects between treatment indicator and each covariate
 
 
 # Outcome Transformation 
-**(Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**   
+**(Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)** 
+The transformed outcome is a noisy but unbiased estimate of the treatment effect and can as such be used as a target variable for model training. It can be used to calculate a feasible estimate of the MSE between model estimate and true treatment effect that is useful for model comparison. 
+
 The transformed outcome is:
 
 \\[
@@ -100,11 +102,13 @@ argmin_{\tau} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X])− (W_i − E[W=1|X_i]) 
 \\]
 The nuisance function for the conditional outcome and the proponsity score are estimated separately and an second-stage model trained on the transformation loss.
 
+The name is a hommage to Peter M. Robinson and the residualization in the decomposition. 
+
 Nie, X., & Wager, S. (2017). Quasi-Oracle Estimation of Heterogeneous Treatment Effects. ArXiv:1712.04912. Retrieved from http://arxiv.org/abs/1712.04912
 
 
 ## Pollienated transformed-outcome tree/forest
-Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\).
+Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
 
 Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
 
@@ -148,9 +152,9 @@ Shi, C., Blei, D. M., & Veitch, V. (2019). Adapting Neural Networks for the Esti
 
 
 # Treatment Effect Projection 
-Use a single model to estimate the ITE as estimated by any method above. The second-stage model can be a linear regression for interpretability or any single model to replace several models in the first stage. 
+Use a single model in a second stage to estimate the ITE as estimated by any method above. The second-stage model can be a linear regression for interpretability or any single model, which then replaces multiple models used in the first stage in, for example, the k-model approach. 
 
-## X-Learner 
+## X-learner 
 In settings where the treatment and control group vary in size, we may want to emphasize the conditional mean model estimated on the larger group. 
 
 Construct a treatment estimate for the treatment and control group separately using the conditional mean model from the other group: 
@@ -164,6 +168,7 @@ Project the treatment estimates on variables *X* directly within each group. Com
 \hat{\tau} = w(x)\hat{\tau_0} + (1-w(x))\hat{\tau_1} 
 \\]
 
+The name refers to the *cross* use of the conditonal mean of one group in the construction of the treatment estimate for the other group.
 
 TODO: The conditonal mean correction and propensity weighting make the X-Learner look like a variation on double robust estimation to me. Verify!
 
