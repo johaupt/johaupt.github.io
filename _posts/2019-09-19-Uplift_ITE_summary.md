@@ -43,7 +43,7 @@ Unfortunately, research in different fields is fractured, with different termini
 Covariates for individual *i*: \\( X_i \\)   
 Treatment **G**roup Indicator: \\(W\\)   
 (Potential) Outcome *Y* for individual *i* under group assignment *G*: \\( Y_i(G)\\)   
-(Estimated) Propensity score \\( e(X) = P(G|X) \\)
+(Estimated) Propensity score \\( e(X) = P(G|X) \\)    
 (Estimated) Conditional outcome under group assignment *G*: \\( \mu(X_i, G_i) \\)
 
 # Benchmark studies
@@ -98,35 +98,35 @@ TODO
 ## R-learner
 Optimize a model \\( \tau(X_i)\\) for a loss function based on a decomposition of the outcome function:
 \\[
-argmin_{\tau} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X])− (W_i − E[W=1|X_i]) \tau(X_i) \right)
+\underset{\tau}{\arg\min} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X])− (W_i − E[W=1|X_i]) \tau(X_i) \right)
 \\]
 The nuisance function for the conditional outcome and the proponsity score are estimated separately and an second-stage model trained on the transformation loss.
 
 The name is a hommage to Peter M. Robinson and the residualization in the decomposition. 
 
-Nie, X., & Wager, S. (2017). Quasi-Oracle Estimation of Heterogeneous Treatment Effects. ArXiv:1712.04912. Retrieved from http://arxiv.org/abs/1712.04912
+*Nie, X., & Wager, S. (2017). Quasi-Oracle Estimation of Heterogeneous Treatment Effects. ArXiv:1712.04912. Retrieved from http://arxiv.org/abs/1712.04912*
 
 
 ## Pollienated transformed-outcome tree/forest
 Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
 
-Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
+*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 
 # Causal Tree
 Build a tree with a splitting criterion that maximizes an estimate of the treatment effect between groups. 
 
-(Rzepakowsk, P., & Jaroszewics, S. (2010). Decision Trees for Uplift Modeling. https://doi.org/10.1109/ICDM.2010.62)
-Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal effects. Proceedings of the National Academy of Sciences, 113(27), 7353–7360. https://doi.org/10.1073/pnas.1510489113
+*(Rzepakowsk, P., & Jaroszewics, S. (2010). Decision Trees for Uplift Modeling. https://doi.org/10.1109/ICDM.2010.62)
+Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal effects. Proceedings of the National Academy of Sciences, 113(27), 7353–7360. https://doi.org/10.1073/pnas.1510489113*
 
 ## Boosted Causal Trees
-Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
+*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 ## Generalized Random Forest 
-Athey, S., Tibshirani, J., & Wager, S. (2019). Generalized random forests. The Annals of Statistics, 47(2), 1148–1178.
+*Athey, S., Tibshirani, J., & Wager, S. (2019). Generalized random forests. The Annals of Statistics, 47(2), 1148–1178. *
 
 # Bagged Causal MARS
-Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
+*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 The following approaches can be classified as *Indirect Models, Multi-model Approaches or Metalearners*:    
 
@@ -138,21 +138,21 @@ The outcome models (*base learners*) can take any form.
 ### Bayesian Additive Regression Trees
 Use Bayesian Additive Regression Trees as a base learner. The difference in posterior distributions provides an uncertainty estimate of the treatment effect.
 
-Hill, J. L. (2011). Bayesian Nonparametric Modeling for Causal Inference. Journal of Computational and Graphical Statistics, 20(1), 217–240. https://doi.org/10.1198/jcgs.2010.08162
+*Hill, J. L. (2011). Bayesian Nonparametric Modeling for Causal Inference. Journal of Computational and Graphical Statistics, 20(1), 217–240. https://doi.org/10.1198/jcgs.2010.08162*
 
 ### Treatment Residual Neural Network
 Use Neural Networks as base learner. Model calibration seems to be better if one base learner predicts the conditional mean for the control group, while the other predicts the residual between the observed outcome and the control base learner, i.e. the treatment effect.
 
-Farrell, M. H., Liang, T., & Misra, S. (2018). Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands. ArXiv E-Prints, arXiv:1809.09953.
+*Farrell, M. H., Liang, T., & Misra, S. (2018). Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands. ArXiv E-Prints, arXiv:1809.09953*
 
 ### DragonNet
 Under non-random treatment assignmnet, it is sufficient to correct for variables that impact the treatment assignment. Thus we correct for non-random treatment assignment by joint prediction of conditional means and treatment propensity in a multi-output neural network. We rely on the hidden representation to filter the information that is necessary to predict treatment assignment. 
 
-Shi, C., Blei, D. M., & Veitch, V. (2019). Adapting Neural Networks for the Estimation of Treatment Effects. ArXiv:1906.02120 [Cs, Stat]. Retrieved from http://arxiv.org/abs/1906.02120
+*Shi, C., Blei, D. M., & Veitch, V. (2019). Adapting Neural Networks for the Estimation of Treatment Effects. ArXiv:1906.02120 [Cs, Stat]. Retrieved from http://arxiv.org/abs/1906.02120*
 
 
 # Treatment Effect Projection 
-Use a single model in a second stage to estimate the ITE as estimated by any method above. The second-stage model can be a linear regression for interpretability or any single model, which then replaces multiple models used in the first stage in, for example, the k-model approach. 
+Use a single model in a second stage to estimate the ITE as estimated by any method above. The second-stage model can be a linear regression for interpretability or any single model, which then replaces multiple models used in the first stage, see k-model approach. 
 
 ## X-learner 
 In settings where the treatment and control group vary in size, we may want to emphasize the conditional mean model estimated on the larger group. 
@@ -172,6 +172,6 @@ The name refers to the *cross* use of the conditonal mean of one group in the co
 
 TODO: The conditonal mean correction and propensity weighting make the X-Learner look like a variation on double robust estimation to me. Verify!
 
-Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences, 116(10), 4156–4165.
+*Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences, 116(10), 4156–4165.*
 
 
