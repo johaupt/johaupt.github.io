@@ -8,6 +8,11 @@ categories:
 
 *A comprehensive collection of methods to estimate individualized treatment effects with a focus on machine learning, known as causal machine learning or uplift modeling.*
 
+# Table of Contents
+1. [Linear Additive Treatment Variable](#Linearadditivetreatmentvariable)
+2. [DragonNet](###Dragonnet)
+3. [DragonNet](#Dragonnet)
+
 The estimation of treatment effects on the individual level has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in information systems. 
 
 The idea is generally to estimate the effect that a conceivable treatment will have on an individual. Treatment is a general term that can mean anything from a mail catalog to earlier starting time for class to medication. Example questions and treatments are:
