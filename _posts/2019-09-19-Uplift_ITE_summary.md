@@ -9,13 +9,22 @@ categories:
 *A comprehensive collection of methods to estimate individualized treatment effects with a focus on machine learning, known as causal machine learning or uplift modeling.*
 
 # Table of Contents
-0. [Notation](#notation)
-0. [Notation](#Notation)
-1. [Linear Additive Treatment Variable](#linear_additive_treatment_variable)
-1. [Linear Additive Treatment Variable](#linear-additive-treatment-variable)
-  1 [DragonNet](#dragonnet)
-1. [X_Learner](#xlearner)
-1. [X_Learner](#x-learner)
+0. [Linear Additive Treatment Variable](#linear-additive-treatment-variable)
+0. [Modified Covariate Method](#modified-covariate-method)
+0. [Outcome Transformation](#outcome-transformation)
+    0. [Double Robust Estimation](#double-robust-estimation)
+    0. [R-Learner](#r-learner)
+    0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree)
+0. [Causal Tree](#causal-tree)
+    0. [Boosted causal trees](#boosted-causal-trees)
+    0. [Generalized random forest](#generalized-random-forest)
+0. [Bagged Causal MARS](#bagged-causal-mars)
+0. [Difference in Conditional Means](#difference-in-conditional-means)
+    0. [Bayesian Additive Regression Trees](#bayesian-additive-regression-trees)
+    0. [Treatment residual neural network](#treatment-residual-neural-network)
+0. [DragonNet](#dragonnet)
+0. [Estimated Treatment Effect Projection](#treatment-effect-projection)
+    0. [X-learner](#x-learner)
 
 The estimation of treatment effects on the individual level has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in information systems. 
 
@@ -50,7 +59,6 @@ These studies compare at least a subset of the methods in a structured setting:
 
 The following approaches can be classified as *direct methods*:    
 
-<a name="linear_additive_treatment_variable"></a>
 # Linear Additive Treatment Variable 
 **(S-Learner)**    
 Include treatment indicator into the model
@@ -62,7 +70,8 @@ Disadvantages:
 - Treatment effect typically small relative to other effects
 - Model might ignore treatment variable
 
-# Modified Covariate Method (Covariate Transformation)
+# Modified Covariate Method 
+**(Covariate Transformation)**
 Include interaction effects between treatment indicator and each covariate
 
 
@@ -80,11 +89,11 @@ The transformed outcome including treatment propensity correction is:
 Y^*_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
 \\]
 
-## Double Robust Estimation 
+## Double robust estimation 
 The transformed outcome including treatment propensity correction and conditional mean centering is:
 TODO
 
-## R-Learner
+## R-learner
 Optimize a model \\( \tau(X_i)\\) for a loss function based on a decomposition of the outcome function:
 \\[
 argmin_{\tau} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X])− (W_i − E[W=1|X_i]) \tau(X_i) \right)
@@ -94,7 +103,7 @@ The nuisance function for the conditional outcome and the proponsity score are e
 Nie, X., & Wager, S. (2017). Quasi-Oracle Estimation of Heterogeneous Treatment Effects. ArXiv:1712.04912. Retrieved from http://arxiv.org/abs/1712.04912
 
 
-## Pollienated transformed-outcome Tree/Forest
+## Pollienated transformed-outcome tree/forest
 Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\).
 
 Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
