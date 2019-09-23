@@ -11,21 +11,9 @@ categories:
 # Table of Contents
 0. [Notation](#notation)
 0. [Notation](#Notation)
-1. [Linear Additive Treatment Variable](#linearadditivetreatmentvariable)
 1. [Linear Additive Treatment Variable](#linear_additive_treatment_variable)
-1. [Linear Additive Treatment Variable](#linear)
-1. [Linear Additive Treatment Variable](#linear additive treatment variable)
-  - [DragonNet](#dragonnet)
-    - [DragonNet](#dragonnet)
-
-# Table of Contents
-1. [Example](#example)
-2. [Example2](#example2)
-3. [Third Example](#third-example)
-
-## Example [](#){name=example}
-## Example2 [](#){name=example2}
-## [Third Example](#){name=third-example}
+1. [Linear Additive Treatment Variable](#linear-additive-treatment-variable)
+  1 [DragonNet](#dragonnet)
 
 The estimation of treatment effects on the individual level has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in information systems. 
 
@@ -60,6 +48,7 @@ These studies compare at least a subset of the methods in a structured setting:
 
 The following approaches can be classified as *direct methods*:    
 
+<a name="linear_additive_treatment_variable"></a>
 # Linear Additive Treatment Variable 
 **(S-Learner)**    
 Include treatment indicator into the model
