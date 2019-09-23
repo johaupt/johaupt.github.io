@@ -9,9 +9,11 @@ categories:
 *A comprehensive collection of methods to estimate individualized treatment effects with a focus on machine learning, known as causal machine learning or uplift modeling.*
 
 # Table of Contents
-1. [Linear Additive Treatment Variable](#Linearadditivetreatmentvariable)
-2. [DragonNet](###Dragonnet)
-3. [DragonNet](#Dragonnet)
+0. [Notation](#notation)
+0. [Notation](#Notation)
+1. [Linear Additive Treatment Variable](#linearadditivetreatmentvariable)
+2. [DragonNet](###dragonnet)
+3. [DragonNet](#dragonnet)
 
 The estimation of treatment effects on the individual level has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in information systems. 
 
@@ -82,7 +84,7 @@ TODO
 ## R-Learner
 Optimize a model \\( \tau(X_i)\\) for a loss function based on a decomposition of the outcome function:
 \\[
-argmin_\{tau} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X])− (W_i − E[W=1|X_i]) \tau(X_i) \right)
+argmin_{\tau} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X])− (W_i − E[W=1|X_i]) \tau(X_i) \right)
 \\]
 The nuisance function for the conditional outcome and the proponsity score are estimated separately and an second-stage model trained on the transformation loss.
 
@@ -140,15 +142,15 @@ Use a single model to estimate the ITE as estimated by any method above. The sec
 In settings where the treatment and control group vary in size, we may want to emphasize the conditional mean model estimated on the larger group. 
 
 Construct a treatment estimate for the treatment and control group separately using the conditional mean model from the other group: 
-\[[ 
+\\[ 
 D_i^1 = Y_i(1) - E[Y(0)|X=x]
 D_i^0 = E[Y(1)|X=x] - Y_i(0)
-\\]]
+\\]
 
 Project the treatment estimates on variables *X* directly within each group. Combine the treatment effect estimates from both projection models using a weighted average with weights, for example, equal to the estimated propensity score.
-\[[
+\\[
 \hat{\tau} = w(x)\hat{\tau_0} + (1-w(x))\hat{\tau_1} 
-\]]
+\\]
 
 
 TODO: The conditonal mean correction and propensity weighting make the X-Learner look like a variation on double robust estimation to me. Verify!
