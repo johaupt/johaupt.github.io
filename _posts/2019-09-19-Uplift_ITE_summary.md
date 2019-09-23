@@ -14,6 +14,8 @@ categories:
 1. [Linear Additive Treatment Variable](#linear_additive_treatment_variable)
 1. [Linear Additive Treatment Variable](#linear-additive-treatment-variable)
   1 [DragonNet](#dragonnet)
+1. [X_Learner](#xlearner)
+1. [X_Learner](#x-learner)
 
 The estimation of treatment effects on the individual level has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in information systems. 
 
@@ -139,7 +141,7 @@ Shi, C., Blei, D. M., & Veitch, V. (2019). Adapting Neural Networks for the Esti
 # Treatment Effect Projection 
 Use a single model to estimate the ITE as estimated by any method above. The second-stage model can be a linear regression for interpretability or any single model to replace several models in the first stage. 
 
-## (X-Learner) 
+## X-Learner 
 In settings where the treatment and control group vary in size, we may want to emphasize the conditional mean model estimated on the larger group. 
 
 Construct a treatment estimate for the treatment and control group separately using the conditional mean model from the other group: 
