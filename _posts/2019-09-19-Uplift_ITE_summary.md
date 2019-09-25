@@ -10,17 +10,18 @@ categories:
 
 # Table of Contents
 0. [Linear Additive Treatment Variable](#linear-additive-treatment-variable)
-0. [Modified Covariate Method](#modified-covariate-method)
 0. [Outcome Transformation](#outcome-transformation)
-    0. [Double Robust Estimation](#double-robust-estimation)
-    0. [R-Learner](#r-learner)
+    0. [Double robust estimation](#double-robust-estimation)
+0. Modified Loss Function
+    0. [Modified Covariate Method](#modified-covariate-method)
+    0. [R-learner](#r-learner)
     0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree)
 0. [Causal Tree](#causal-tree)
     0. [Boosted causal trees](#boosted-causal-trees)
     0. [Generalized random forest](#generalized-random-forest)
 0. [Bagged Causal MARS](#bagged-causal-mars)
-0. [Difference in Conditional Means](#difference-in-conditional-means)
-    0. [Bayesian Additive Regression Trees](#bayesian-additive-regression-trees)
+0. [K-Models Approach](#k-models-approach)
+    0. [Bayesian additive regression trees](#bayesian-additive-regression-trees)
     0. [Treatment residual neural network](#treatment-residual-neural-network)
 0. [DragonNet](#dragonnet)
 0. [Estimated Treatment Effect Projection](#treatment-effect-projection)
@@ -41,10 +42,10 @@ Unfortunately, research in different fields is fractured, with different termini
 
 # Notation
 Covariates for individual *i*: \\( X_i \\)   
-Treatment **G**roup Indicator: \\(W\\)   
-(Potential) Outcome *Y* for individual *i* under group assignment *G*: \\( Y_i(G)\\)   
-(Estimated) Propensity score \\( e(X) = P(G|X) \\)    
-(Estimated) Conditional outcome under group assignment *G*: \\( \mu(X_i, G_i) \\)
+Treatment Group Indicator: \\(W\\)   
+(Potential) Outcome *Y* for individual *i* under group assignment *W*: \\( Y_i(W)\\)   
+(Estimated) Propensity score \\( e(X) = P(W|X) \\)    
+(Estimated) Conditional outcome under group assignment *G*: \\( \mu(X_i, W_i) \\)
 
 # Benchmark studies
 These studies compare at least a subset of the methods in a structured setting:
@@ -61,7 +62,8 @@ The following approaches can be classified as *direct methods*:
 
 # Linear Additive Treatment Variable 
 **(S-Learner)**    
-Include treatment indicator into the model    
+Include treatment indicator as a covariate into the model, optionally with interaction to other covariates. Predict the ITE via the difference of predicting an observation with treatment set to 0 and set to 1.
+
 Advantages:
 - Single model
 - Interpretable
@@ -69,10 +71,6 @@ Advantages:
 Disadvantages: 
 - Treatment effect typically small relative to other effects
 - Model might ignore treatment variable
-
-# Modified Covariate Method 
-**(Covariate Transformation)**
-Include interaction effects between treatment indicator and each covariate
 
 
 # Outcome Transformation 
@@ -95,6 +93,20 @@ Y^*_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
 The transformed outcome including treatment propensity correction and conditional mean centering is:
 TODO
 
+# Modified Loss Function
+## Modified Covariate Method 
+**(Covariate Transformation)**
+Optimize a model \\( \tau(X_i)\\) for a loss function based 
+
+\\[
+    \underset{\tau}{\arg\min} \frac{1}{N}\sum_i (2W_i-1) \frac{W_i - p(X)}{4p(X_i)(1-p(X))} (2(2W_i-1) Y_i - \tau(X_i))^2
+\\]
+
+
+*(Tian, L., Alizadeh, A. A., Gentles, A. J., & Tibshirani, R. (2014). A simple method for estimating interactions between a treatment and a large number of covariates. Journal of the American Statistical Association, 109(508), 1517–1532. https://doi.org/10.1080/01621459.2014.951443)    
+Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence. IZA Discussion Paper, 12039. Retrieved from https://ssrn.com/abstract=3318814*
+
+
 ## R-learner
 Optimize a model \\( \tau(X_i)\\) for a loss function based on a decomposition of the outcome function:
 \\[
@@ -116,22 +128,22 @@ Build trees on the transformed outcome, but replace the leaf estimates with \\(\
 # Causal Tree
 Build a tree with a splitting criterion that maximizes an estimate of the treatment effect between groups. 
 
-*(Rzepakowsk, P., & Jaroszewics, S. (2010). Decision Trees for Uplift Modeling. https://doi.org/10.1109/ICDM.2010.62)
+*(Rzepakowsk, P., & Jaroszewics, S. (2010). Decision Trees for Uplift Modeling. https://doi.org/10.1109/ICDM.2010.62)    
 Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal effects. Proceedings of the National Academy of Sciences, 113(27), 7353–7360. https://doi.org/10.1073/pnas.1510489113*
 
 ## Boosted Causal Trees
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 ## Generalized Random Forest 
-*Athey, S., Tibshirani, J., & Wager, S. (2019). Generalized random forests. The Annals of Statistics, 47(2), 1148–1178. *
+*Athey, S., Tibshirani, J., & Wager, S. (2019). Generalized random forests. The Annals of Statistics, 47(2), 1148–1178.*
 
 # Bagged Causal MARS
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 The following approaches can be classified as *Indirect Models, Multi-model Approaches or Metalearners*:    
 
-## Difference in Conditional Means 
-**(K-Model approach, T-Learner, Conditional Mean Regressions)**    
+## K-Model approach
+**(T-Learner, Conditional Mean Regressions, Difference in Conditional Means)**    
 Estimate an outcome model for each treatment group separately and calculate the treatment effect as the difference between the estimated outcomes.
 The outcome models (*base learners*) can take any form.
 
