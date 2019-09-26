@@ -94,7 +94,7 @@ The transformed outcome including treatment propensity correction and conditiona
 \\[
 Y^*_i = E[Y=1|X_i] - E[Y=0|X_i] + \frac{W_i(Y_i-E[Y=1|X_i])}{e(X_i)} - \frac{(1-W_i)(Y_i-E[Y=1|X_i])}{1-e(X_i)}
 \\]
-where we can use any method to estimate \\(E[Y=1|X_i]\\), \\(E[Y=0|X_i]\\) and \\(e(X_i)\\). 
+Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y=1|X_i]\\), \\(E[Y=0|X_i]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^*_i\\) and train a model on transformed outcome variable. 
 
 
 *(Robins, J. M., & Rotnitzky, A. (1995). Semiparametric Efficiency in Multivariate Regression Models with Missing Data. Journal of the American Statistical Association, 90(429), 122–129. https://doi.org/10.1080/01621459.1995.10476494)
