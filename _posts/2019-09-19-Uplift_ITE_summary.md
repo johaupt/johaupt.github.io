@@ -9,7 +9,7 @@ categories:
 *A comprehensive collection of methods to estimate individualized treatment effects with a focus on machine learning, known as causal machine learning or uplift modeling.*
 
 # Table of Contents
-0. [Linear Additive Treatment Variable](#linear-additive-treatment-variable)
+0. [Treatment Variable](#treatment-indicator-as-variable)
 0. [Outcome Transformation](#outcome-transformation)
     0. [Double robust estimation](#double-robust-estimation)
 0. Modified Loss Function
@@ -45,7 +45,7 @@ Covariates for individual *i*: \\( X_i \\)
 Treatment Group Indicator: \\(W\\)   
 (Potential) Outcome *Y* for individual *i* under group assignment *W*: \\( Y_i(W)\\)   
 (Estimated) Propensity score \\( e(X) = P(W|X) \\)    
-(Estimated) Conditional outcome under group assignment *G*: \\( \mu(X_i, W_i) \\)
+(Estimated) Conditional outcome under group assignment *W*: \\( \mu(X_i, W_i) \\)
 
 # Benchmark studies
 These studies compare at least a subset of the methods in a structured setting:
@@ -60,38 +60,46 @@ These studies compare at least a subset of the methods in a structured setting:
 
 The following approaches can be classified as *direct methods*:    
 
-# Linear Additive Treatment Variable 
+# Treatment Indicator as Variable 
 **(S-Learner)**    
-Include treatment indicator as a covariate into the model, optionally with interaction to other covariates. Predict the ITE via the difference of predicting an observation with treatment set to 0 and set to 1.
+Include treatment indicator as a covariate into the model, optionally with interaction to other covariates. Predict the ITE via the difference of predicting an observation with treatment set to 0 and set to 1. Training a single model for the outcome is simple and often interpretable. 
 
-Advantages:
-- Single model
-- Interpretable
+A regression model with a linear additive treatment effect is
+\\[
+ Y = \beta_0 + \tau_0 D_i+ \tau D_i X_i + \beta X_i + \epsilon_i
+\\]
 
-Disadvantages: 
-- Treatment effect typically small relative to other effects
-- Model might ignore treatment variable
+Under linear regression, the interaction effects between all variables and the treatment indicator blow up the dimensionality quickly. Instead, we could use any machine learning model and include the treatment indicator as a variable. However, if the treatment effect is small relative to other effects on the outcome, then regularized machine learning methods may ignore the treatment variable. 
 
 
 # Outcome Transformation 
 **(Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)** 
-The transformed outcome is a noisy but unbiased estimate of the treatment effect and can as such be used as a target variable for model training. It can be used to calculate a feasible estimate of the MSE between model estimate and true treatment effect that is useful for model comparison. 
-
-The transformed outcome is:
-
+The transformed outcome is 
 \\[
 Y^*_i = W_i Y_i(1) - (1-W_i) Y_i(0)
 \\]
-
-The transformed outcome including treatment propensity correction is:
-
+or including treatment propensity correction 
 \\[
 Y^*_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
 \\]
 
+The transformed outcome is a noisy but unbiased estimate of the treatment effect.
+[TODO: Include proof]
+
+As an unbiased estimate, it can be used as a target variable for model training. 
+The transformed outcome can also be used to calculate a feasible estimate of the MSE between model estimate and true treatment effect that is useful for model comparison. 
+
 ## Double robust estimation 
-The transformed outcome including treatment propensity correction and conditional mean centering is:
-TODO
+The transformed outcome including treatment propensity correction and conditional mean centering is
+\\[
+Y^*_i = E[Y=1|X_i] - E[Y=0|X_i] + \frac{W_i(Y_i-E[Y=1|X_i])}{e(X_i)} - \frac{(1-W_i)(Y_i-E[Y=1|X_i])}{1-e(X_i)}
+\\]
+where we can use any method to estimate \\(E[Y=1|X_i]\\), \\(E[Y=0|X_i]\\) and \\(e(X_i)\\). 
+
+
+*(Robins, J. M., & Rotnitzky, A. (1995). Semiparametric Efficiency in Multivariate Regression Models with Missing Data. Journal of the American Statistical Association, 90(429), 122–129. https://doi.org/10.1080/01621459.1995.10476494)
+Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence. IZA Discussion Paper, 12039. Retrieved from https://ssrn.com/abstract=3318814*
+
 
 # Modified Loss Function
 ## Modified Covariate Method 
@@ -140,24 +148,26 @@ Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal 
 # Bagged Causal MARS
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
-The following approaches can be classified as *Indirect Models, Multi-model Approaches or Metalearners*:    
 
-## K-Model approach
+
+The following approaches can be classified as *Indirect Models or Metalearners*:    
+
+# K-Model approach
 **(T-Learner, Conditional Mean Regressions, Difference in Conditional Means)**    
 Estimate an outcome model for each treatment group separately and calculate the treatment effect as the difference between the estimated outcomes.
 The outcome models (*base learners*) can take any form.
 
-### Bayesian Additive Regression Trees
+## Bayesian Additive Regression Trees
 Use Bayesian Additive Regression Trees as a base learner. The difference in posterior distributions provides an uncertainty estimate of the treatment effect.
 
 *Hill, J. L. (2011). Bayesian Nonparametric Modeling for Causal Inference. Journal of Computational and Graphical Statistics, 20(1), 217–240. https://doi.org/10.1198/jcgs.2010.08162*
 
-### Treatment Residual Neural Network
+## Treatment Residual Neural Network
 Use Neural Networks as base learner. Model calibration seems to be better if one base learner predicts the conditional mean for the control group, while the other predicts the residual between the observed outcome and the control base learner, i.e. the treatment effect.
 
 *Farrell, M. H., Liang, T., & Misra, S. (2018). Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands. ArXiv E-Prints, arXiv:1809.09953*
 
-### DragonNet
+## DragonNet
 Under non-random treatment assignmnet, it is sufficient to correct for variables that impact the treatment assignment. Thus we correct for non-random treatment assignment by joint prediction of conditional means and treatment propensity in a multi-output neural network. We rely on the hidden representation to filter the information that is necessary to predict treatment assignment. 
 
 *Shi, C., Blei, D. M., & Veitch, V. (2019). Adapting Neural Networks for the Estimation of Treatment Effects. ArXiv:1906.02120 [Cs, Stat]. Retrieved from http://arxiv.org/abs/1906.02120*
