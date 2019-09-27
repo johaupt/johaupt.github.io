@@ -6,10 +6,10 @@ categories:
   - causal machine learning
 ---
 
-*A comprehensive collection of methods to estimate individualized treatment effects with a focus on machine learning, known as causal machine learning or uplift modeling.*
+*A comprehensive collection of methods from causal machine learning or uplift modeling to estimate individualized treatment effects.*
 
 # Table of Contents
-0. [Treatment Variable](#treatment-indicator-as-variable)
+0. [Treatment Indicator as Variable](#treatment-indicator-as-variable)
 0. [Outcome Transformation](#outcome-transformation)
     0. [Double robust estimation](#double-robust-estimation)
 0. Modified Loss Function
@@ -23,7 +23,7 @@ categories:
 0. [K-Models Approach](#k-models-approach)
     0. [Bayesian additive regression trees](#bayesian-additive-regression-trees)
     0. [Treatment residual neural network](#treatment-residual-neural-network)
-0. [DragonNet](#dragonnet)
+    0. [DragonNet](#dragonnet)
 0. [Estimated Treatment Effect Projection](#treatment-effect-projection)
     0. [X-learner](#x-learner)
 
@@ -73,18 +73,19 @@ Under linear regression, the interaction effects between all variables and the t
 
 
 # Outcome Transformation 
-**(Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)** 
+**(Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**    
 The transformed outcome is 
 \\[
-Y^*_i = W_i Y_i(1) - (1-W_i) Y_i(0)
+Y^{TO}_i = W_i Y_i(1) - (1-W_i) Y_i(0)
 \\]
+
 or including treatment propensity correction 
 \\[
-Y^*_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
+Y^{IPW}_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
 \\]
 
 The transformed outcome is a noisy but unbiased estimate of the treatment effect.
-[TODO: Include proof]
+[TODO: Show]
 
 As an unbiased estimate, it can be used as a target variable for model training. 
 The transformed outcome can also be used to calculate a feasible estimate of the MSE between model estimate and true treatment effect that is useful for model comparison. 
@@ -92,22 +93,25 @@ The transformed outcome can also be used to calculate a feasible estimate of the
 ## Double robust estimation 
 The transformed outcome including treatment propensity correction and conditional mean centering is
 \\[
-Y^*_i = E[Y=1|X_i] - E[Y=0|X_i] + \frac{W_i(Y_i-E[Y=1|X_i])}{e(X_i)} - \frac{(1-W_i)(Y_i-E[Y=1|X_i])}{1-e(X_i)}
+Y^{DR}_i = E[Y=1|X_i] - E[Y=0|X_i] + \frac{W_i(Y_i-E[Y=1|X_i])}{e(X_i)} - \frac{(1-W_i)(Y_i-E[Y=1|X_i])}{1-e(X_i)}
 \\]
-Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y=1|X_i]\\), \\(E[Y=0|X_i]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^*_i\\) and train a model on transformed outcome variable. 
-
+Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y=1|X_i]\\), \\(E[Y=0|X_i]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^{DR}_i\\) and train a model on transformed outcome variable. 
 
 *(Robins, J. M., & Rotnitzky, A. (1995). Semiparametric Efficiency in Multivariate Regression Models with Missing Data. Journal of the American Statistical Association, 90(429), 122–129. https://doi.org/10.1080/01621459.1995.10476494)
 Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence. IZA Discussion Paper, 12039. Retrieved from https://ssrn.com/abstract=3318814*
 
+## Pollienated transformed-outcome tree/forest
+Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
+
+*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 # Modified Loss Function
 ## Modified Covariate Method 
-**(Covariate Transformation)**
+**(Covariate Transformation)**    
 Optimize a model \\( \tau(X_i)\\) for a loss function based 
 
 \\[
-    \underset{\tau}{\arg\min} \frac{1}{N}\sum_i (2W_i-1) \frac{W_i - p(X)}{4p(X_i)(1-p(X))} (2(2W_i-1) Y_i - \tau(X_i))^2
+    \underset{\tau}{\arg\min} \frac{1}{N}\sum_i (2W_i-1) \frac{W_i - e(X_i)}{4 e(X_i)(1-e(X_i))} (2(2W_i-1) Y_i - \tau(X_i))^2
 \\]
 
 
@@ -118,19 +122,13 @@ Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimatio
 ## R-learner
 Optimize a model \\( \tau(X_i)\\) for a loss function based on a decomposition of the outcome function:
 \\[
-\underset{\tau}{\arg\min} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X])− (W_i − E[W=1|X_i]) \tau(X_i) \right)
+\underset{\tau}{\arg\min} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X_i])− (W_i − E[W=1|X_i]) \tau(X_i) \right)
 \\]
 The nuisance function for the conditional outcome and the proponsity score are estimated separately and an second-stage model trained on the transformation loss.
 
 The name is a hommage to Peter M. Robinson and the residualization in the decomposition. 
 
 *Nie, X., & Wager, S. (2017). Quasi-Oracle Estimation of Heterogeneous Treatment Effects. ArXiv:1712.04912. Retrieved from http://arxiv.org/abs/1712.04912*
-
-
-## Pollienated transformed-outcome tree/forest
-Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
-
-*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 
 # Causal Tree
@@ -181,18 +179,18 @@ In settings where the treatment and control group vary in size, we may want to e
 
 Construct a treatment estimate for the treatment and control group separately using the conditional mean model from the other group: 
 \\[ 
-D_i^1 = Y_i(1) - E[Y(0)|X=x]
-D_i^0 = E[Y(1)|X=x] - Y_i(0)
+W_i^1 = Y_i(1) - E[Y(0)|X=x]
+W_i^0 = E[Y(1)|X=x] - Y_i(0)
 \\]
 
-Project the treatment estimates on variables *X* directly within each group. Combine the treatment effect estimates from both projection models using a weighted average with weights, for example, equal to the estimated propensity score.
+Project the treatment estimates on variables *X* directly within each group. Combine the treatment effect estimates from both projection models using a weighted average with weights manually chosen or equal to the estimated propensity score.
 \\[
 \hat{\tau} = w(x)\hat{\tau_0} + (1-w(x))\hat{\tau_1} 
 \\]
 
 The name refers to the *cross* use of the conditonal mean of one group in the construction of the treatment estimate for the other group.
 
-TODO: The conditonal mean correction and propensity weighting make the X-Learner look like a variation on double robust estimation to me. Verify!
+TODO: The conditonal mean correction and propensity weighting make the X-Learner look like a variation on double robust estimation with added treatment effect projection to me.
 
 *Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences, 116(10), 4156–4165.*
 
