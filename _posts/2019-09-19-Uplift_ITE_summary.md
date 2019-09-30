@@ -99,12 +99,12 @@ Our job would be so much easier if we knew the actual treatment effect and could
 
 The proxy variable is a transformation of the observed outcome for the individual:
 \\[
-Y^{TO}_i = W_i Y_i(1) - (1-W_i) Y_i(0)
+Y^{TO}_i = W_i Y_i - (1-W_i) Y_i
 \\]
 
 Or including treatment propensity correction if we didn't do a 50:50 randomized experiment:
 \\[
-Y^{IPW}_i = W_i \cdot \frac{Y_i(1)}{e(X_i)} - (1-W_i) \cdot \frac{Y_i(0)}{1-e(X_i)}
+Y^{IPW}_i = W_i \cdot \frac{Y_i}{e(X_i)} - (1-W_i) \cdot \frac{Y_i}{1-e(X_i)}
 \\]
 
 The transformed outcome is a noisy but unbiased estimate of the treatment effect. As an unbiased estimate, it can be used as a target variable for model training. 
