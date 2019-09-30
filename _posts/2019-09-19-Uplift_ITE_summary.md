@@ -9,27 +9,21 @@ categories:
 *A comprehensive collection of state-of-the-art methods from causal machine learning or uplift modeling to estimate individualized treatment effects.*
 
 # Table of Contents
-0. [Treatment Indicator as Variable](#treatment-indicator-as-variable)
-
 0. [K-Models Approach](#k-models-approach)
     0. [Bayesian additive regression trees](#bayesian-additive-regression-trees)
     0. [Treatment residual neural network](#treatment-residual-neural-network)
     0. [DragonNet](#dragonnet)
-
+0. [Treatment Indicator as Variable](#treatment-indicator-as-variable)
 0. [Outcome Transformation](#outcome-transformation)
     0. [Double robust estimation](#double-robust-estimation)
-
 0. [Causal Tree](#causal-tree)
+    0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree)
     0. [Boosted causal trees](#boosted-causal-trees)
     0. [Generalized random forest](#generalized-random-forest)
-0. [Bagged Causal MARS](#bagged-causal-mars)
-
+0. [Bagged Causal MARS](#bagged-causal-multivariate-adaptive-regression-splines)
 0. Modified Loss Function
     0. [Modified Covariate Method](#modified-covariate-method)
     0. [R-learner](#r-learner)
-    0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree)
-
-
 0. [Estimated Treatment Effect Projection](#treatment-effect-projection)
     0. [X-learner](#x-learner)
 0. [Benchmark Studies](#benchmark-studies)
@@ -116,11 +110,6 @@ The transformed outcome can also be used to calculate a feasible estimate of the
 
 Hitsch, G. J., & Misra, S. (2018). Heterogeneous Treatment Effects and Optimal Targeting Policy Evaluation. SSRN.
 
-## Pollienated transformed-outcome tree/forest
-Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
-
-*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
-
 ## Double robust estimation 
 The transformed outcome including treatment propensity correction and conditional mean centering is
 \\[
@@ -131,9 +120,15 @@ Double robust esimation has two steps. In the first, we use effective models of 
 *Kang, J. D. Y., & Schafer, J. L. (2007). Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data. Statistical Science, 22(4), 523–539. https://doi.org/10.1214/07-STS227
 Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence. IZA Discussion Paper, 12039. Retrieved from https://ssrn.com/abstract=3318814*
 
-# Causal Tree
+# Non-parametric methods
 Build a tree with a splitting criterion that maximizes an estimate of the treatment effect between groups. 
 
+## Pollienated transformed-outcome tree/forest
+Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
+
+*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
+
+## Causal Tree
 *(Rzepakowsk, P., & Jaroszewics, S. (2010). Decision Trees for Uplift Modeling. https://doi.org/10.1109/ICDM.2010.62)    
 Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal effects. Proceedings of the National Academy of Sciences, 113(27), 7353–7360. https://doi.org/10.1073/pnas.1510489113*
 
@@ -143,7 +138,10 @@ Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal 
 ## Generalized Random Forest 
 *Athey, S., Tibshirani, J., & Wager, S. (2019). Generalized random forests. The Annals of Statistics, 47(2), 1148–1178.*
 
-# Bagged Causal MARS
+## Bagged Causal Multivariate Adaptive Regression Splines
+Multivariate Adaptive Regression Splines (MARS) are related to the trees discussed above. 
+[TODO]: I haven't seen them used in practice, but they are in The Elements of Statistical Learning and seem to do well in Powers et al.
+
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 # Modified Loss Function
