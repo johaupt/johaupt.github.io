@@ -16,43 +16,45 @@ categories:
 0. [Treatment Indicator as Variable](#treatment-indicator-as-variable)
 0. [Outcome Transformation](#outcome-transformation)
     0. [Double robust estimation](#double-robust-estimation)
-0. [Causal Tree](#causal-tree)
+0. [Non-parametric Methods](#non-parametric-methods)
+    0. [Causal tree](#causal-tree)
     0. [Pollienated transformed-outcome tree](#pollienated-transformed-outcome-tree)
     0. [Boosted causal trees](#boosted-causal-trees)
     0. [Generalized random forest](#generalized-random-forest)
 0. [Bagged Causal MARS](#bagged-causal-multivariate-adaptive-regression-splines)
 0. Modified Loss Function
-    0. [Modified Covariate Method](#modified-covariate-method)
+    0. [Covariate transformation](#covariate-transformation)
     0. [R-learner](#r-learner)
 0. [Estimated Treatment Effect Projection](#treatment-effect-projection)
     0. [X-learner](#x-learner)
 0. [Benchmark Studies](#benchmark-studies)
 
-Assume that we want to change the world. A little less grandiose, we want to take an action that will impact an outcome to our preferences. A little more applied, fields like medicine and marketing make a decision to take action that increases life expectation by five years or makes grandma spend another dollar in the supermarket. To make that decision, we want to know in advance what effect the conceivable treatment will have on each individual/grandma.
-
-Remember treatment as a general term that can mean anything from a mail catalog to earlier starting time for a class to medication. Example questions and treatments are:
+Assume that we want to change the world. A little less grandiose, assume we want to take an action that will impact an outcome to be more like we prefer. A little more applied, fields like medicine and marketing make a decision to take action that increases life expectation by five years or makes grandma spend another dollar in the supermarket. To make that decision, we want to know in advance what effect the conceivable treatment will have on each individual/grandma. Remember treatment as a general term that can mean anything from a mail catalog to earlier starting time for a class to medication.     
+Example questions and treatments are:
 
 - How much more likely is a my middle-aged, sporty patient to be cured when given new medication as opposed to the standard medication?
 - How much more likely are participants to complete the online training if we send them a progress report every week? Or are there certain participants that react negatively to perceived pressure?
 - How much more will a customer buy if promised free shipping as opposed to not showing any banner?
 
-Estimation of treatment effects on the individual level is a tricky problem, because we typically only have one shot at applying a treatment: either my grandma gets the coupon or she doesn't and we will be left to ponder the 'what if'. 'What if' type of questions belong to the domain of causal inference and treatment effect estimation for individuals has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in business intelligence. 
+Estimation of treatment effects on the individual level is a tricky problem, because we typically only have one shot at applying a treatment: either my grandma gets the coupon or she doesn't and we will be left to ponder the 'what if'. 'What if' type of questions belong to the domain of causal inference and estimating the treatment effect for individuals has become a task at the intersection of causal inference and machine learning. The same problem is known as heterogeneous treatment effects in social studies and medicine, conditional average treatment effects in econometrics and uplift modeling in business intelligence. 
 
-The fundamental problem of 'what if' is that we can only apply one treatment to each individual and observe their outcome. Since we don't know how the individual would have reacted under alternative treatment, we can never calculate the real treatment effect. What we can do is to look at a group of individuals who have received different treatments and the difference in their outcomes.    
-Research into estimating treatment effects from experiments and observational studies goes far into the last century, but the last ten years have seen renewed interest to leverage machine learning techniques to increase the power of known methods or build machine learning models specialized in estimating treatment effects.
+The fundamental problem of 'what if' is that we can only apply one treatment to each individual and observe their outcome. Since we don't know how the individual would have reacted under alternative treatment, we can never calculate the real treatment effect. What we can do is to look at a group of individuals who have received different treatments and the difference in their outcomes.
 
-Unfortunately, research in different fields is fractured, with different termini and notation. The following list is meant as an incomplete, but comprehensive summary of state-of-the-art methods from bioinformatics, computer science, econometrics and business studies to estimate individualized treatment effects. I will assume that we know that we need some individuals that have gotten treatment and some that haven't and how randomized experiments work. 
+Research into estimating treatment effects from experiments and observational studies goes far into the last century, but the last ten years have seen renewed interest to leverage machine learning techniques to increase the power of known methods or build machine learning models specialized in estimating treatment effects.    
+Unfortunately, research in different fields is fractured, with different termini and notation. The following list is meant as an incomplete, but comprehensive summary of state-of-the-art methods from bioinformatics, computer science, econometrics and business studies to estimate individualized treatment effects. I will assume that we know how randomized experiments work and that we have data on some individuals who have gotten treatment and some who haven't. 
 
 # Notation
-Covariates for individual *i*: \\( X_i \\) *What we know about the person*    
-(Estimated) Propensity score \\( e(X) = P(W|X) \\) *Their chance to get the coupon from us*    
-Treatment Group Indicator: \\(W\\) *If the person got a coupon or not*     
-(Potential) Outcome *Y* for individual *i* under group assignment *W*: \\( Y_i(W)\\) *If/How much they bought*     
-(Estimated) Conditional outcome under group assignment *W*: \\( \mu(X_i, W_i) \\) *If/How much we think they should have bought*    
-(Estimated) Treatment Effect: \\( \tau_i \\)
+My notation is roughly in line with the econometric literature:
+
+Covariates for individual *i* (*What we know about the person*   ): \\( X_i \\)  
+(Estimated) Propensity score (*Their chance to get the coupon from us* ): \\( P(W=w|X), e(X)=P(W=1|X) when W \in {0;1} \\)    
+Treatment Group Indicator (*If the person got a coupon or not*  ): \\(W\\)    
+(Potential) Outcome *Y* for individual *i* under group assignment *W* (*If/How much they bought*): \\( Y_i(W)\\)     
+(Estimated) Conditional outcome under group assignment *W* (*If/How much we think they should have bought*): \\( \mu(X_i, W_i) \\)     
+(Estimated) Treatment Effect (*How much impact the coupon had*): \\( \tau_i \\) 
 
 # K-Model approach
-**(T-Learner, Conditional Mean Regressions, Difference in Conditional Means)**    
+**(aka T-Learner, Conditional Mean Regressions, Difference in Conditional Means)**    
 The following approaches build a model to predict the outcome with and without treatment. By looking at the difference between the predicted outcomes, we can find out how much impact we can expect from the treatment.
 
 When using the k-model approached, named after the number of models we need to train, we estimate an outcome model for each treatment group separately and calculate the treatment effect as the difference between the estimated outcomes.     
@@ -77,7 +79,7 @@ When we can't do an experiment and treatment assignment is not random, we can co
 
 
 # Treatment Indicator as Variable 
-**(S-Learner)**    
+**(aka S-Learner)**    
 
 The outcome process (read: who completes their purchase in our online shop) is often more complicated than the process behind the treatment effect (read: who is impacted most by a coupon). The following approaches therefore aim to estimate the treatment effect directly without the need to build a good outcome model first.
 
@@ -92,7 +94,7 @@ Under linear regression, the interaction effects between all variables and the t
 
 
 # Outcome Transformation 
-**(Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**    
+**(aka Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**    
 Our job would be so much easier if we knew the actual treatment effect and could just train a regression model to predict it, but we can never know the actual treatment effect for an individual. However, we can find an artificial variable that is equal to the treatment effect in expectation.
 
 The proxy variable is a transformation of the observed outcome for the individual:
@@ -113,18 +115,18 @@ Hitsch, G. J., & Misra, S. (2018). Heterogeneous Treatment Effects and Optimal T
 ## Double robust estimation 
 The transformed outcome including treatment propensity correction and conditional mean centering is
 \\[
-Y^{DR}_i = E[Y=1|X_i] - E[Y=0|X_i] + \frac{W_i(Y_i-E[Y=1|X_i])}{e(X_i)} - \frac{(1-W_i)(Y_i-E[Y=1|X_i])}{1-e(X_i)}
+Y^{DR}_i = E[Y|X_i, W=1] - E[Y|X_i, W_i=0] + \frac{W_i(Y_i-E[Y|X_i, W_i=1])}{e(X_i)} - \frac{(1-W_i)(Y_i-E[Y|X_i, W_i=0])}{1-e(X_i)}
 \\]
-Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y=1|X_i]\\), \\(E[Y=0|X_i]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^{DR}_i\\) and train a model on transformed outcome variable. 
+Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y|X_i, W=1]\\), \\(E[Y|X_i, W=0]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^{DR}_i\\) and train a model on transformed outcome variable. 
 
-*Kang, J. D. Y., & Schafer, J. L. (2007). Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data. Statistical Science, 22(4), 523–539. https://doi.org/10.1214/07-STS227
+*Kang, J. D. Y., & Schafer, J. L. (2007). Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data. Statistical Science, 22(4), 523–539. https://doi.org/10.1214/07-STS227    
 Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence. IZA Discussion Paper, 12039. Retrieved from https://ssrn.com/abstract=3318814*
 
 # Non-parametric methods
-Build a tree with a splitting criterion that maximizes an estimate of the treatment effect between groups. 
+Separate the individuals into groups based on their covariates and estimate the treatment effect within each group as the difference between treatment groups. Use a criterion that maximizes an approximation of the treatment effect difference between groups to separate the individuals into groups.
 
 ## Pollienated transformed-outcome tree/forest
-Build trees on the transformed outcome, but replace the leaf estimates with \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
+Build a tree on the transformed outcome, but replace the leaf estimate \\( \bar{Y}^{TO} \\) with an estimate of the average treatment effect \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
 
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
@@ -145,8 +147,8 @@ Multivariate Adaptive Regression Splines (MARS) are related to the trees discuss
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 # Modified Loss Function
-## Modified Covariate Method 
-**(Covariate Transformation)**    
+## Covariate Transformation
+**(aka Modified Covariate Method)**    
 Optimize a model \\( \tau(X_i)\\) for a loss function based 
 
 \\[
