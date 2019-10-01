@@ -3,7 +3,8 @@ layout: page
 title: Research
 ---
 
-Find me on ResearchGate: https://www.researchgate.net/profile/Johannes_Haupt
+Find me on [Github](https://github.com/johaupt/) and [ResearchGate](https://www.researchgate.net/profile/Johannes_Haupt)
+
 
 Haupt, J., Jacob, D., Gubela, R., & Lessmann, S. (2019). Affordable Uplift: Supervised Randomization in Controlled Experiments.
 
