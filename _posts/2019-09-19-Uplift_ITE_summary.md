@@ -126,11 +126,15 @@ Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimatio
 Separate the individuals into groups based on their covariates and estimate the treatment effect within each group as the difference between treatment groups. Use a criterion that maximizes an approximation of the treatment effect difference between groups to separate the individuals into groups.
 
 ## Pollienated transformed-outcome tree/forest
-Build a tree on the transformed outcome, but replace the leaf estimate \\( \bar{Y}^{TO} \\) with an estimate of the average treatment effect \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
+Build a tree on the transformed outcome, but replace the leaf estimate \\( \bar{Y^{TO}} \\) with an estimate of the average treatment effect \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
 
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
 
 ## Causal Tree
+[TODO] Explain tree building in detail
+
+The structure of the tree is build on one random half of the training data and the leaf estimates are calculated on the other half (*honest splitting*). This avoids overfitting bias that happens when we use the data to find the most different groups and base our estimates for these groups on the same data.
+
 *(Rzepakowsk, P., & Jaroszewics, S. (2010). Decision Trees for Uplift Modeling. https://doi.org/10.1109/ICDM.2010.62)    
 Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal effects. Proceedings of the National Academy of Sciences, 113(27), 7353–7360. https://doi.org/10.1073/pnas.1510489113*
 
