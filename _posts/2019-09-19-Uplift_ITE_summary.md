@@ -82,7 +82,7 @@ Alaa, A. M., Weisz, M., & van der Schaar, M. (2017). [Deep Counterfactual Networ
 Particular to neural networks, we can improve model calibration in the two-model framework by 1) constructing estimates in the treatment group as an addition of the control and treatment model and 2)training the networks jointly.     
 To train a neural network that predicts the treatment effect directly, look at the observed outcomes under treatment as a sum of the outcome without treatment and the treatment effect. Then we could estimate one network that predicts the outcome without treatment for all observations and a second network that predicts the treatment effect that needs to be added for treated individuals, equivalent to the residual left by the outcome network for treated observations. Instead of two outcome models, this framework leaves us with one network that predicts the outcome and one network that predicts the treatment effect directly.
 \\[
-  Y = \mathtext{nnet}_0 + T_i * \mathtext{nnet}_1 
+  Y = \text{nnet}_0 + T_i * \text{nnet}_1 
 \\]
 To ensure that the networks are in tune with each other, we should train them jointly. This does not require much effort: For each observation, we sum up the prediction of the outcome network and the prediction of the treatment network multiplied by the treatment indicator. We then backpropagate the error through both networks.     
 
