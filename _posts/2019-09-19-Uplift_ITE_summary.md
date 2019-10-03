@@ -47,10 +47,10 @@ Unfortunately, research in different fields is fractured, with different termini
 My notation is roughly in line with the econometric literature:
 
 Covariates for individual *i* (*What we know about the person*   ): \\( X_i \\)  
-(Estimated) Propensity score (*Their chance to get the coupon from us* ): \\( P(W=w|X), e(X)=P(W=1|X) when W \in {0;1} \\)    
-Treatment Group Indicator (*If the person got a coupon or not*  ): \\(W\\)    
-(Potential) Outcome *Y* for individual *i* under group assignment *W* (*If/How much they bought*): \\( Y_i(W)\\)     
-(Estimated) Conditional outcome under group assignment *W* (*If/How much we think they should have bought*): \\( \mu(X_i, W_i) \\)     
+(Estimated) Propensity score (*Their chance to get the coupon from us* ): \\( P(W=w|X), e(X)=P(T=1|X) when T \in {0;1} \\)    
+Treatment Group Indicator (*If the person got a coupon or not*  ): \\(T\\)    
+(Potential) Outcome *Y* for individual *i* under group assignment *T* (*If/How much they bought*): \\( Y_i(T)\\)     
+(Estimated) Conditional outcome under group assignment *T* (*If/How much we think they should have bought*): \\( \mu(X_i, T_i) \\)     
 (Estimated) Treatment Effect (*How much impact the coupon had*): \\( \tau_i \\) 
 
 # K-Model approach
@@ -65,17 +65,28 @@ The outcome models (*base learners*) can take any form, so we could use neural n
 ## Bayesian Additive Regression Trees
 Use Bayesian Additive Regression Trees as outcome models. The difference in posterior distributions provides an uncertainty estimate of the treatment effect that may be useful for the decision or to do uncertainty based data collection. 
 
-*Hill, J. L. (2011). Bayesian Nonparametric Modeling for Causal Inference. Journal of Computational and Graphical Statistics, 20(1), 217–240. https://doi.org/10.1198/jcgs.2010.08162*
+*Hill, J. L. (2011). [Bayesian Nonparametric Modeling for Causal Inference](https://doi.org/10.1198/jcgs.2010.08162). Journal of Computational and Graphical Statistics, 20(1), 217–240.*
 
-## Treatment Residual Neural Network
-Use neural networks as outcome models. Model calibration seems to be better if one base learner predicts the conditional mean for the control group, while the other predicts the residual between the observed outcome and the control base learner, i.e. the treatment effect.
+## Multi-output network
+**(DragonNet)**    
+We can of course use two neural networks as outcome models in the two-model framework. The two outcome models are likely very similar, since both approximate to a large extent the outcome process without treatment. We may be able to gain efficiency and improve calibration through parameter sharing in the lower hidden layers. The architecture is then best understood as a single multi-output network, with one loss calculated on the control group observations and one (or more) loss calculated on the treatment group observations.    
 
-*Farrell, M. H., Liang, T., & Misra, S. (2018). Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands. ArXiv E-Prints, arXiv:1809.09953*
+The multi-outcome architecture has an additional advantage when working with observational data. When we cannot conduct an experiment and treatment assignment is not random, we can correct for variables that impact the treatment assignment to still make unbiased estimates. It is in fact sufficient to correct only for the variables that impact treatment assignment (*propensity weighting*). An efficient way to filter the relevant information in the multi-output neural network is to correct the shared hidden layers. We correct the last shared layer, for example, by adding the treatment probability as an additional output. Predicting the treatment probability forces the hidden layers to distill the information that is necessary to predict treatment assignment and focus less on the information that is relevant only for outcome prediction, but doesn't differ between the control and treatment group.
 
-## DragonNet
-When we can't do an experiment and treatment assignment is not random, we can correct for variables that impact the treatment assignment to make unbiased estimates (*propensity weighting*). A special way to do this in a neural network is to correct the hidden layers by joint prediction of conditional means and treatment propensity in a multi-output neural network. We rely on the hidden representation to filter the information that is necessary to predict treatment assignment. 
+*Shalit, U., Johansson, F. D., & Sontag, D. (2017). [Estimating individual treatment effect: generalization bounds and algorithms](https://arxiv.org/abs/1606.03976). Proceedings of the 34th International Conference on Machine Learning (ICML 2017).     
+Shi, C., Blei, D. M., & Veitch, V. (2019). [Adapting Neural Networks for the Estimation of Treatment Effects](http://arxiv.org/abs/1906.02120). ArXiv:1906.02120 [Cs, Stat].     
+Alaa, A. M., Weisz, M., & van der Schaar, M. (2017). [Deep Counterfactual Networks with Propensity-Dropout](http://arxiv.org/abs/1706.05966). ArXiv E-Prints, arXiv:1706.05966.*
 
-*Shi, C., Blei, D. M., & Veitch, V. (2019). Adapting Neural Networks for the Estimation of Treatment Effects. ArXiv:1906.02120 [Cs, Stat]. Retrieved from http://arxiv.org/abs/1906.02120*
+
+## Treatment residual neural network
+Particular to neural networks, we can improve model calibration in the two-model framework by 1) constructing estimates in the treatment group as an addition of the control and treatment model and 2)training the networks jointly.     
+To train a neural network that predicts the treatment effect directly, look at the observed outcomes under treatment as a sum of the outcome without treatment and the treatment effect. Then we could estimate one network that predicts the outcome without treatment for all observations and a second network that predicts the treatment effect that needs to be added for treated individuals, equivalent to the residual left by the outcome network for treated observations. Instead of two outcome models, this framework leaves us with one network that predicts the outcome and one network that predicts the treatment effect directly.
+\\[
+  Y = \mathtext{nnet}_0 + T_i * \mathtext{nnet}_1 
+\\]
+To ensure that the networks are in tune with each other, we should train them jointly. This does not require much effort: For each observation, we sum up the prediction of the outcome network and the prediction of the treatment network multiplied by the treatment indicator. We then backpropagate the error through both networks.     
+
+*Farrell, M. H., Liang, T., & Misra, S. (2018). [Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands](https://arxiv.org/abs/1809.09953). ArXiv E-Prints, arXiv:1809.09953*
 
 
 # Treatment Indicator as Variable 
@@ -99,28 +110,28 @@ Our job would be so much easier if we knew the actual treatment effect and could
 
 The proxy variable is a transformation of the observed outcome for the individual:
 \\[
-Y^{TO}_i = W_i Y_i - (1-W_i) Y_i
+Y^{TO}_i = T_i Y_i - (1-T_i) Y_i
 \\]
 
 Or including treatment propensity correction if we didn't do a 50:50 randomized experiment:
 \\[
-Y^{IPW}_i = W_i \cdot \frac{Y_i}{e(X_i)} - (1-W_i) \cdot \frac{Y_i}{1-e(X_i)}
+Y^{IPW}_i = T_i \cdot \frac{Y_i}{e(X_i)} - (1-T_i) \cdot \frac{Y_i}{1-e(X_i)}
 \\]
 
 The transformed outcome is a noisy but unbiased estimate of the treatment effect. As an unbiased estimate, it can be used as a target variable for model training. 
 The transformed outcome can also be used to calculate a feasible estimate of the MSE between model estimate and true treatment effect that is useful for model comparison. 
 
-Hitsch, G. J., & Misra, S. (2018). Heterogeneous Treatment Effects and Optimal Targeting Policy Evaluation. SSRN.
+*Hitsch, G. J., & Misra, S. (2018). [Heterogeneous Treatment Effects and Optimal Targeting Policy Evaluation](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3111957). SSRN.*
 
 ## Double robust estimation 
 The transformed outcome including treatment propensity correction and conditional mean centering is
 \\[
-Y^{DR}_i = E[Y|X_i, W=1] - E[Y|X_i, W_i=0] + \frac{W_i(Y_i-E[Y|X_i, W_i=1])}{e(X_i)} - \frac{(1-W_i)(Y_i-E[Y|X_i, W_i=0])}{1-e(X_i)}
+Y^{DR}_i = E[Y|X_i, W=1] - E[Y|X_i, T_i=0] + \frac{T_i(Y_i-E[Y|X_i, T_i=1])}{e(X_i)} - \frac{(1-T_i)(Y_i-E[Y|X_i, T_i=0])}{1-e(X_i)}
 \\]
 Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y|X_i, W=1]\\), \\(E[Y|X_i, W=0]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^{DR}_i\\) and train a model on transformed outcome variable. 
 
-*Kang, J. D. Y., & Schafer, J. L. (2007). Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data. Statistical Science, 22(4), 523–539. https://doi.org/10.1214/07-STS227    
-Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence. IZA Discussion Paper, 12039. Retrieved from https://ssrn.com/abstract=3318814*
+*Kang, J. D. Y., & Schafer, J. L. (2007). [Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data](https://doi.org/10.1214/07-STS227 ). Statistical Science, 22(4), 523–539.   
+Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). [Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence](https://ssrn.com/abstract=3318814). IZA Discussion Paper, 12039.*
 
 # Non-parametric methods
 Separate the individuals into groups based on their covariates and estimate the treatment effect within each group as the difference between treatment groups. Use a criterion that maximizes an approximation of the treatment effect difference between groups to separate the individuals into groups.
@@ -128,18 +139,18 @@ Separate the individuals into groups based on their covariates and estimate the 
 ## Pollienated transformed-outcome tree/forest
 Build a tree on the transformed outcome, but replace the leaf estimate \\( \bar{Y^{TO}} \\) with an estimate of the average treatment effect \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
 
-*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
+*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2018). [Some methods for heterogeneous treatment effect estimation in high-dimensions](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7623). Statistics in Medicine, 37(11).*
 
 ## Causal Tree
 [TODO] Explain tree building in detail
 
 The structure of the tree is build on one random half of the training data and the leaf estimates are calculated on the other half (*honest splitting*). This avoids overfitting bias that happens when we use the data to find the most different groups and base our estimates for these groups on the same data.
 
-*(Rzepakowsk, P., & Jaroszewics, S. (2010). Decision Trees for Uplift Modeling. https://doi.org/10.1109/ICDM.2010.62)    
-Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal effects. Proceedings of the National Academy of Sciences, 113(27), 7353–7360. https://doi.org/10.1073/pnas.1510489113*
+*(Rzepakowsk, P., & Jaroszewics, S. (2010). [Decision Trees for Uplift Modeling](https://doi.org/10.1109/ICDM.2010.62). 2010 IEEE International Conference on Data Mining.)    
+Athey, S., & Imbens, G. (2016). [Recursive partitioning for heterogeneous causal effects](https://doi.org/10.1073/pnas.1510489113). Proceedings of the National Academy of Sciences, 113(27), 7353–7360.*
 
 ## Boosted Causal Trees
-*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
+*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2018). [Some methods for heterogeneous treatment effect estimation in high-dimensions](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7623). Statistics in Medicine, 37(11).*
 
 ## Generalized Random Forest 
 *Athey, S., Tibshirani, J., & Wager, S. (2019). Generalized random forests. The Annals of Statistics, 47(2), 1148–1178.*
@@ -148,7 +159,7 @@ Athey, S., & Imbens, G. (2016). Recursive partitioning for heterogeneous causal 
 Multivariate Adaptive Regression Splines (MARS) are related to the trees discussed above. 
 [TODO]: I haven't seen them used in practice, but they are in The Elements of Statistical Learning and seem to do well in Powers et al.
 
-*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.*
+*Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2018). [Some methods for heterogeneous treatment effect estimation in high-dimensions](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7623). Statistics in Medicine, 37(11).*
 
 # Modified Loss Function
 ## Covariate Transformation
@@ -156,24 +167,24 @@ Multivariate Adaptive Regression Splines (MARS) are related to the trees discuss
 Optimize a model \\( \tau(X_i)\\) for a loss function based 
 
 \\[
-    \underset{\tau}{\arg\min} \frac{1}{N}\sum_i (2W_i-1) \frac{W_i - e(X_i)}{4 e(X_i)(1-e(X_i))} (2(2W_i-1) Y_i - \tau(X_i))^2
+    \underset{\tau}{\arg\min} \frac{1}{N}\sum_i (2T_i-1) \frac{T_i - e(X_i)}{4 e(X_i)(1-e(X_i))} (2(2T_i-1) Y_i - \tau(X_i))^2
 \\]
 
 
-*(Tian, L., Alizadeh, A. A., Gentles, A. J., & Tibshirani, R. (2014). A simple method for estimating interactions between a treatment and a large number of covariates. Journal of the American Statistical Association, 109(508), 1517–1532. https://doi.org/10.1080/01621459.2014.951443)    
-Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence. IZA Discussion Paper, 12039. Retrieved from https://ssrn.com/abstract=3318814*
+*(Tian, L., Alizadeh, A. A., Gentles, A. J., & Tibshirani, R. (2014). [A simple method for estimating interactions between a treatment and a large number of covariates](https://doi.org/10.1080/01621459.2014.951443). Journal of the American Statistical Association, 109(508), 1517–1532.)    
+Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). [Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence](https://ssrn.com/abstract=3318814). IZA Discussion Paper, 12039.*
 
 
 ## R-learner
 Optimize a model \\( \tau(X_i)\\) for a loss function based on a decomposition of the outcome function:
 \\[
-\underset{\tau}{\arg\min} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X_i])− (W_i − E[W=1|X_i]) \tau(X_i) \right)
+\underset{\tau}{\arg\min} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X_i])− (T_i − E[W=1|X_i]) \tau(X_i) \right)
 \\]
 The nuisance function for the conditional outcome and the proponsity score are estimated separately and an second-stage model trained on the transformation loss.
 
 The name is a hommage to Peter M. Robinson and the residualization in the decomposition. 
 
-*Nie, X., & Wager, S. (2017). Quasi-Oracle Estimation of Heterogeneous Treatment Effects. ArXiv:1712.04912. Retrieved from http://arxiv.org/abs/1712.04912*
+*Nie, X., & Wager, S. (2017). [Quasi-Oracle Estimation of Heterogeneous Treatment Effects](http://arxiv.org/abs/1712.04912). ArXiv:1712.04912.*
 
 # Treatment Effect Projection 
 Use a single model in a second stage to estimate the ITE as estimated by any method above. The second-stage model can be a linear regression for interpretability or any single model, which then replaces multiple models used in the first stage, see k-model approach. 
@@ -183,8 +194,8 @@ In settings where the treatment and control group vary in size, we may want to e
 
 Construct a treatment estimate for the treatment and control group separately using the conditional mean model from the other group: 
 \\[ 
-W_i^1 = Y_i(1) - E[Y(0)|X=x]
-W_i^0 = E[Y(1)|X=x] - Y_i(0)
+T_i^1 = Y_i(1) - E[Y(0)|X=x]
+T_i^0 = E[Y(1)|X=x] - Y_i(0)
 \\]
 
 Project the treatment estimates on variables *X* directly within each group. Combine the treatment effect estimates from both projection models using a weighted average with weights manually chosen or equal to the estimated propensity score.
@@ -196,7 +207,7 @@ The name refers to the *cross* use of the conditonal mean of one group in the co
 
 TODO: The conditonal mean correction and propensity weighting make the X-Learner look like a variation on double robust estimation with added treatment effect projection to me.
 
-*Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences, 116(10), 4156–4165.*
+*Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). [Metalearners for estimating heterogeneous treatment effects using machine learning](https://www.pnas.org/content/116/10/4156). Proceedings of the National Academy of Sciences, 116(10), 4156–4165.*
 
 
 # Benchmark studies
