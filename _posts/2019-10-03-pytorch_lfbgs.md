@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Optimizing Neural Networks with LFBGS in PyTorch"
-date:   2019-03-22
+date:   2019-10-03
 categories:
   - python
   - pytorch
@@ -15,9 +15,9 @@ categories:
 
 If you ever trained a zero hidden layer model for testing you may have seen that it typically performs worse than a linear (logistic) regression model. By wait? Aren't these the same thing? Why would the zero hidden layer network be worse? Exactly. There is, of course, a good explanation and it is model estimation. We typically train neural networks using variants of stochastic gradient descent. We typically train regression models using optimization methods than are not stochastic and make use of second derivates.
 
-If you have ever trained a one-hidden-layer network in scikit-learn, you might have seen that one option for the optimizer there is the same as for logistic regression: the [*Limited memory Broyden Fletcher Goldfarb Shanno* algorithm](https://en.wikipedia.org/wiki/Limited-memory_BFGS). Using the second order derivate to guide optimization should make convergence faster, although the time and memory requirement might make it infeasible for very deep networks. 
+If you have ever trained a one-hidden-layer network in scikit-learn, you might have seen that one option for the optimizer there is the same as for logistic regression: the [*Limited memory Broyden Fletcher Goldfarb Shanno* algorithm](https://en.wikipedia.org/wiki/Limited-memory_BFGS). Using the second order derivate to guide optimization should make convergence faster, although the time and memory requirement might make it infeasible for very deep networks and mini-batch training is not available in PyTorch out-of-the-box. 
 
-I work on tabular datasets where overfitting is a larger concern than maximum flexibility, so I'd be happy to get more stable convergence and regularize my network more to make sure I'm not optimizing on the training data too much. So let's check out how to use LFGBS in PyTorch! 
+I work on tabular datasets where good convergence is a larger concern than deep architectures, so I'd be happy to get more stable convergence and regularize my network more to make sure I'm not overfitting. So let's check out how to use LFGBS in PyTorch! 
 
 ## Alright, how?
 
