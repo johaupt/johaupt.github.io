@@ -12,7 +12,7 @@ categories:
 0. [K-Models Approach](#k-models-approach)
     0. [Bayesian additive regression trees](#bayesian-additive-regression-trees)
     0. [Treatment residual neural network](#treatment-residual-neural-network)
-    0. [DragonNet](#dragonnet)
+    0. [Multi-task network](#multi-task-network)
 0. [Treatment Indicator as Variable](#treatment-indicator-as-variable)
 0. [Outcome Transformation](#outcome-transformation)
     0. [Double robust estimation](#double-robust-estimation)
@@ -67,11 +67,11 @@ Use Bayesian Additive Regression Trees as outcome models. The difference in post
 
 *Hill, J. L. (2011). [Bayesian Nonparametric Modeling for Causal Inference](https://doi.org/10.1198/jcgs.2010.08162). Journal of Computational and Graphical Statistics, 20(1), 217–240.*
 
-## Multi-output network
+## Multi-task network
 **(DragonNet)**    
-We can of course use two neural networks as outcome models in the two-model framework. The two outcome models are likely very similar, since both approximate to a large extent the outcome process without treatment. We may be able to gain efficiency and improve calibration through parameter sharing in the lower hidden layers. The architecture is then best understood as a single multi-output network, with one loss calculated on the control group observations and one (or more) loss calculated on the treatment group observations.    
+We can of course use two neural networks as outcome models in the two-model framework. The two outcome models are likely very similar, since both approximate to a large extent the outcome process without treatment. We may be able to gain efficiency and improve calibration through parameter sharing in the lower hidden layers. The architecture is then best understood as a single multi-task network, with one loss calculated on the control group observations and one (or more) loss calculated on the treatment group observations.    
 
-The multi-outcome architecture has an additional advantage when working with observational data. When we cannot conduct an experiment and treatment assignment is not random, we can correct for variables that impact the treatment assignment to still make unbiased estimates. It is in fact sufficient to correct only for the variables that impact treatment assignment (*propensity weighting*). An efficient way to filter the relevant information in the multi-output neural network is to correct the shared hidden layers. We correct the last shared layer, for example, by adding the treatment probability as an additional output. Predicting the treatment probability forces the hidden layers to distill the information that is necessary to predict treatment assignment and focus less on the information that is relevant only for outcome prediction, but doesn't differ between the control and treatment group.
+The multi-task architecture has an additional advantage when working with observational data. When we cannot conduct an experiment and treatment assignment is not random, we can correct for variables that impact the treatment assignment to still make unbiased estimates. It is in fact sufficient to correct only for the variables that impact treatment assignment (*propensity weighting*). An efficient way to filter the relevant information in the multi-task neural network is to correct the shared hidden layers. We correct the last shared layer, for example, by adding the treatment probability as an additional output. Predicting the treatment probability forces the hidden layers to distill the information that is necessary to predict treatment assignment and focus less on the information that is relevant only for outcome prediction, but doesn't differ between the control and treatment group.
 
 *Shalit, U., Johansson, F. D., & Sontag, D. (2017). [Estimating individual treatment effect: generalization bounds and algorithms](https://arxiv.org/abs/1606.03976). Proceedings of the 34th International Conference on Machine Learning (ICML 2017).     
 Shi, C., Blei, D. M., & Veitch, V. (2019). [Adapting Neural Networks for the Estimation of Treatment Effects](http://arxiv.org/abs/1906.02120). ArXiv:1906.02120 [Cs, Stat].     
