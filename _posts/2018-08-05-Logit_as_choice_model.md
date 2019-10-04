@@ -10,7 +10,7 @@ categories:
 
 *Efficient summary how to motivate logistic regression and softmax regression as a (customer) choice model*.
 
-Assume two choice alternatives: $C_0$ and $C_1$. A person picks at a choice point $n$ one of the alternatives *i,j* with higher utility $U_{i/j}$, which we define as a function of the characteristics $x_{i/j}$, weighted by some coefficients $\beta_{i/j}$ and an error $\epsilon_{{i/j},n}$. Which choice model we derive depends on our assumption on the error term, e.g. *extreme value distribution* for the logit model or *normal distribution* for a probit model.
+Assume two choice alternatives: $C_0$ and $C_1$. A person picks at a choice point $n$ one of the alternatives *i,j* with higher utility $U_{i/j}$, which we define as a function of the characteristics $x_{i/j}$, weighted by some coefficients $\beta_{i/j}$ and an error $\epsilon_{i/j,n}$. Which choice model we derive depends on our assumption on the error term, e.g. *extreme value distribution* for the logit model or *normal distribution* for a probit model.
 
 The probability to pick choice i is
 
