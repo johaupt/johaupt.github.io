@@ -21,7 +21,7 @@ I work on tabular datasets where good convergence is a larger concern than deep 
 
 ## Alright, how?
 
-The PyTorch documentation says (https://pytorch.org/docs/stable/optim.html)
+The PyTorch [documentation](https://pytorch.org/docs/stable/optim.html) says 
 > Some optimization algorithms such as Conjugate Gradient and LBFGS need to reevaluate the function multiple times, so you have to pass in a closure that allows them to recompute your model. The closure should clear the gradients, compute the loss, and return it.
 
 It also provides an example:
@@ -271,7 +271,7 @@ net = NNet(INPUT_SIZE, HIDDEN_LAYER_SIZE, loss = nn.BCELoss(), sigmoid=True)
 net.optim = LBFGS(net.parameters(), history_size=10, max_iter=4)
 ```
 
-A batch version of LBFGS is available at https://github.com/nlesc-dirac/pytorch/blob/master/torch/optim/lbfgs.py
+A batch version of LBFGS is available at [https://github.com/nlesc-dirac/pytorch/blob/master/torch/optim/lbfgs.py](https://github.com/nlesc-dirac/pytorch/blob/master/torch/optim/lbfgs.py)
 
 
 ```python
@@ -391,9 +391,6 @@ net = NNet(INPUT_SIZE, HIDDEN_LAYER_SIZE, loss = nn.BCELoss(), sigmoid=True)
 net.optim = LBFGS(net.parameters(), history_size=10, max_iter=4)
 ```
 
-A batch version of LBFGS is available at https://github.com/nlesc-dirac/pytorch/blob/master/torch/optim/lbfgs.py
-
-
 ```python
 net.train(data_loader, EPOCHS, validation_data = {"X":torch.Tensor(X_val), "y":torch.Tensor(y_val).unsqueeze(1) })
 ```
@@ -428,4 +425,4 @@ pred_val["LBFGS_deep"] = net.predict(X_val)
 
 
 
-To be honest, the results are very close and any conclusion does not survive repeated testing. I'm afraid we'll need a real benchmark at some point to figure this out. Until then, here's a great reddit thread for you to explore this further: https://www.reddit.com/r/MachineLearning/comments/4bys6n/lbfgs_and_neural_nets/
+To be honest, the results are very close and any conclusion does not survive repeated testing. I'm afraid we'll need a real benchmark at some point to figure this out. Until then, here's a great reddit thread for you to explore this further:     [https://www.reddit.com/r/MachineLearning/comments/4bys6n/lbfgs_and_neural_nets/](https://www.reddit.com/r/MachineLearning/comments/4bys6n/lbfgs_and_neural_nets/)
