@@ -10,7 +10,7 @@ categories:
 
 *Efficient summary how to motivate logistic regression and softmax regression as a (customer) choice model*.
 
-Assume two choice alternatives: $$C_0$$ and $$C_1$$. A person picks at a choice point $n$ one of the alternatives *i,j* with higher utility $$U_{i/j}$$, which we define as a function of the characteristics $$x_{i/j}$$, weighted by some coefficients $$\beta_{i/j}$$ and an error $$\epsilon_{i/j,n}$$. Which choice model we derive depends on our assumption on the error term, e.g. *extreme value distribution* for the logit model or *normal distribution* for a probit model.
+Assume two choice alternatives: $$C_0$$ and $$C_1$$. A person picks at a choice point $$n$$ one of the alternatives *i,j* with higher utility $$U_{i/j}$$, which we define as a function of the characteristics $$x_{i/j}$$, weighted by some coefficients $$\beta_{i/j}$$ and an error $$\epsilon_{i/j,n}$$. Which choice model we derive depends on our assumption on the error term, e.g. *extreme value distribution* for the logit model or *normal distribution* for a probit model.
 
 The probability to pick choice i is
 
@@ -32,7 +32,7 @@ The cumulative distribution function of the Logistic function is
 P(\epsilon \leq v) = \frac{1}{1+e^{-\frac{v - \mu}{s}}} \text{,}
 \end{align}
 
-where $\mu$ and $s$ are parameters of the error, which we assume to be 0 and 1, respectively. This choice seems to be justified since the scaling of utility functions is arbitrary and immune to linear scaling.
+where $$\mu$$ and $$s$$ are parameters of the error, which we assume to be 0 and 1, respectively. This choice seems to be justified since the scaling of utility functions is arbitrary and immune to linear scaling.
 
 We can see that this is the equation from above with $$v = V_{in} - V_{jn}$$. We can expand the difference to put this in the form of 
 \begin{align}
