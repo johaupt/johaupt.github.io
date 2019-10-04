@@ -14,12 +14,14 @@ Assume two choice alternatives: $C_0$ and $C_1$. A person picks at a choice poin
 
 The probability to pick choice i is
 
-$
-P_n(i|{i,j}) = P(U_{in} \geq U_{jn}) = P(V_{in} + \epsilon_{in} \geq V_{jn}+ \epsilon_{jn})$,
+\begin{align}
+P_n(i|{i,j}) = P(U_{in} \geq U_{jn}) = P(V_{in} + \epsilon_{in} \geq V_{jn}+ \epsilon_{jn}) \text{,}
+\end{align}
 
 which is equivalent to 
-
-$P_n(i|{i,j}) = P(\epsilon_{jn} - \epsilon_{jn} \leq V_{in} - V_{jn})$.
+\begin{align}
+P_n(i|{i,j}) = P(\epsilon_{in} - \epsilon_{jn} \leq V_{in} - V_{jn}) \text{.}
+\end{align}
 
 So the the choice for an alternative happens when the unobserved influences do not outweight the deterministic advantage of the choice.
 
