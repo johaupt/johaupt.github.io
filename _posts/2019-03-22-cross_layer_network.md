@@ -17,13 +17,13 @@ Pytorch implementation of the Cross Layer described in "Deep & Cross Network for
 
 A typical extension to (generalized) linear regression models is to include variable interactions when we expect non-linear effects. For example,
 $$y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x^2_{1i} + \beta_3 x_{2i} + \beta_4 x_{2i} x_{1i}$$
-models an outcome variable that is non-linear in $x_1$ and where the effect of $x_2$ could have a moderating effect on the effect of $x_1$ and vice versa. But note how the interactions increase the dimensionality/complexity.
+models an outcome variable that is non-linear in $$x_1$$ and where the effect of $$x_2$$ could have a moderating effect on the effect of $$x_1$$ and vice versa. But note how the interactions increase the dimensionality/complexity.
 
 The idea behind cross layers is similar. In principle, a deep network should be able to learn variable interactions as needed. But the guideline is always if we can make the model more expressive by encoding more information, the network will have an easier time learning. 
 
 In their paper, Ruoxi, Bin, Gang und Mingliang propose a module that calculates variable interactions efficiently. The efficiency comes from reducing the matrix of interactions through a weighted sum with trained weights, to which they also add a bias term.  
 
-In particular, we calculate the interactions between the input $x_0$ and current hidden layer of the cross module $x_l$. We reduce this interaction, which has one additional dimension due to the outer product, back to the orginal dimensionality by the weighted sum $w_l$. We then add the original current hidden layer back to its interaction with the input $x_0$. 
+In particular, we calculate the interactions between the input $$x_0$$ and current hidden layer of the cross module $x_l$. We reduce this interaction, which has one additional dimension due to the outer product, back to the orginal dimensionality by the weighted sum $$w_l$$. We then add the original current hidden layer back to its interaction with the input $$x_0$$. 
 
 $$x_{l+1} = x_0x_l^{\top} w_l + b_l + x_l = f(x_l, w_l, b_l) + x_l$$
 
@@ -125,7 +125,7 @@ torch.mm(a.unsqueeze(-1), a.unsqueeze(-2))
 
 Now the same concept, but for matrices. Add an additional dimension, then do multiplication. In this case, not matrix multiplication but batch matrix multiplication, since we have more than one matrix.
 
-See how each matrix is the interaction output for one observation. $x_i^2$ on the diagonal and $x_i \cdot x_j \; \forall i,j$ in the upper and lower triangle.
+See how each matrix is the interaction output for one observation. $$x_i^2$$ on the diagonal and $$x_i \cdot x_j \; \forall i,j$$ in the upper and lower triangle.
 
 
 ```python
@@ -177,7 +177,7 @@ torch.tensordot(x0xl, weights, dims=[[-1],[0]]) + bias
 
 
 
-Add a shortcut connection from the original input $x_0$ to each layer as in the residual network by adding the input to the output at each layer.
+Add a shortcut connection from the original input $$x_0$$ to each layer as in the residual network by adding the input to the output at each layer.
 
 
 ```python
