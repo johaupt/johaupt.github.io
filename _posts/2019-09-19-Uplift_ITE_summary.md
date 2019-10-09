@@ -29,6 +29,8 @@ categories:
     0. [X-learner](#x-learner)
 0. [Benchmark Studies](#benchmark-studies)
 
+# Motivation
+
 Assume that we want to change the world. A little less grandiose, assume we want to take an action that will impact an outcome to be more like we prefer. A little more applied, fields like medicine and marketing make a decision to take action that increases life expectation by five years or makes grandma spend another dollar in the supermarket. To make that decision, we want to know in advance what effect the conceivable treatment will have on each individual/grandma. Remember treatment as a general term that can mean anything from a mail catalog to earlier starting time for a class to medication.     
 Example questions and treatments are:
 
@@ -47,7 +49,7 @@ Unfortunately, research in different fields is fractured, with different termini
 My notation is roughly in line with the econometric literature:
 
 Covariates for individual *i* (*What we know about the person*   ): \\( X_i \\)  
-(Estimated) Propensity score (*Their chance to get the coupon from us* ): \\( P(W=w|X), e(X)=P(T=1|X) when T \in {0;1} \\)    
+(Estimated) Propensity score (*Their chance to get the coupon from us* ): \\( P(W=w|X), e(X)=P(T=1|X) \text{when} T \in {0;1} \\)    
 Treatment Group Indicator (*If the person got a coupon or not*  ): \\(T\\)    
 (Potential) Outcome *Y* for individual *i* under group assignment *T* (*If/How much they bought*): \\( Y_i(T)\\)     
 (Estimated) Conditional outcome under group assignment *T* (*If/How much we think they should have bought*): \\( \mu(X_i, T_i) \\)     
@@ -68,7 +70,7 @@ Use Bayesian Additive Regression Trees as outcome models. The difference in post
 *Hill, J. L. (2011). [Bayesian Nonparametric Modeling for Causal Inference](https://doi.org/10.1198/jcgs.2010.08162). Journal of Computational and Graphical Statistics, 20(1), 217–240.*
 
 ## Multi-task network
-**(DragonNet)**    
+**(aka DragonNet)**    
 We can of course use two neural networks as outcome models in the two-model framework. The two outcome models are likely very similar, since both approximate to a large extent the outcome process without treatment. We may be able to gain efficiency and improve calibration through parameter sharing in the lower hidden layers. The architecture is then best understood as a single multi-task network, with one loss calculated on the control group observations and one (or more) loss calculated on the treatment group observations.    
 
 The multi-task architecture has an additional advantage when working with observational data. When we cannot conduct an experiment and treatment assignment is not random, we can correct for variables that impact the treatment assignment to still make unbiased estimates. It is in fact sufficient to correct only for the variables that impact treatment assignment (*propensity weighting*). An efficient way to filter the relevant information in the multi-task neural network is to correct the shared hidden layers. We correct the last shared layer, for example, by adding the treatment probability as an additional output. Predicting the treatment probability forces the hidden layers to distill the information that is necessary to predict treatment assignment and focus less on the information that is relevant only for outcome prediction, but doesn't differ between the control and treatment group.
