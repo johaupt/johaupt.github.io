@@ -9,7 +9,7 @@ categories:
   - optimization
 ---
 
-# Using LFGBS instead of SGD with PyTorch
+# Using LBFGS instead of SGD with PyTorch
 
 ## Why?
 
@@ -17,7 +17,7 @@ If you ever trained a zero hidden layer model for testing you may have seen that
 
 If you have ever trained a one-hidden-layer network in scikit-learn, you might have seen that one option for the optimizer there is the same as for logistic regression: the [*Limited memory Broyden Fletcher Goldfarb Shanno* algorithm](https://en.wikipedia.org/wiki/Limited-memory_BFGS). Using the second order derivate to guide optimization should make convergence faster, although the time and memory requirement might make it infeasible for very deep networks and mini-batch training is not available in PyTorch out-of-the-box. 
 
-I work on tabular datasets where good convergence is a larger concern than deep architectures, so I'd be happy to get more stable convergence and regularize my network more to make sure I'm not overfitting. So let's check out how to use LFGBS in PyTorch! 
+I work on tabular datasets where good convergence is a larger concern than deep architectures, so I'd be happy to get more stable convergence and regularize my network more to make sure I'm not overfitting. So let's check out how to use LBFGS in PyTorch! 
 
 ## Alright, how?
 
@@ -37,7 +37,7 @@ for input, target in dataset:
     optimizer.step(closure)
     ```
 
-Note how the function `closure()` contains the same steps we typically use before taking a step with SGD or Adam. In other words, if the optimizer needs the gradient once, like SGD or Adam, it's simple to calculate the gradient with `.backward()` and pass it to the optimizer. If the optimizer needs to calculate the gradient itself, like LFGBS, then we pass instead a function that wraps the steps we typically do once for others optimizers. 
+Note how the function `closure()` contains the same steps we typically use before taking a step with SGD or Adam. In other words, if the optimizer needs the gradient once, like SGD or Adam, it's simple to calculate the gradient with `.backward()` and pass it to the optimizer. If the optimizer needs to calculate the gradient itself, like LBFGS, then we pass instead a function that wraps the steps we typically do once for others optimizers. 
 
 Let's see how that looks in a simple feed forward network:
 
