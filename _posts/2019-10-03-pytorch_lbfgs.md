@@ -9,7 +9,7 @@ categories:
   - optimization
 ---
 
-# Using LBFGS instead of SGD with PyTorch
+*How to use LBFGS instead of stochastic gradient descent for neural network training instead in PyTorch*
 
 ## Why?
 
