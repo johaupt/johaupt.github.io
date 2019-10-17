@@ -139,7 +139,9 @@ Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). [Machine Learning Estimati
 Separate the individuals into groups based on their covariates and estimate the treatment effect within each group as the difference between treatment groups. Use a criterion that maximizes an approximation of the treatment effect difference between groups to separate the individuals into groups.
 
 ## Pollienated transformed-outcome tree/forest
-Build a tree on the transformed outcome, but replace the leaf estimate \\( \bar{Y^{TO}} \\) with an estimate of the average treatment effect \\(\bar{Y}(1) - \bar{Y}(0)\\). The approach is theoretically very close to causal trees, but causal trees maximize the variance between leaves for efficiency in practice. 
+Building a tree on the transformed outcome variable with the common CART algorithm does not return unbiased treatment estimates. Because the ratio of treatment to control group observations varies for each leaf, the average of the leaf used for prediction in CART is not a correct estimate of the treatment effect.
+
+A better approach is to build a tree on the transformed outcome, but replace the average of the transformed outcome in each leaf \\( \bar{Y^{TO}} \\) with an estimate of the average treatment effect using the difference in the averages between treatment and control group \\(\bar{Y}(1) - \bar{Y}(0)\\). 
 
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2018). [Some methods for heterogeneous treatment effect estimation in high-dimensions](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7623). Statistics in Medicine, 37(11).*
 
