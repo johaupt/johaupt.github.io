@@ -10,10 +10,10 @@ categories:
 
 # Table of Contents
 0. [K-Models Approach](#k-models-approach)
-    0. [Bayesian additive regression trees](#bayesian-additive-regression-trees)
     0. [Treatment residual neural network](#treatment-residual-neural-network)
     0. [Multi-task network](#multi-task-network)
 0. [Treatment Indicator as Variable](#treatment-indicator-as-variable)
+    0. [Bayesian additive regression trees](#bayesian-additive-regression-trees)
 0. [Outcome Transformation](#outcome-transformation)
     0. [Double robust estimation](#double-robust-estimation)
 0. [Non-parametric Methods](#non-parametric-methods)
@@ -56,18 +56,13 @@ Treatment Group Indicator (*If the person got a coupon or not*  ): \\(T\\)
 (Estimated) Treatment Effect (*How much impact the coupon had*): \\( \tau_i \\) 
 
 # K-Model approach
-**(aka T-Learner, Conditional Mean Regressions, Difference in Conditional Means)**    
+**(aka Two-Model Approach, T-Learner, Conditional Mean Regressions, Difference in Conditional Means)**    
 The following approaches build a model to predict the outcome with and without treatment. By looking at the difference between the predicted outcomes, we can find out how much impact we can expect from the treatment.
 
 When using the k-model approached, named after the number of models we need to train, we estimate an outcome model for each treatment group separately and calculate the treatment effect as the difference between the estimated outcomes.     
 If there is one treatment, we will have two groups: treatment and control (where people might get nothing or Placebo). The impact of treatment vs. doing nothing is then the difference between the prediction of the model build on the treated and prediction of the model build on the control group.
 
 The outcome models (*base learners*) can take any form, so we could use neural networks or boosted trees to do the heavy lifting. The downside of the k-model approach is that the outcome process may be difficult to estimate and that the errors of the two models in the difference may add up.
-
-## Bayesian Additive Regression Trees
-Use Bayesian Additive Regression Trees as outcome models. The difference in posterior distributions provides an uncertainty estimate of the treatment effect that may be useful for the decision or to do uncertainty based data collection. 
-
-*Hill, J. L. (2011). [Bayesian Nonparametric Modeling for Causal Inference](https://doi.org/10.1198/jcgs.2010.08162). Journal of Computational and Graphical Statistics, 20(1), 217–240.*
 
 ## Multi-task network
 **(aka DragonNet)**    
@@ -94,8 +89,6 @@ To ensure that the networks are in tune with each other, we should train them jo
 # Treatment Indicator as Variable 
 **(aka S-Learner)**    
 
-The outcome process (read: who completes their purchase in our online shop) is often more complicated than the process behind the treatment effect (read: who is impacted most by a coupon). The following approaches therefore aim to estimate the treatment effect directly without the need to build a good outcome model first.
-
 We can include the treatment indicator as a covariate into the model, optionally with interaction to other covariates. Predict the ITE via the difference of predicting an observation with treatment set to 0 and set to 1. Training a single model for the outcome is simple and often interpretable. 
 
 A regression model with a linear additive treatment effect and interaction effects would look like this:
@@ -103,11 +96,19 @@ A regression model with a linear additive treatment effect and interaction effec
  Y = \beta_0 + \tau_0 D_i+ \tau D_i X_i + \beta X_i + \epsilon_i
 \\]
 
-Under linear regression, the interaction effects between all variables and the treatment indicator blow up the dimensionality quickly. Instead, we could use any machine learning model and include the treatment indicator as a variable. However, if the treatment effect is small relative to other effects on the outcome, then regularized machine learning methods may ignore the treatment variable. 
+Under linear regression, the interaction effects between all variables and the treatment indicator blow up the dimensionality quickly. Instead, we could use any machine learning model and include the treatment indicator as a variable. However, if the treatment effect is small relative to other effects on the outcome, then regularized machine learning methods may ignore the treatment variable completely.
 
+The advantage of response model that include the treatment variable directly is that they are flexible when modeling multiple treatments or continuous treatments. We always train a single model. To predict the ITE, we feed in $X$ multiple times, each time with the treatment variable set to the value of interest. In the binary case, we would set the treatment variable once to 1 and once to 0 for the same $X$. The difference in predictions is the treatment effect estimate.
+
+## Bayesian Additive Regression Trees
+Use Bayesian Additive Regression Trees as the response model. The difference in posterior distributions gives a good estimate of the ITE in practice and gives an uncertainty estimate of the treatment effect that may be useful for risk-conscious decision-making or to do uncertainty based data collection. 
+
+*Hill, J. L. (2011). [Bayesian Nonparametric Modeling for Causal Inference](https://doi.org/10.1198/jcgs.2010.08162). Journal of Computational and Graphical Statistics, 20(1), 217–240.*
 
 # Outcome Transformation 
-**(aka Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**    
+**(aka Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**
+The outcome process (read: who completes their purchase in our online shop) is often more complicated than the process behind the treatment effect (read: who is impacted most by a coupon). The following approaches therefore aim to estimate the treatment effect directly without the need to build a good outcome model first.
+
 Our job would be so much easier if we knew the actual treatment effect and could just train a regression model to predict it, but we can never know the actual treatment effect for an individual. However, we can find an artificial variable that is equal to the treatment effect in expectation.
 
 The proxy variable is a transformation of the observed outcome for the individual:
