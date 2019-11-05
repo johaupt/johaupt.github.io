@@ -9,8 +9,8 @@ categories:
 *A comprehensive collection of state-of-the-art methods from causal machine learning or uplift modeling to estimate individualized treatment effects.*
 
 # Table of Contents
-0. [K-Models Approach](#k-models-approach)
-    0. [Treatment residual neural network](#treatment-residual-neural-network)
+0. [K-Model Approach](#k-model-approach)
+    0. [Treatment residual specification](#treatment-residual-specification)
     0. [Multi-task network](#multi-task-network)
 0. [Treatment Indicator as Variable](#treatment-indicator-as-variable)
     0. [Bayesian additive regression trees](#bayesian-additive-regression-trees)
@@ -75,19 +75,20 @@ Shi, C., Blei, D. M., & Veitch, V. (2019). [Adapting Neural Networks for the Est
 Alaa, A. M., Weisz, M., & van der Schaar, M. (2017). [Deep Counterfactual Networks with Propensity-Dropout](http://arxiv.org/abs/1706.05966). ArXiv E-Prints, arXiv:1706.05966.*
 
 
-## Treatment residual neural network
-Particular to neural networks, we can improve model calibration in the two-model framework by 1) constructing estimates in the treatment group as an addition of the control and treatment model and 2)training the networks jointly.     
+## Treatment residual specification
+We can improve model calibration in the two-model framework by 1) constructing estimates in the treatment group as an addition of the control and treatment model and 2) joint model training.     
 To train a neural network that predicts the treatment effect directly, look at the observed outcomes under treatment as a sum of the outcome without treatment and the treatment effect. Then we could estimate one network that predicts the outcome without treatment for all observations and a second network that predicts the treatment effect that needs to be added for treated individuals, equivalent to the residual left by the outcome network for treated observations. Instead of two outcome models, this framework leaves us with one network that predicts the outcome and one network that predicts the treatment effect directly.
 \\[
   Y = \text{nnet}_0 + T_i * \text{nnet}_1 
 \\]
 To ensure that the networks are in tune with each other, we should train them jointly. This does not require much effort: For each observation, we sum up the prediction of the outcome network and the prediction of the treatment network multiplied by the treatment indicator. We then backpropagate the error through both networks.     
 
-*Farrell, M. H., Liang, T., & Misra, S. (2018). [Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands](https://arxiv.org/abs/1809.09953). ArXiv E-Prints, arXiv:1809.09953*
+*Hahn, P. R., Murray, J. S., & Carvalho, C. M. (2017). [Bayesian Regression Tree Models for Causal Inference: Regularization, Confounding, and Heterogeneous Effects](https://doi.org/10.2139/ssrn.3048177). SSRN Electronic Journal.     
+Farrell, M. H., Liang, T., & Misra, S. (2018). [Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands](https://arxiv.org/abs/1809.09953). ArXiv E-Prints, arXiv:1809.09953*
 
 
 # Treatment Indicator as Variable 
-**(aka S-Learner)**    
+**(aka Single-Model-Approach, S-Learner)**    
 
 We can include the treatment indicator as a covariate into the model, optionally with interaction to other covariates. Predict the ITE via the difference of predicting an observation with treatment set to 0 and set to 1. Training a single model for the outcome is simple and often interpretable. 
 
@@ -106,7 +107,7 @@ Use Bayesian Additive Regression Trees as the response model. The difference in 
 *Hill, J. L. (2011). [Bayesian Nonparametric Modeling for Causal Inference](https://doi.org/10.1198/jcgs.2010.08162). Journal of Computational and Graphical Statistics, 20(1), 217–240.*
 
 # Outcome Transformation 
-**(aka Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**
+**(aka Modified Outcome Method, Class Variable Transformation, Generalized Weighted Uplift Method)**     
 The outcome process (read: who completes their purchase in our online shop) is often more complicated than the process behind the treatment effect (read: who is impacted most by a coupon). The following approaches therefore aim to estimate the treatment effect directly without the need to build a good outcome model first.
 
 Our job would be so much easier if we knew the actual treatment effect and could just train a regression model to predict it, but we can never know the actual treatment effect for an individual. However, we can find an artificial variable that is equal to the treatment effect in expectation.
