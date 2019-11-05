@@ -11,7 +11,7 @@ categories:
 # Table of Contents
 0. [K-Model Approach](#k-model-approach)
     0. [Treatment residual specification](#treatment-residual-specification)
-    0. [Multi-task network](#multi-task-network)
+    0. [Selection bias correcting networks](#selection-bias-correcting-networks)
 0. [Treatment Indicator as Variable](#treatment-indicator-as-variable)
     0. [Bayesian additive regression trees](#bayesian-additive-regression-trees)
 0. [Outcome Transformation](#outcome-transformation)
@@ -46,7 +46,7 @@ Research into estimating treatment effects from experiments and observational st
 Unfortunately, research in different fields is fractured, with different termini and notation. The following list is meant as an incomplete, but comprehensive summary of state-of-the-art methods from bioinformatics, computer science, econometrics and business studies to estimate individualized treatment effects. I will assume that we know how randomized experiments work and that we have data on some individuals who have gotten treatment and some who haven't. 
 
 # Notation
-My notation is roughly in line with the econometric literature:
+My notation roughly follows the econometric literature:
 
 Covariates for individual *i* (*What we know about the person*   ): \\( X_i \\)  
 (Estimated) Propensity score (*Their chance to get the coupon from us* ): \\( P(W=w|X), e(X)=P(T=1|X) \text{when} T \in {0;1} \\)    
@@ -64,7 +64,7 @@ If there is one treatment, we will have two groups: treatment and control (where
 
 The outcome models (*base learners*) can take any form, so we could use neural networks or boosted trees to do the heavy lifting. The downside of the k-model approach is that the outcome process may be difficult to estimate and that the errors of the two models in the difference may add up.
 
-## Multi-task network
+## Selection bias correcting networks
 **(aka DragonNet)**    
 We can of course use two neural networks as outcome models in the two-model framework. The two outcome models are likely very similar, since both approximate to a large extent the outcome process without treatment. We may be able to gain efficiency and improve calibration through parameter sharing in the lower hidden layers. The architecture is then best understood as a single multi-task network, with one loss calculated on the control group observations and one (or more) loss calculated on the treatment group observations.    
 
@@ -76,14 +76,16 @@ Alaa, A. M., Weisz, M., & van der Schaar, M. (2017). [Deep Counterfactual Networ
 
 
 ## Treatment residual specification
-We can improve model calibration in the two-model framework by 1) constructing estimates in the treatment group as an addition of the control and treatment model and 2) joint model training.     
-To train a neural network that predicts the treatment effect directly, look at the observed outcomes under treatment as a sum of the outcome without treatment and the treatment effect. Then we could estimate one network that predicts the outcome without treatment for all observations and a second network that predicts the treatment effect that needs to be added for treated individuals, equivalent to the residual left by the outcome network for treated observations. Instead of two outcome models, this framework leaves us with one network that predicts the outcome and one network that predicts the treatment effect directly.
+We can improve model calibration in the two-model framework by 1) constructing estimates in the treatment group as an addition of the control and treatment model and 2) joint model training.
+
+*Hahn, P. R., Murray, J. S., & Carvalho, C. M. (2017). [Bayesian Regression Tree Models for Causal Inference: Regularization, Confounding, and Heterogeneous Effects](https://doi.org/10.2139/ssrn.3048177). SSRN Electronic Journal.      
+
+Neural network can be combined so that one network predicts the treatment effect directly. Look at the observed outcomes under treatment as a sum of the outcome without treatment and the treatment effect. Then we could estimate one network that predicts the outcome without treatment for all observations and a second network that predicts the treatment effect that needs to be added for treated individuals, equivalent to the residual left by the outcome network for treated observations. Instead of two outcome models, this framework leaves us with one network that predicts the outcome and one network that predicts the treatment effect.
 \\[
   Y = \text{nnet}_0 + T_i * \text{nnet}_1 
 \\]
 To ensure that the networks are in tune with each other, we should train them jointly. This does not require much effort: For each observation, we sum up the prediction of the outcome network and the prediction of the treatment network multiplied by the treatment indicator. We then backpropagate the error through both networks.     
 
-*Hahn, P. R., Murray, J. S., & Carvalho, C. M. (2017). [Bayesian Regression Tree Models for Causal Inference: Regularization, Confounding, and Heterogeneous Effects](https://doi.org/10.2139/ssrn.3048177). SSRN Electronic Journal.     
 Farrell, M. H., Liang, T., & Misra, S. (2018). [Deep Neural Networks for Estimation and Inference: Application to Causal Effects and Other Semiparametric Estimands](https://arxiv.org/abs/1809.09953). ArXiv E-Prints, arXiv:1809.09953*
 
 
@@ -211,7 +213,7 @@ Project the treatment estimates on variables *X* directly within each group. Com
 
 The name refers to the *cross* use of the conditonal mean of one group in the construction of the treatment estimate for the other group.
 
-TODO: The conditonal mean correction and propensity weighting make the X-Learner look like a variation on double robust estimation with added treatment effect projection to me.
+[TODO] The conditonal mean correction and propensity weighting make the X-Learner look like a variation on double robust estimation with added treatment effect projection to me.
 
 *Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). [Metalearners for estimating heterogeneous treatment effects using machine learning](https://www.pnas.org/content/116/10/4156). Proceedings of the National Academy of Sciences, 116(10), 4156–4165.*
 
