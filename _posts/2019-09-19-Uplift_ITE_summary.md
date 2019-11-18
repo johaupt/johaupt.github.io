@@ -180,7 +180,7 @@ The transformed outcome can also be used to calculate a feasible estimate of the
 ### Double Robust Estimation 
 The transformed outcome including treatment propensity correction and conditional mean centering is
 \\[
-Y^{DR}_i = E[Y|X_i, W=1] - E[Y|X_i, T_i=0] + \frac{T_i(Y_i-E[Y|X_i, T_i=1])}{e(X_i)} - \frac{(1-T_i)(Y_i-E[Y|X_i, T_i=0])}{1-e(X_i)}
+Y^{\text{DR}}_i = E[Y|X_i, W=1] - E[Y|X_i, T_i=0] + \frac{T_i(Y_i-E[Y|X_i, T_i=1])}{e(X_i)} - \frac{(1-T_i)(Y_i-E[Y|X_i, T_i=0])}{1-e(X_i)}
 \\]
 Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y|X_i, W=1]\\), \\(E[Y|X_i, W=0]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^{DR}_i\\) and train a model on transformed outcome variable.
 
