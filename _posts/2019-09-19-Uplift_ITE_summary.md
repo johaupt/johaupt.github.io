@@ -188,13 +188,14 @@ Double robust esimation has two steps. In the first, we use effective models of 
 Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). [Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence](https://ssrn.com/abstract=3318814). IZA Discussion Paper, 12039.*
 
 ## Causal Trees
-**(a.k.a. Pollienated Outcome Tree)**
+**(a.k.a. Pollienated Outcome Tree)**  
 Transformed-outcome trees are tree build on the transformed outcome variable with the common CART algorithm. However, they do not return unbiased treatment estimates, because the ratio of treatment to control group observations varies for each leaf.
 
-A better approach is to build a tree on the transformed outcome, but replace the average of the transformed outcome in each leaf \\( \bar{Y^{TO}} \\) with a better estimate of the treatment effect in that leaf. Given the group of observations in the leaf, we can estimate the average treatment effect in the leaf by the difference in the averages between treatment and control group, corrected for the probability of the observations to fall in their group \\( e_i \\) for cases other than 50:50 randomized experiments:
+A better approach is to build a tree on the transformed outcome, but replace the average of the transformed outcome in each leaf \\( \bar{Y}^{TO} \\) with a better estimate of the treatment effect in that leaf. Given the group of observations in the leaf, we can estimate the average treatment effect in the leaf by the difference in the averages between treatment and control group, corrected for the probability of the observations to fall in their group \\( e_i \\) for cases other than 50:50 randomized experiments:
 \\[
-\tau^{\text{ATE}_{\text{leaf}} =  \frac{\sum_{i \in \text{leaf}} Y_i \cdot W_i / e_i}{\sum_{i=1} W_i / e_i} -
-\frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i)}{\sum_{i=1} (1-W_i) / (1-e_i)}
+\hat{\tau}^{\text{ATE}}_{\text{leaf}} =  
+\frac{\sum_{i \in \text{leaf}} Y_i \cdot W_i / e_i}        {\sum_{i \in \text{leaf}} W_i / e_i} -
+\frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i)}{\sum_{i \in \text{leaf}} (1-W_i) / (1-e_i)}
 \\].
 
 The ATE estimate will be biased, because we use the same data twice. Once to build the tree structure to maximize variance between the leaves, and once to estimate the ATE in the leaves. Causal trees avoid bias by building the structure of the tree on one random half of the training data and calculating the leaf estimates on the other half (*honest splitting*).
