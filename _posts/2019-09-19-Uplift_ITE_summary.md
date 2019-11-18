@@ -180,7 +180,7 @@ The transformed outcome can also be used to calculate a feasible estimate of the
 ### Double Robust Estimation 
 The transformed outcome including treatment propensity correction and conditional mean centering is
 \\[
-Y^{\text{DR}}_i = E[Y|X_i, W=1] - E[Y|X_i, T_i=0] + \frac{T_i(Y_i-E[Y|X_i, T_i=1])}{e(X_i)} - \frac{(1-T_i)(Y_i-E[Y|X_i, T_i=0])}{1-e(X_i)}
+Y^{DR}_i = E[Y|X_i, W=1] - E[Y|X_i, T_i=0] + \frac{T_i(Y_i-E[Y|X_i, T_i=1])}{e(X_i)} - \frac{(1-T_i)(Y_i-E[Y|X_i, T_i=0])}{1-e(X_i)}
 \\]
 Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y|X_i, W=1]\\), \\(E[Y|X_i, W=0]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^{DR}_i\\) and train a model on transformed outcome variable.
 
@@ -193,8 +193,9 @@ Transformed-outcome trees are tree build on the transformed outcome variable wit
 
 A better approach is to build a tree on the transformed outcome, but replace the average of the transformed outcome in each leaf \\( \bar{Y}^{TO} \\) with a better estimate of the treatment effect in that leaf. Given the group of observations in the leaf, we can estimate the average treatment effect in the leaf by the difference in the averages between treatment and control group, corrected for the probability of the observations to fall in their group \\( e_i \\) for cases other than 50:50 randomized experiments,
 \\[
-\hat{\tau}^{\text{ATE}}_{\text{leaf}} =  \frac{\sum_{i \in \text{leaf}} Y_i \cdot W_i / e_i}        {\sum_{i \in \text{leaf}} W_i / e_i} - \frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i)}{\sum_{i \in \text{leaf}} (1-W_i) / (1-e_i)}
+\hat{\tau}^{\text{ATE}}_{\text{leaf}} = \frac{\sum_{i \in \text{leaf}} Y_i \cdot W_i / e_i}{\sum_{i \in \text{leaf}} W_i / e_i} - \frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i)}{\sum_{i \in \text{leaf}} (1-W_i) / (1-e_i)}
 \\]
+
 The ATE estimate will be biased, because we use the same data twice. Once to build the tree structure to maximize variance between the leaves, and once to estimate the ATE in the leaves. Causal trees avoid bias by building the structure of the tree on one random half of the training data and calculating the leaf estimates on the other half (*honest splitting*).
 
 If ITE estimates are unbiased, it turns out that we do not need to use the transformed outcome as splitting criterion. Only if the ITE estimates are unbiased, it is sufficient to optimize the decision tree splits by maximizing the variance between treatment effects in the leaves. The splitting criterion for causal trees then simplifies to the MSE/variance splitting criterion used in CART regression trees:
