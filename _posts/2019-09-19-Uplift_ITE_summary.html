@@ -182,16 +182,27 @@ Knaus, M. C., Lechner, M., &amp; Strittmatter, A. (2019). <a href="https://ssrn.
 <h2 id="causal-trees">Causal Trees</h2>
 <p><strong>(a.k.a. Pollienated Outcome Tree)</strong><br>
 Transformed-outcome trees are tree build on the transformed outcome variable with the common CART algorithm. However, they do not return unbiased treatment estimates, because the ratio of treatment to control group observations varies for each leaf.</p>
-<p>A better approach is to build a tree on the transformed outcome, but replace the average of the transformed outcome in each leaf \( \bar{Y}^{TO} \) with a better estimate of the treatment effect in that leaf. Given the group of observations in the leaf, we can estimate the average treatment effect in the leaf by the difference in the averages between treatment and control group, corrected for the probability of the observations to fall in their group \( e_i \) for cases other than 50:50 randomized experiments:</p>
-<p>\[
-\hat{\tau}^{\text{ATE}}<em>{\text{leaf}} =<br>
-\frac{\sum</em>{i \in \text{leaf}} Y_i \cdot W_i / e_i}        {\sum_{i \in \text{leaf}} W_i / e_i} -
-\frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i)}{\sum_{i \in \text{leaf}} (1-W_i) / (1-e_i)}
+<p>A better approach is to build a tree on the transformed outcome, but replace the average of the transformed outcome in each leaf \( \bar{Y}^{TO} \) with a better estimate of the treatment effect in that leaf. Given the group of observations in the leaf, we can estimate the average treatment effect in the leaf by the difference in the averages between treatment and control group, corrected for the probability of the observations to fall in their group \( e_i \) for cases other than 50:50 randomized experiments,
+\[
+\hat{\tau}^{\text{ATE}}_{\text{leaf}}
 \]</p>
+<p>\[
+= \frac{\sum_{i \in \text{leaf}} Y_i \cdot W_i / e_i}{\sum_{i \in \text{leaf}} W_i / e_i}
+\]</p>
+<p>\[</p>
+<ul>
+<li>\frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i)}{\sum_{i \in \text{leaf}} (1-W_i) / (1-e_i)}
+\]</li>
+</ul>
+<p>\[</p>
+<p>\]</p>
 <p>The ATE estimate will be biased, because we use the same data twice. Once to build the tree structure to maximize variance between the leaves, and once to estimate the ATE in the leaves. Causal trees avoid bias by building the structure of the tree on one random half of the training data and calculating the leaf estimates on the other half (<em>honest splitting</em>).</p>
 <p>If ITE estimates are unbiased, it turns out that we do not need to use the transformed outcome as splitting criterion. Only if the ITE estimates are unbiased, it is sufficient to optimize the decision tree splits by maximizing the variance between treatment effects in the leaves. The splitting criterion for causal trees then simplifies to the MSE/variance splitting criterion used in CART regression trees:
 \[
-S = n_{\text{leaf} \hat{\tau_{\leaf}}^2
+S = n_{leaf} \hat{leaf}^2
+\]</p>
+<p>\[
+S = n_{\text{leaf}} \hat{\tau_{leaf}}^2
 \]</p>
 <p><em>Athey, S., &amp; Imbens, G. W. (2015). Machine Learning Methods for Estimating Heterogeneous Causal Eﬀects.<br>
 (Rzepakowsk, P., &amp; Jaroszewics, S. (2010). <a href="https://doi.org/10.1109/ICDM.2010.62">Decision Trees for Uplift Modeling</a>. 2010 IEEE International Conference on Data Mining.)<br>
