@@ -204,10 +204,10 @@ A better approach is to build a tree on the transformed outcome, but replace the
 \hat{\tau}^{\text{ATE}}_{\text{leaf}}
 \\]
 \\[
- = \frac{\sum_{i \in \text{leaf}} Y_i \cdot W_i / e_i}{\sum_{i \in \text{leaf}} W_i / e_i}
+ =\frac{\sum_{i \in \text{leaf}} Y_i \cdot W_i / e_i }{\sum_{i \in \text{leaf}} W_i/e_i }
  \\]
  \\[
-   \frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i) }{\sum_{i \in \text{leaf}} (1-W_i)/(1-e_i) }
+-\frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i) }{\sum_{i \in \text{leaf}} (1-W_i)/(1-e_i) }
 \\]
 
 The ATE estimate will be biased, because we use the same data twice. Once to build the tree structure to maximize variance between the leaves, and once to estimate the ATE in the leaves. Causal trees avoid bias by building the structure of the tree on one random half of the training data and calculating the leaf estimates on the other half (*honest splitting*).
