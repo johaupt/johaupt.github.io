@@ -7,6 +7,7 @@ categories:
 ---
 
 *A comprehensive collection of state-of-the-art methods from causal machine learning or uplift modeling to estimate individualized treatment effects.*
+
 # Table of Contents <!-- omit in toc -->
 
 - [Motivation](#motivation)
@@ -32,7 +33,6 @@ categories:
     - [R-learner](#r-learner)
 - [Benchmark Studies](#benchmark-studies)
 
-
 # Motivation
 
 Assume that we want to change the world. A little less grandiose, assume we want to take an action that will impact an outcome to be more like we prefer. A little more applied, fields like medicine and marketing make a decision to take action that increases life expectation by five years or makes grandma spend another dollar in the supermarket. To make that decision, we want to know in advance what effect the conceivable treatment will have on each individual/grandma. Remember treatment as a general term that can mean anything from a mail catalog to earlier starting time for a class to medication.  
@@ -53,12 +53,18 @@ Unfortunately, research in different fields is fractured, with different termini
 
 My notation roughly follows the econometric literature:
 
-Covariates for individual *i* (*What we know about the person*   ): \\( X_i \\)  
-(Estimated) Propensity score (*Their chance to get the coupon from us* ): \\( P(W=w|X), e(X)=P(T=1|X) \text{ when } T \in {0;1} \\)  
-Treatment Group Indicator (*If the person got a coupon or not*  ): \\(T\\)    
-(Potential) Outcome *Y* for individual *i* under group assignment *T* (*If/How much they bought*): \\( Y_i(T)\\)     
-(Estimated) Conditional outcome under group assignment *T* (*If/How much we think they should have bought*): \\( \mu(X_i, T_i) \\)     
-(Estimated) Treatment Effect (*How much impact the coupon had*): \\( \tau_i \\) 
+*What we know about the person:*  
+Covariates for individual *i*: \\( X_i \\)  
+*Their chance to get the coupon from us:*  
+(Estimated) Propensity score: \\( P(W=w|X), e(X)=P(T=1|X) \text{ when } T \in {0;1} \\)  
+*If the person got a coupon or not:*  
+Treatment Group Indicator: \\(T\\)  
+*If/How much they bought:*  
+(Potential) Outcome *Y* for individual *i* under group assignment *T*: \\( Y_i(T)\\)  
+*If/How much we think they should have bought:*  
+(Estimated) Conditional outcome under group assignment *T*: \\( \mu(X_i, T_i) \\)  
+*How much impact (we think) the coupon had:*  
+(Estimated) Treatment Effect: \\( \tau_i \\)
 
 # Indirect Estimation
 
@@ -155,7 +161,7 @@ To ensure that the networks are in tune with each other, we should train them jo
 
 Add a single model after any approach to estimate the ITE and predict the estimated ITE directly from the covariates. Treatment effect projection is useful to reduce complexity, increase prediction speed, faciliate interpretation or add additional regularization. When multiple models are used to estimate the ITE, for example as part of the k-model approach, a single model can replace the *k* models and reduce the time necessary to make a prediction. The treatment effect projection model could be linear regression which is easier to interpret than approaches containing multiple models.
 
-*Foster, J. C., Taylor, J. M. G., & Ruberg, S. J. (2011). Subgroup identification from randomized clinical trial data. Statistics in Medicine, 30(24), 2867–2880. https://doi.org/10.1002/sim.4322*
+*Foster, J. C., Taylor, J. M. G., & Ruberg, S. J. (2011). [Subgroup identification from randomized clinical trial data](https://doi.org/10.1002/sim.4322). Statistics in Medicine, 30(24), 2867–2880.*
 
 ### Outcome Transformation
 
@@ -173,11 +179,12 @@ Y^{IPW}_i = T_i \cdot \frac{Y_i}{e(X_i)} - (1-T_i) \cdot \frac{Y_i}{1-e(X_i)}
 \\]
 
 The transformed outcome is a noisy but unbiased estimate of the treatment effect. As an unbiased estimate, it can be used as a target variable for model training. 
-The transformed outcome can also be used to calculate a feasible estimate of the MSE between model estimate and true treatment effect that is useful for model comparison. 
+The transformed outcome can also be used to calculate a feasible estimate of the MSE between model estimate and true treatment effect that is useful for model comparison.
 
 *Hitsch, G. J., & Misra, S. (2018). [Heterogeneous Treatment Effects and Optimal Targeting Policy Evaluation](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3111957). SSRN.*
 
-### Double Robust Estimation 
+### Double Robust Estimation
+
 The transformed outcome including treatment propensity correction and conditional mean centering is
 \\[
 Y^{DR}_i = E[Y|X_i, W=1] - E[Y|X_i, T_i=0] + \frac{T_i(Y_i-E[Y|X_i, T_i=1])}{e(X_i)} - \frac{(1-T_i)(Y_i-E[Y|X_i, T_i=0])}{1-e(X_i)}
@@ -188,6 +195,7 @@ Double robust esimation has two steps. In the first, we use effective models of 
 Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). [Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence](https://ssrn.com/abstract=3318814). IZA Discussion Paper, 12039.*
 
 ## Causal Trees
+
 **(a.k.a. Pollienated Outcome Tree)**  
 Transformed-outcome trees are tree build on the transformed outcome variable with the common CART algorithm. However, they do not return unbiased treatment estimates, because the ratio of treatment to control group observations varies for each leaf.
 
@@ -200,7 +208,7 @@ A better approach is to build a tree on the transformed outcome, but replace the
 
 The ATE estimate will be biased, because we use the same data twice. Once to build the tree structure to maximize variance between the leaves, and once to estimate the ATE in the leaves. Causal trees avoid bias by building the structure of the tree on one random half of the training data and calculating the leaf estimates on the other half (*honest splitting*).
 
-If ITE estimates are unbiased, it turns out that we do not need to use the transformed outcome as splitting criterion. Only if the ITE estimates are unbiased, it is sufficient to optimize the decision tree splits by maximizing the variance between treatment effects in the leaves. The splitting criterion for causal trees then simplifies to the MSE/variance splitting criterion used in CART regression 
+If ITE estimates are unbiased, it turns out that we do not need to use the transformed outcome as splitting criterion. Only if the ITE estimates are unbiased, it is sufficient to optimize the decision tree splits by maximizing the variance between treatment effects in the leaves. The splitting criterion for causal trees then simplifies to the MSE/variance splitting criterion used in CART regression
 
 \\[
   S = n_{\text{leaf}} \; \hat{\tau}_{\text{leaf}}^2
@@ -211,15 +219,18 @@ If ITE estimates are unbiased, it turns out that we do not need to use the trans
 Athey, S., & Imbens, G. (2016). [Recursive partitioning for heterogeneous causal effects](https://doi.org/10.1073/pnas.1510489113). Proceedings of the National Academy of Sciences, 113(27), 7353–7360.*
 
 ### Causal Tree Ensembles
+
 Causal trees can be bagged or boosted like other models. Confidence intervals and consistency proofs exist for causal forests.
 
 *Wager, S., & Athey, S. (2018). Estimation and inference of heterogeneous treatment effects using random forests. Journal of the American Statistical Association, 113(523), 1228–1242. https://doi.org/10.1080/01621459.2017.1319839  
 Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2018). [Some methods for heterogeneous treatment effect estimation in high-dimensions](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7623). Statistics in Medicine, 37(11).*
 
-### Generalized Random Forest 
+### Generalized Random Forest
+
 *Athey, S., Tibshirani, J., & Wager, S. (2019). Generalized random forests. The Annals of Statistics, 47(2), 1148–1178.*
 
 ## Bagged Causal Multivariate Adaptive Regression Splines
+
 Multivariate Adaptive Regression Splines (MARS) are related to the trees discussed above. They are reported to perform well by Powers et al. (2018), but perform less well in the simulations conducted by Wendling et al. (2018).
 
 *Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2018). [Some methods for heterogeneous treatment effect estimation in high-dimensions](https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.7623). Statistics in Medicine, 37(11).*
@@ -238,8 +249,8 @@ Optimize a model \\( \tau(X_i)\\) for a loss function
 *(Tian, L., Alizadeh, A. A., Gentles, A. J., & Tibshirani, R. (2014). [A simple method for estimating interactions between a treatment and a large number of covariates](https://doi.org/10.1080/01621459.2014.951443). Journal of the American Statistical Association, 109(508), 1517–1532.)  
 Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). [Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence](https://ssrn.com/abstract=3318814). IZA Discussion Paper, 12039.*
 
-
 ### R-learner
+
 Optimize a model \\( \tau(X_i)\\) for a loss function based on a decomposition of the outcome function:
 \\[
 \underset{\tau}{\arg\min} \frac{1}{n}\sum_i \left( (Y_i − E[Y|X_i])− (T_i − E[W=1|X_i]) \tau(X_i) \right)
@@ -251,10 +262,11 @@ The name is a hommage to Peter M. Robinson and the residualization in the decomp
 *Nie, X., & Wager, S. (2017). [Quasi-Oracle Estimation of Heterogeneous Treatment Effects](http://arxiv.org/abs/1712.04912). ArXiv:1712.04912.*
 
 # Benchmark Studies
+
 These studies compare at least a subset of the methods in a structured setting. The literature seems divided into studies on health, medical and social studies concernced with performance on few observations, especially with many covariates, and studies on marketing with large scale A/B tests. I therefore recommend reading the simulation settings and data descriptions carefully and match them to the target application.
 
-- Devriendt, F., Moldovan, D., & Verbeke, W. (2018). A literature survey and experimental evaluation of the state-of-the-art in uplift modeling: a stepping stone toward the development of prescriptive analytics. Big Data, 6(1), 13–41. https://doi.org/10.1089/big.2017.0104
+- Devriendt, F., Moldovan, D., & Verbeke, W. (2018). A literature survey and experimental evaluation of the state-of-the-art in uplift modeling: a stepping stone toward the development of prescriptive analytics. Big Data, 6(1), 13–41. <https://doi.org/10.1089/big.2017.0104>
 - Gubela, R. M., Bequé, A., Gebert, F., & Lessmann, S. (2019). Conversion uplift in e-commerce: A systematic benchmark of modeling strategies. International Journal of Information Technology & Decision Making, 18(3), 747–791.
 - Künzel, S. R., Sekhon, J. S., Bickel, P. J., & Yu, B. (2019). Metalearners for estimating heterogeneous treatment effects using machine learning. Proceedings of the National Academy of Sciences, 116(10), 4156–4165.
 - Powers, S., Qian, J., Jung, K., Schuler, A., Shah, N. H., Hastie, T., & Tibshirani, R. (2017). Some methods for heterogeneous treatment effect estimation in high-dimensions. CoRR, arXiv:1707.00102v1.
-- Wendling, T., Jung, K., Callahan, A., Schuler, A., Shah, N. H., & Gallego, B. (2018). Comparing methods for estimation of heterogeneous treatment effects using observational data from health care databases. Statistics in Medicine, 37, 3309–3324. https://doi.org/10.1002/sim.7820
+- Wendling, T., Jung, K., Callahan, A., Schuler, A., Shah, N. H., & Gallego, B. (2018). Comparing methods for estimation of heterogeneous treatment effects using observational data from health care databases. Statistics in Medicine, 37, 3309–3324. <https://doi.org/10.1002/sim.7820>
