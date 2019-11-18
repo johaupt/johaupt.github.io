@@ -202,9 +202,10 @@ Transformed-outcome trees are tree build on the transformed outcome variable wit
 A better approach is to build a tree on the transformed outcome, but replace the average of the transformed outcome in each leaf \\( \bar{Y}^{TO} \\) with a better estimate of the treatment effect in that leaf. Given the group of observations in the leaf, we can estimate the average treatment effect in the leaf by the difference in the averages between treatment and control group, corrected for the probability of the observations to fall in their group \\( e_i \\) for cases other than 50:50 randomized experiments,  
 \\[
 \hat{\tau}^{\text{ATE}}_{\text{leaf}}
+\\]
+\\[
  = \frac{\sum_{i \in \text{leaf}} Y_i \cdot W_i / e_i}{\sum_{i \in \text{leaf}} W_i / e_i}
  \\]
-
  \\[
    \frac{\sum_{i \in \text{leaf}} Y_i \cdot (1-W_i) / (1-e_i) }{\sum_{i \in \text{leaf}} (1-W_i)/(1-e_i) }
 \\]
