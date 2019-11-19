@@ -168,7 +168,7 @@ class TabularData(Dataset):
         return self.X[idx, :], self.y[idx]
 ```
 
-Make sure to match the data type and module to `Long`/`float64`. If you get errors like `RuntimeError: Expected object of scalar type Float but got scalar type Double for argument #4 'mat1'` when called `fit`, then the data type and model type don't match. 
+Make sure to match the data type and module to `Long`/`float64`. If you get errors like `RuntimeError: Expected object of scalar type Float but got scalar type Double for argument #4 'mat1'` when calling `fit`, then the data type and model type don't match. 
 
 
 ```python
