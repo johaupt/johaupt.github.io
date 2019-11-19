@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title:  "How to put a custom pytorch module into the fastai Learner framework"
@@ -233,7 +232,7 @@ fastai_nnet.recorder.plot()
 ```
 
 
-![png](/../assets/img/2019-11-19-fastai_custom_network_module.png)
+![png](/assets/img/2019-11-19-fastai_custom_network_module.png)
 
 
 That's it! You will never have to manually implement the `fit` method again!
