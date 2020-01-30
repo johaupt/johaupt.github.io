@@ -329,7 +329,7 @@ pred_val["logit"] = logit.predict_proba(X_val)[:,1]
 
 
 
-Nice! We can see that Adams gets us close, but LBFGS gets us *very* close or even better than *liblinear*. 
+Nice! We can see that ADAM gets us close, but LBFGS gets us *very* close or even better than *liblinear*. 
 
 ## Deep networks
 

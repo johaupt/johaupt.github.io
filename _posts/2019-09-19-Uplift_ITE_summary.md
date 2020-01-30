@@ -187,9 +187,9 @@ The transformed outcome can also be used to calculate a feasible estimate of the
 
 The transformed outcome including treatment propensity correction and conditional mean centering is
 \\[
-Y^{DR}_i = E[Y|X_i, W=1] - E[Y|X_i, T_i=0] + \frac{T_i(Y_i-E[Y|X_i, T_i=1])}{e(X_i)} - \frac{(1-T_i)(Y_i-E[Y|X_i, T_i=0])}{1-e(X_i)}
+Y^{DR}_i = E[Y|X_i, T_i=1] - E[Y|X_i, T_i=0] + \frac{T_i(Y_i-E[Y|X_i, T_i=1])}{e(X_i)} - \frac{(1-T_i)(Y_i-E[Y|X_i, T_i=0])}{1-e(X_i)}
 \\]
-Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y|X_i, W=1]\\), \\(E[Y|X_i, W=0]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^{DR}_i\\) and train a model on transformed outcome variable.
+Double robust esimation has two steps. In the first, we use effective models of our choice to estimate \\(E[Y|X_i, T_i=1]\\), \\(E[Y|X_i, T_i=0]\\) and \\(e(X_i)\\). In the second, we calculate \\(Y^{DR}_i\\) and train a model on transformed outcome variable.
 
 *Kang, J. D. Y., & Schafer, J. L. (2007). [Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data](https://doi.org/10.1214/07-STS227 ). Statistical Science, 22(4), 523–539.  
 Knaus, M. C., Lechner, M., & Strittmatter, A. (2019). [Machine Learning Estimation of Heterogeneous Causal Effects: Empirical Monte Carlo Evidence](https://ssrn.com/abstract=3318814). IZA Discussion Paper, 12039.*
