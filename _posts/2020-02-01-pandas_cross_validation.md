@@ -1,16 +1,18 @@
 ---
 layout: post
-title:  "Saving and Analyzing Cross-Validation Results with Pandas"
+title:  "Modularization: Saving Model Predictions under Cross-Validation"
 date:   2020-02-01
 categories:
   - infrastructure
   - pandas
+  - numpy
+  - pipeline
   - parallelization
   - optimization
 ---
 
 
-*Tutorials rarely discuss how to save and process intermediary results in more complex experimental setting. This is a walkthrough of how to save model predictions and separate post-processing and evaluation into a separate step, in a setting doing cross-validation while parallelizing model trainign using {multiprocessing}.*
+*Tutorials rarely discuss how to save and process intermediary results in more complex experimental setting. This is a walkthrough of how to save model predictions to shift post-processing and evaluation into a separate step. We make the model predictions in a setting doing cross-validation while parallelizing model training using {multiprocessing} and save the predictions using {numpy}.*
 
 
 ```python
@@ -86,8 +88,8 @@ eval_test
 
 
 
-    {'logit': {'ROC_AUC': 0.9960869844120854},
-     'random_forest': {'ROC_AUC': 0.9956379498364232}}
+    {'logit': {'ROC_AUC': 0.9651639344262295},
+     'random_forest': {'ROC_AUC': 0.9577356557377049}}
 
 
 
@@ -124,8 +126,8 @@ pd.DataFrame(eval_test)
   <tbody>
     <tr>
       <th>ROC_AUC</th>
-      <td>0.996087</td>
-      <td>0.995638</td>
+      <td>0.965164</td>
+      <td>0.957736</td>
     </tr>
   </tbody>
 </table>
@@ -222,6 +224,22 @@ print("Cross-Validation complete.")
     Cross-Validation complete.
 
 
+These are the raw predictions that we usually want to save. Don't forget to also save the correct version of the input data. With the data, the train and test indices and the predictions we can repeat or alter the evaluation without having to retrain the model library. 
+
+We are discarding the actual models here, which you may want to pickle to look into model interpretation later. The best way to save the model predictions is to use numpy. We could also do a json.dump for a more flexible format, but then the numpy arrays would have to be preprocessed, since {json} doesn't handle them out-of-the-box.
+
+
+```python
+np.save( "./model_predictions_test", pred_test, allow_pickle=True)
+del(pred_test)
+```
+
+
+```python
+# Re-load the data this way
+pred_test = np.load( "./model_predictions_test.npy", allow_pickle=True)
+```
+
 Wrap the steps above up into a function that evaluates several predictions and returns a dictionary of results for each model (1st level) and metric (2nd level)
 
 
@@ -244,12 +262,12 @@ eval_test
 
 
 
-    [{'logit': {'ROC_AUC': 0.9875189380275593},
-      'random_forest': {'ROC_AUC': 0.9844167087511723}},
-     {'logit': {'ROC_AUC': 0.9873025034268812},
-      'random_forest': {'ROC_AUC': 0.9844888536180652}},
-     {'logit': {'ROC_AUC': 0.9879876649454963},
-      'random_forest': {'ROC_AUC': 0.9858003442340791}}]
+    [{'logit': {'ROC_AUC': 0.9650399799203987},
+      'random_forest': {'ROC_AUC': 0.9641435691491269}},
+     {'logit': {'ROC_AUC': 0.970460153868486},
+      'random_forest': {'ROC_AUC': 0.9683190593700102}},
+     {'logit': {'ROC_AUC': 0.9552511742981104},
+      'random_forest': {'ROC_AUC': 0.9597690845853203}}]
 
 
 
@@ -295,20 +313,20 @@ eval_test_dataframe
     <tr>
       <th>0</th>
       <th>ROC_AUC</th>
-      <td>0.987519</td>
-      <td>0.984417</td>
+      <td>0.965040</td>
+      <td>0.964144</td>
     </tr>
     <tr>
       <th>1</th>
       <th>ROC_AUC</th>
-      <td>0.987303</td>
-      <td>0.984489</td>
+      <td>0.970460</td>
+      <td>0.968319</td>
     </tr>
     <tr>
       <th>2</th>
       <th>ROC_AUC</th>
-      <td>0.987988</td>
-      <td>0.985800</td>
+      <td>0.955251</td>
+      <td>0.959769</td>
     </tr>
   </tbody>
 </table>
@@ -362,20 +380,20 @@ eval_test_dataframe
     <tr>
       <th>0</th>
       <th>ROC_AUC</th>
-      <td>0.987519</td>
-      <td>0.984417</td>
+      <td>0.965040</td>
+      <td>0.964144</td>
     </tr>
     <tr>
       <th>1</th>
       <th>ROC_AUC</th>
-      <td>0.987303</td>
-      <td>0.984489</td>
+      <td>0.970460</td>
+      <td>0.968319</td>
     </tr>
     <tr>
       <th>2</th>
       <th>ROC_AUC</th>
-      <td>0.987988</td>
-      <td>0.985800</td>
+      <td>0.955251</td>
+      <td>0.959769</td>
     </tr>
   </tbody>
 </table>
@@ -423,8 +441,8 @@ eval_test_dataframe.groupby("metric").mean()
   <tbody>
     <tr>
       <th>ROC_AUC</th>
-      <td>0.987603</td>
-      <td>0.984902</td>
+      <td>0.963584</td>
+      <td>0.964077</td>
     </tr>
   </tbody>
 </table>
@@ -470,8 +488,8 @@ eval_test_dataframe.groupby("metric").std()
   <tbody>
     <tr>
       <th>ROC_AUC</th>
-      <td>0.00035</td>
-      <td>0.000779</td>
+      <td>0.007708</td>
+      <td>0.004275</td>
     </tr>
   </tbody>
 </table>
