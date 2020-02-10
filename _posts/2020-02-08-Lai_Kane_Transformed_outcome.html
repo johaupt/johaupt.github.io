@@ -11794,7 +11794,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A well-known approach to estimate observation-level uplift AKA the conditional average treatment effect (CATE) is a transformation approach that turns the observed outcomes $Y_i \in \{0;1\}$ and the treatment indicator $T_i \in \{0;1\}$ into a single variable. The single variable can the be used as a target variable for any popular machine learning model. That in itself is a great idea that has been shown to work well empirically and has been discussed and refined in a number of papers.</p>
+<p>A well-known approach to estimate observation-level uplift AKA the conditional average treatment effect (CATE) is a transformation approach that turns the observed outcomes \\(Y_i \in \{0;1\}\\) and the treatment indicator $T_i \in \{0;1\}$ into a single variable. The single variable can the be used as a target variable for any popular machine learning model. That in itself is a great idea that has been shown to work well empirically and has been discussed and refined in a number of papers.</p>
 <p>While the story is plausible and the empirical results are promising, the analytical discussion of the transformation approach is fragemented and, honestly, often confusing. An additional issue that the proposed transformation is only feasible for binary outcome variables, since it is explained as a recoding of Converted|Treated &amp; Not-Converted|Not-Treated as class 1 and Non-Converted|Treated &amp; Converted|Not-Treated as class 0.</p>
 <p>However, there is general approach to transform the outcome variable in the literature on causal inference. This approach seems different at first glance as we will see below. The purpose of this post is to show that the uplift transformation is in fact a rescaled special case of the more general outcome transformation approach, which works for categorical and continuous outcomes.</p>
 
@@ -11827,7 +11827,7 @@ $$</p>
 $$</p>
 <p>Kane et al. (2014) note that this formula ignores the ratio at which customers are treated and propose to weight the observations by the probability to fall into their observed group. The paper is confusing, but I believe what they propose can be translated to</p>
 <p>$$
-   Y^{Kane} = Y_i \cdot \frac{T_i}{p(T)} + (1-Y_i) \cdot \frac{T_i}{1-p(T)}
+   Y^{Kane} = Y_i \cdot \frac{T_i}{p(T)} + (1-Y_i) \cdot \frac{(1-T_i)}{1-p(T)}
 $$</p>
 <p>where $1-p(T)=p(C)$ is the probability to be in the control group.</p>
 
@@ -11848,7 +11848,7 @@ $$</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The statistics literature is aware of a general outcome transformation that holds in binary and continuous cases. This transformation has apparently been known for some time, since recent papers don't bother to give a reference.</p>
 <p>$$
-Y^{TO} = Y_i \cdot \frac{T_i}{p_i(T)} - Y_i \cdot \frac{T_i}{1-p_i(T)}
+Y^{TO} = Y_i \cdot \frac{T_i}{p_i(T)} - Y_i \cdot \frac{(1-T_i){1-p_i(T)}
 $$</p>
 <p>The big differene to Kane et al.'s approach is that there is a $-Y_i$ instead of $1-Y_i$.</p>
 <p>The transformed outcome (TO) has the property that its expectation is equal to the true treatment effect and is therefore used to estimate models of the conditional average treatment effect or do model selection. 
@@ -11887,7 +11887,7 @@ E[Y^{Kane}] &amp;= E[Y|T=1] p(T) + (1-E[Y|T=0])(1-p(T)) &amp;&amp; |p(T)=1-p(T)=
 &amp;= \frac{E[Y|T=1] + (1-E[Y|T=0])}{2} &amp;&amp;\\
 &amp;= \frac{1+E[Y|T=1] -E[Y|T=0])}{2} &amp;&amp;\\
 \end{align}</p>
-<p>This is an intersting result, because papers discussing Lai's transformation have noted that $2*p(Z)-1$ gives an estimate of the true treatment effect in expectation. We can now see exactly, why this is true only when there is a 50:50 treatment control split in the data.</p>
+<p>This is an intersting result, because papers discussing Lai's transformation have noted that $2*p(Z)-1$ gives an estimate of the true treatment effect in expectation. We can now see exactly why this is true only when there is a 50:50 treatment control split in the data.</p>
 
 </div>
 </div>
@@ -11896,7 +11896,7 @@ E[Y^{Kane}] &amp;= E[Y|T=1] p(T) + (1-E[Y|T=0])(1-p(T)) &amp;&amp; |p(T)=1-p(T)=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's see that the expectation of the Kane transformed outcome is.</p>
+<p>Let's see the expectation of the Kane transformed outcome.</p>
 <p>\begin{align}
 E[Y^{Kane}] &amp;= E[Y_i \cdot \frac{T_i}{p(T)} + (1-Y_i) \cdot \frac{1-T_i}{1-p(T)}] &amp;&amp;\\
 &amp;= E[Y_i] \cdot \frac{E[T_i]}{p(T)} + (1-E[Y_i]) \cdot \frac{1-E[T_i]}{1-p(T)} &amp;&amp;  |E[T_i]=p(T) \\
