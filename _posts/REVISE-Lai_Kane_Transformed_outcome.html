@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Outcome Transformations for Uplift Modeling and Treatment Effect Estimation"
-date:   2020-02-08
+date:   2099-02-08
 categories:
   - causal inference
   - uplift modeling
@@ -11877,7 +11877,7 @@ E[Y^{TO}] &amp;= E[Y_i \cdot \frac{T_i}{p_i(T)} - Y_i \cdot \frac{1-T_i}{1-p_i(T
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's see that the expectation of the Lai transformed outcome is.</p>
 <p>\begin{align}
-E[Y^{Kane}] &amp;= E[Y_i \cdot T_i + (1-Y_i) \cdot (1-T_i)] &amp;&amp;\\
+E[Y^{Lai}] &amp;= E[Y_i \cdot T_i + (1-Y_i) \cdot (1-T_i)] &amp;&amp;\\
 &amp;= E[Y_i] \cdot E[T_i] + (1-E[Y_i]) \cdot (1-E[T_i])&amp;&amp;  |E[T_i]=p_i(T)\\
 &amp;= (1-p(T))+ E[Y|T=1] p(T) - E[Y|T=0](1-p(T)) &amp;&amp; \textit{|Potential outcome framework assumptions} \\
 \end{align}</p>
