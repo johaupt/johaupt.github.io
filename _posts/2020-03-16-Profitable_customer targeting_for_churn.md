@@ -104,11 +104,11 @@ I've color-coded the cost parameters, because we will try to summarize them by u
 
 $$
 \begin{align}
-\Pi_i \\&= \beta \gamma(CLV) + 
+\Pi_i &= \beta \gamma(CLV) + 
 \beta\gamma (\color{blue}{-\delta}) + (1-\beta) (\color{blue}{-\delta}) + \beta (\color{red}{-c}) + (1-\beta)(\color{red}{-c})  \\
-       \\&= \beta \gamma(CLV) + \beta\gamma \color{blue}{-\delta} + (1-\beta)\color{blue}{-\delta} - \color{red}{c}\\
-       \\&= \beta \gamma(CLV) - \color{blue}{\delta}(\beta\gamma + 1 -\beta) - \color{red}{c}\\
-       \\&= \beta \gamma(CLV) - \color{blue}{\delta}(1-\beta(1-\gamma)) - \color{red}{c}
+       &= \beta \gamma(CLV) + \beta\gamma \color{blue}{-\delta} + (1-\beta)\color{blue}{-\delta} - \color{red}{c}\\
+       &= \beta \gamma(CLV) - \color{blue}{\delta}(\beta\gamma + 1 -\beta) - \color{red}{c}\\
+       &= \beta \gamma(CLV) - \color{blue}{\delta}(1-\beta(1-\gamma)) - \color{red}{c}
 \end{align}
 $$
 
@@ -122,10 +122,10 @@ This looks like the decision under the potential outcome framework if
 
 $$
 \begin{align}
-p_i(1)-p_i(0) \\&= \beta\gamma   \\         
-p_i(1) \\&= (1-\beta(1-\gamma)) \\
+p_i(1)-p_i(0) &= \beta\gamma   \\         
+p_i(1) &= (1-\beta(1-\gamma)) \\
 \text{and following from these}    \\
-p(0) \\&= 1-\beta
+p(0) &= 1-\beta
 \end{align}
 $$
 
@@ -196,10 +196,10 @@ $$
 Following the same math as before, this looks like the decision under the potential outcome framework if    
 
 \begin{align}
-p_i(1)-p_i(0) \\&= \beta\gamma - (1-\beta)\lambda   \\         
-p_i(1) \\&= (1-\beta(1-\gamma)) \\
+p_i(1)-p_i(0) &= \beta\gamma - (1-\beta)\lambda   \\         
+p_i(1) &= (1-\beta(1-\gamma)) \\
 \text{and following from these}    \\
-p(0) \\&= 1-\beta
+p(0) &= 1-\beta
 \end{align}
 
 Does that make sense? Let's see:    
