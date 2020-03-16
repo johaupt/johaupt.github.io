@@ -39,13 +39,13 @@ $$
 
 with    
 N: Number of customers    
-$\alpha$: Ratio of customers targeted    
-$CLV$: The value of the customer to the company    
-$\beta$: Fraction of (targeted) customers who would churn    
-$\gamma$: Fraction of (targeted) customers who decide to remain when receiving the marketing incentive    
-$\delta$: The cost of the marketing incentive if it is accepted    
-$c$: The cost of contacting the customer with the marketing incentive    
-$A$: The fixed cost of running the retention campaign
+\(\alpha\): Ratio of customers targeted    
+\(CLV\): The value of the customer to the company    
+\(\beta\): Fraction of (targeted) customers who would churn    
+\(\gamma\): Fraction of (targeted) customers who decide to remain when receiving the marketing incentive    
+\(\delta\): The cost of the marketing incentive if it is accepted    
+\(c\): The cost of contacting the customer with the marketing incentive    
+\(A\): The fixed cost of running the retention campaign
 
 There are some aspects of the formula that are relevant to calculate the overall campaign profit, but do not affect the targeting decision for a single customer, which is the purpose in all of the papers referenced above. When deciding whether to target a single customer, we can ignore the number of customers in the campaign and the fixed costs of the campaign. This leaves us:
 
