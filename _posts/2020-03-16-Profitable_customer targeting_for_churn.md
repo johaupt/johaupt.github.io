@@ -148,7 +148,7 @@ The problem is apparent in point 2. When no customers consider churning, then th
 
 Note that the probabilites \\(\beta\\) and \\(\gamma\\) define the set of states that are possible after targeting a customer and assign a value to each state. \\(\beta\\) indicates if a customer has plans to leave the customer and \\(\gamma\\) indicates if she will stay after receiving the incentive. 
 
-The churn literature usually assumes that \\(\lambda=1$ if the customer had no plans to churn, because it seems plausible that everybody would accept an offer that aligns with their original plan. Let's remove that assumption for now:
+The churn literature usually assumes that \\(\lambda=1\\) if the customer had no plans to churn, because it seems plausible that everybody would accept an offer that aligns with their original plan. Let's remove that assumption for now:
 
 $$
 \Pi_i = \color{red}{\beta \gamma}(CLV - \delta -c) + \color{blue}{\beta(1-\gamma)}(-c) + \color{salmon}{(1-\beta)\gamma}(-\delta-c)  + \color{purple}{(1-\beta)(1-\gamma)}(?)
@@ -195,12 +195,14 @@ $$
 
 Following the same math as before, this looks like the decision under the potential outcome framework if    
 
+$$
 \begin{align}
 p_i(1)-p_i(0) &= \beta\gamma - (1-\beta)\lambda   \\         
 p_i(1) &= (1-\beta(1-\gamma)) \\
 \text{and following from these}    \\
 p(0) &= 1-\beta
 \end{align}
+$$
 
 Does that make sense? Let's see:    
 
