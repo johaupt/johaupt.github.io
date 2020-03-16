@@ -65,12 +65,12 @@ $$
 p_i(1) (CLV(1) - \delta) - c > p_i(0) \cdot CLV(0)
 $$
 with    
-$CLV$: The value of the customer to the company    
-$p_i$: The probability of a customer to stay with the company  
-$\delta$: The cost of the marketing incentive if it is accepted    
-$c$: The cost of contacting the customer with the marketing incentive    
-$\cdot(1)$: The hypothetical value for the customer if receiving the marketing incentive    
-$\cdot(0)$: The hypothetical value for the customer without the marketing incentive
+\\(CLV\\): The value of the customer to the company    
+\\(p_i\\): The probability of a customer to stay with the company  
+\\(\delta\\): The cost of the marketing incentive if it is accepted    
+\\(c\\): The cost of contacting the customer with the marketing incentive    
+\\(\cdot(1)\\): The hypothetical value for the customer if receiving the marketing incentive    
+\\(\cdot(0)\\): The hypothetical value for the customer without the marketing incentive
 
 We'll follow the implicit assumption in the campaign profit function that the value of the customer is not influenced by the marketing incentive.
 
@@ -100,8 +100,9 @@ $$
 \Pi_i = \beta \gamma(CLV) + \beta \gamma (\color{blue}{-\delta}) + \beta \gamma (\color{red}{-c}) + \beta(1-\gamma)(\color{red}{-c}) + (1-\beta)(\color{blue}{-\delta}) +(1-\beta)(\color{red}{-c})
 $$
 
-I've color-coded the cost parameters, because we will try to summarize them by using the fact that $\beta$ and $(1-\beta)$ and $\gamma$ and $(1-\gamma)$ respectively are probabilities that add up to 1.
+I've color-coded the cost parameters, because we will try to summarize them by using the fact that \\(\beta\\) and \\((1-\beta)\\) and \\(\gamma\\) and \\((1-\gamma)\\) respectively are probabilities that add up to 1.
 
+$$
 \begin{align}
 \Pi_i \\&= \beta \gamma(CLV) + 
 \beta\gamma (\color{blue}{-\delta}) + (1-\beta) (\color{blue}{-\delta}) + \beta (\color{red}{-c}) + (1-\beta)(\color{red}{-c})  \\
@@ -109,6 +110,7 @@ I've color-coded the cost parameters, because we will try to summarize them by u
        \\&= \beta \gamma(CLV) - \color{blue}{\delta}(\beta\gamma + 1 -\beta) - \color{red}{c}\\
        \\&= \beta \gamma(CLV) - \color{blue}{\delta}(1-\beta(1-\gamma)) - \color{red}{c}
 \end{align}
+$$
 
 We will target a customer if the profit is positive, i.e.
 
@@ -118,33 +120,35 @@ $$
 
 This looks like the decision under the potential outcome framework if    
 
+$$
 \begin{align}
 p_i(1)-p_i(0) \\&= \beta\gamma   \\         
 p_i(1) \\&= (1-\beta(1-\gamma)) \\
 \text{and following from these}    \\
 p(0) \\&= 1-\beta
 \end{align}
+$$
 
 Does that make sense? Let's see:    
 
-1. $p(0)$ is the probability of a customer to make the plan to churn. $\checkmark$    
-2. $p(1)$ is the complementary probablility of a customer to make a plan to churn and churn even when offered the treatment. That includes customers who make no plan to churn and those that are convinced by the incentive. $\checkmark$    
-3. $p(1)-p(0)$ is the probability of a customer to make the plan to churn and not churn when offered the treatment. **?**
+1. \\(p(0)\\) is the probability of a customer to make the plan to churn. \\(\checkmark\\)    
+2. \\(p(1)\\) is the complementary probablility of a customer to make a plan to churn and churn even when offered the treatment. That includes customers who make no plan to churn and those that are convinced by the incentive. \\(\checkmark\\)    
+3. \\(p(1)-p(0)\\) is the probability of a customer to make the plan to churn and not churn when offered the treatment. **?**
 
-Interpretation 3 (refering to Eq.1) is weird because the treatment effect $p(1)-p(0)$ is in principle bounded between [-1,1]. It is reasonable in churn campaigns that some customers will be reminded by the campaign to cancel their contract and we see that quite severely in real campaigns. 
+Interpretation 3 (refering to Eq.1) is weird because the treatment effect \\(p(1)-p(0)\\) is in principle bounded between [-1,1]. It is reasonable in churn campaigns that some customers will be reminded by the campaign to cancel their contract and we see that quite severely in real campaigns. 
 
 To find a solution and correctly map all potential treatment effects, let's consider the extreme cases in the current profit formula:
 
-1. $\beta\gamma=1$ if $\beta=\gamma=1$. In words, the maximum effectiveness of a campaign is reached when all customers consider to churn before the campaign and all will accept the incentive to stay. 
-2. $\beta\gamma=0$ if either $\beta$ or $\gamma$ or both are zero. In words, the campaign has no effect if no customers consider to churn or no customers accept the marketing incentive when offered. 
+1. \\(\beta\gamma=1\\) if \\(\beta=\gamma=1\\). In words, the maximum effectiveness of a campaign is reached when all customers consider to churn before the campaign and all will accept the incentive to stay. 
+2. \\(\beta\gamma=0\\) if either \\(\beta\\) or \\(\gamma\\) or both are zero. In words, the campaign has no effect if no customers consider to churn or no customers accept the marketing incentive when offered. 
 
 The problem is apparent in point 2. When no customers consider churning, then the campaign may still have a negative effect that leads some customer to churn. We will have to alter the profit function to allow for a negative effect.
 
 ## Campaign profit as a targeting decision
 
-Note that the probabilites $\beta$ and $\gamma$ define the set of states that are possible after targeting a customer and assign a value to each state. $\beta$ indicates if a customer has plans to leave the customer and $\gamma$ indicates if she will stay after receiving the incentive. 
+Note that the probabilites \\(\beta\\) and \\(\gamma\\) define the set of states that are possible after targeting a customer and assign a value to each state. \\(\beta\\) indicates if a customer has plans to leave the customer and \\(\gamma\\) indicates if she will stay after receiving the incentive. 
 
-The churn literature usually assumes that $\lambda=1$ if the customer had no plans to churn, because it seems plausible that everybody would accept an offer that aligns with their original plan. Let's remove that assumption for now:
+The churn literature usually assumes that \\(\lambda=1$ if the customer had no plans to churn, because it seems plausible that everybody would accept an offer that aligns with their original plan. Let's remove that assumption for now:
 
 $$
 \Pi_i = \color{red}{\beta \gamma}(CLV - \delta -c) + \color{blue}{\beta(1-\gamma)}(-c) + \color{salmon}{(1-\beta)\gamma}(-\delta-c)  + \color{purple}{(1-\beta)(1-\gamma)}(?)
@@ -154,34 +158,34 @@ We can construct a state-payoff matrix from the formula that makes the underlyin
 
 ||  1 | 0 |
 |------------------|------------------ |-------------------------|
-|**1**| $\color{red}{CLV - \delta -c}$    | $\color{salmon}{- \delta -c}$  |
-|**0**| $\color{blue}{-c}$   | $\color{purple}{?}$  |
+|**1**| \\(\color{red}{CLV - \delta -c}\\)    | \\(\color{salmon}{- \delta -c}\\)  |
+|**0**| \\(\color{blue}{-c}\\)   | \\(\color{purple}{?}\\)  |
 
-The state-payoff matrix suggested by the profit function is useful because we can compare it to the state-payoff matrix that we would construct from the company cash flow. If we offer an incentive to a customer, we will always pay the offer cost $c$. If the customer accepts the incentive and stays on, we will additionally have to make good on the promise of the incentive and will incur an additional cost $\delta$ in the first row. Whenever the customer stays, we will receive their spending in form of the customer lifetime value.
+The state-payoff matrix suggested by the profit function is useful because we can compare it to the state-payoff matrix that we would construct from the company cash flow. If we offer an incentive to a customer, we will always pay the offer cost \\(c\\). If the customer accepts the incentive and stays on, we will additionally have to make good on the promise of the incentive and will incur an additional cost \\(\delta\\) in the first row. Whenever the customer stays, we will receive their spending in form of the customer lifetime value.
 
 ||  1 | 0 |
 |------------------|------------------ |-------------------------|
-|**1**| $CLV - \delta -c$    | $CLV - \delta -c$  |
-|**0**| $-c$   | $CLV-c$  |
+|**1**| \\(CLV - \delta -c\\)    | \\(CLV - \delta -c\\)  |
+|**0**| \\(-c\\)   | \\(CLV-c\\)  |
 
 The cash-flow includes an additional CLV in the second column, but column-wise linear transformation will not change the decision. Substracting CLV in the second column returns the state-payoff matrix from the profit function above and allows us to fill in the missing payoff if a customer had no plans to churn but does not accept the offer.
 
 ||  1 | 0 |
 |------------------|------------------ |-------------------------|
-|**1**| $\color{red}{CLV - \delta -c}$    | $\color{salmon}{- \delta -c}$  |
-|**0**| $\color{blue}{-c}$   | $\color{purple}{-c}$  |
+|**1**| \\(\color{red}{CLV - \delta -c}\\)    | \\(\color{salmon}{- \delta -c}\\)  |
+|**0**| \\(\color{blue}{-c}\\)   | \\(\color{purple}{-c}\\)  |
 
 With this state-payoff matrix, let's come back to the possibility of negative reactions to the incentive. We have seen that we unreasonably restrict the actions available to the customer. A customer can accept the offer, they can reject the offer *and they can be triggered by the offer to leave*. I suggest that a good way to model this is to consider a third case, where the customer reacts negatively to the treatment. If they had the plan to churn anyway, then this will not change the outcome. If they were considering to stay, then this will decrease the profit of the campaign by removing their CLV.
 
 ||  1 | 0 |
 |------------------|------------------ |-------------------------|
-|**1**| $\color{red}{CLV - \delta -c}$    | $\color{salmon}{- \delta -c}$  |
-|**0**| $\color{blue}{-c}$   | $\color{purple}{-c}$  |
-|**-1**| $-c$   | $-CLV-c$  |
+|**1**| \\(\color{red}{CLV - \delta -c}\\)    | \\(\color{salmon}{- \delta -c}\\)  |
+|**0**| \\(\color{blue}{-c}\\)   | \\(\color{purple}{-c}\\)  |
+|**-1**| \\(-c\\)   | \\(-CLV-c\\)  |
 
-Let's denote the probability that a customer will react negatively to the offer by $\lambda$. Then there is the probability that a customer will accept the offer $\gamma$ and a remaining option to not accept the offer with a probability $1-\gamma-\lambda$.
+Let's denote the probability that a customer will react negatively to the offer by \\(\lambda\\). Then there is the probability that a customer will accept the offer \\(\gamma\\) and a remaining option to not accept the offer with a probability \\(1-\gamma-\lambda\\).
 
-I'll follow the reasoning of the literature and assume that all customer who have no plans to churn will not reject the offer, i.e. that $(1-\beta)(1-\gamma-\lambda)=0$. That assumption is not strictly necessary for the analysis, but allows us to stick close to the original profit formula. 
+I'll follow the reasoning of the literature and assume that all customer who have no plans to churn will not reject the offer, i.e. that \\((1-\beta)(1-\gamma-\lambda)=0\\). That assumption is not strictly necessary for the analysis, but allows us to stick close to the original profit formula. 
 
 The the enhanced churn campaign profit formula is (with changes in green)
 
@@ -200,20 +204,20 @@ p(0) \\&= 1-\beta
 
 Does that make sense? Let's see:    
 
-1. $p(0)$ is the probability of a customer to make the plan to churn. $\checkmark$    
-2. $p(1)$ is the complementary probablility of a customer to make a plan to churn and churn even when offered the treatment. That includes customers who make no plan to churn and those that are convinced by the incentive. $\checkmark$    
-3. $p(1)-p(0)$ is the probability of a customer to make the plan to churn and not churn when offered the treatment **minus the probability of the customer to have no plan to churn but to churn when offered the treatment**.$\checkmark$
+1. \\(p(0)\\) is the probability of a customer to make the plan to churn. \\(\checkmark\\)    
+2. \\(p(1)\\) is the complementary probablility of a customer to make a plan to churn and churn even when offered the treatment. That includes customers who make no plan to churn and those that are convinced by the incentive. \\(\checkmark\\)    
+3. \\(p(1)-p(0)\\) is the probability of a customer to make the plan to churn and not churn when offered the treatment **minus the probability of the customer to have no plan to churn but to churn when offered the treatment**.\\(\checkmark\\)
 (If you are familiar with the transformed outcome approach, compare that explanation to how the transformed outcome is calculated.)
 
 Let's again consider the extreme cases in the enhanced profit formula:
 
-1. $\beta\gamma - (1-\beta)\lambda=1$ if $\beta=\gamma=1$. In words, the maximum effectiveness of a campaign is reached when all customers consider to churn before the campaign and all will accept the incentive to stay. 
-2. $\beta\gamma - (1-\beta)\lambda=0$ if A) $\beta=1$ and $\gamma=0$, B) $\beta=0$ and $\lambda=0$ or C) $\beta\gamma = (1-\beta)\lambda$. In words, the campaign has no effect if A) all customer consider to churn but nobody reacts to the incentive, B) no customers consider to churn and the campaign has no negative effects or C) if the number of customer who consider to churn and are convinced by the campaign and the number of customer who were not planning to churn but are negatively affected by the campaign is exactly equal. 
-3. $\beta\gamma - (1-\beta)\lambda=-1$ if $(1-\beta)=\lambda=1$ i.e. $\beta=0$ and $\lambda=1$. In words, the campaign has the maximum negative effect if no customer were planning to churn, but all will churn after receiving the incentive. 
+1. \\(\beta\gamma - (1-\beta)\lambda=1\\) if \\(\beta=\gamma=1\\). In words, the maximum effectiveness of a campaign is reached when all customers consider to churn before the campaign and all will accept the incentive to stay. 
+2. \\(\beta\gamma - (1-\beta)\lambda=0\\) if A) \\(\beta=1\\) and \\(\gamma=0\\), B) \\(\beta=0\\) and \\(\lambda=0\\) or C) \\(\beta\gamma = (1-\beta)\lambda\\). In words, the campaign has no effect if A) all customer consider to churn but nobody reacts to the incentive, B) no customers consider to churn and the campaign has no negative effects or C) if the number of customer who consider to churn and are convinced by the campaign and the number of customer who were not planning to churn but are negatively affected by the campaign is exactly equal. 
+3. \\(\beta\gamma - (1-\beta)\lambda=-1\\) if \\((1-\beta)=\lambda=1\\) i.e. \\(\beta=0\\) and \\(\lambda=1\\). In words, the campaign has the maximum negative effect if no customer were planning to churn, but all will churn after receiving the incentive. 
 
 ## Conclusion
 
-It may be reasonable in some applications to assume that there are no adversarial campaign effects, $\lambda=0$, but churn campaigns are not one of them. We propose a more intuitive (and correct) way to make the targeting decision:
+It may be reasonable in some applications to assume that there are no adversarial campaign effects, \\(\lambda=0\\), but churn campaigns are not one of them. We propose a more intuitive (and correct) way to make the targeting decision:
 
 $$
 p_i(1) (CLV(1) - \delta) - c > p_i(0) \cdot CLV(0)
@@ -225,7 +229,7 @@ $$
 \Pi = N \alpha  \left[ \beta\gamma(CLV - \delta -c) + \color{green}{(1-\beta)\lambda(-CLV-c)} + \beta(1-\gamma\color{green}{-\lambda})(-c) + (1-\beta)(-\delta-c) \right] -A
 $$
 
-where $\lambda$ is the probability that a customer will leave after receiving the marketing incentive.
+where \\(\lambda\\) is the probability that a customer will leave after receiving the marketing incentive.
 
 ## References
 
