@@ -39,13 +39,13 @@ $$
 
 with    
 N: Number of customers    
-$\alpha$: Ratio of customers targeted    
-$CLV$: The value of the customer to the company    
-$\beta$: Fraction of (targeted) customers who would churn    
-$\gamma$: Fraction of (targeted) customers who decide to remain when receiving the marketing incentive    
-$\delta$: The cost of the marketing incentive if it is accepted    
-$c$: The cost of contacting the customer with the marketing incentive    
-$A$: The fixed cost of running the retention campaign
+\\(\alpha\\): Ratio of customers targeted    
+\\(CLV\\): The value of the customer to the company    
+\\(\beta\\): Fraction of (targeted) customers who would churn    
+\\(\gamma\\): Fraction of (targeted) customers who decide to remain when receiving the marketing incentive    
+\\(\delta\\): The cost of the marketing incentive if it is accepted    
+\\(c\\): The cost of contacting the customer with the marketing incentive    
+\\(A\\): The fixed cost of running the retention campaign
 
 There are some aspects of the formula that are relevant to calculate the overall campaign profit, but do not affect the targeting decision for a single customer, which is the purpose in all of the papers referenced above. When deciding whether to target a single customer, we can ignore the number of customers in the campaign and the fixed costs of the campaign. This leaves us:
 
@@ -103,11 +103,11 @@ $$
 I've color-coded the cost parameters, because we will try to summarize them by using the fact that $\beta$ and $(1-\beta)$ and $\gamma$ and $(1-\gamma)$ respectively are probabilities that add up to 1.
 
 \begin{align}
-\Pi_i \&= \beta \gamma(CLV) + 
+\Pi_i \\&= \beta \gamma(CLV) + 
 \beta\gamma (\color{blue}{-\delta}) + (1-\beta) (\color{blue}{-\delta}) + \beta (\color{red}{-c}) + (1-\beta)(\color{red}{-c})  \\
-       \&= \beta \gamma(CLV) + \beta\gamma \color{blue}{-\delta} + (1-\beta)\color{blue}{-\delta} - \color{red}{c}\\
-       \&= \beta \gamma(CLV) - \color{blue}{\delta}(\beta\gamma + 1 -\beta) - \color{red}{c}\\
-       \&= \beta \gamma(CLV) - \color{blue}{\delta}(1-\beta(1-\gamma)) - \color{red}{c}
+       \\&= \beta \gamma(CLV) + \beta\gamma \color{blue}{-\delta} + (1-\beta)\color{blue}{-\delta} - \color{red}{c}\\
+       \\&= \beta \gamma(CLV) - \color{blue}{\delta}(\beta\gamma + 1 -\beta) - \color{red}{c}\\
+       \\&= \beta \gamma(CLV) - \color{blue}{\delta}(1-\beta(1-\gamma)) - \color{red}{c}
 \end{align}
 
 We will target a customer if the profit is positive, i.e.
@@ -119,10 +119,10 @@ $$
 This looks like the decision under the potential outcome framework if    
 
 \begin{align}
-p_i(1)-p_i(0) \&= \beta\gamma   \\         
-p_i(1) \&= (1-\beta(1-\gamma)) \\
+p_i(1)-p_i(0) \\&= \beta\gamma   \\         
+p_i(1) \\&= (1-\beta(1-\gamma)) \\
 \text{and following from these}    \\
-p(0) \&= 1-\beta
+p(0) \\&= 1-\beta
 \end{align}
 
 Does that make sense? Let's see:    
@@ -192,10 +192,10 @@ $$
 Following the same math as before, this looks like the decision under the potential outcome framework if    
 
 \begin{align}
-p_i(1)-p_i(0) \&= \beta\gamma - (1-\beta)\lambda   \\         
-p_i(1) \&= (1-\beta(1-\gamma)) \\
+p_i(1)-p_i(0) \\&= \beta\gamma - (1-\beta)\lambda   \\         
+p_i(1) \\&= (1-\beta(1-\gamma)) \\
 \text{and following from these}    \\
-p(0) \&= 1-\beta
+p(0) \\&= 1-\beta
 \end{align}
 
 Does that make sense? Let's see:    
