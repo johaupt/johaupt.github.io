@@ -3,10 +3,8 @@ layout: page
 title: About
 ---
 
-I'm a researcher and PhD student [at Humboldt-University](https://www.wiwi.hu-berlin.de/de/professuren/bwl/wi/personen/johannes-haupt). I work on causal machine learning, uplift modeling and neural networks.
+I'm a senior data scientist at [remerge](https://remerge.io) after doctoral studies at the information systems group at [Humboldt-Universität zu Berlin](https://www.wiwi.hu-berlin.de/de/professuren/bwl/wi/). I work on causal machine learning, uplift modeling and Bayesian analysis in experimental settings. Check out the blog for tutorials on causal machine learning, code walkthroughs and insights that have not made it into papers so far.
 
-Check out the blog for tutorials and code walkthroughs of insights that have not made it into papers so far or have made it into papers that deserve a practical write-up.
+I also love longboarding and learning about the Chinese cultural sphere as a member of [sinonerds e.V.](https://sinonerds.com).
 
-I'm available to consult on projects on causal machine learning or reinforcement/policy learning. Please send me an email summarizing your goals, status of the project and your timeline and I'll be happy to make you an offer.
-
-Get in touch if you want to chat or collaborate on uplift modeling, prescriptive decision support or just changing people's actions!
+Get in touch if you want to chat about any of the above or collaborate on uplift modeling or customer targeting!
