@@ -43,7 +43,7 @@ $$
    Y^{Kane} = Y_i \cdot \frac{T_i}{p_T} + (1-Y_i) \cdot \frac{1-T_i}{1-p_T}
 $$
 
-where \\( 1-p_T=p_C \\) is the probability to be in the control group. The probability to receive treatment may dependent on characteristics \\( X \\) as in \\( p_T=p(T=1 \text{|} X) \\).
+where \\( 1-p_T=p_C \\) is the probability to be in the control group. The probability to receive treatment may dependent on characteristics \\( X \\) as in \\( p_T=p(T=1 \| X) \\).
 
 ## The CATE-generating Outcome Transformation
 
