@@ -74,7 +74,6 @@ In the last step, we've rewritten the vector of observed outcomes \\(Y\\) as a s
 
 Let's confirm that the TO is equal to the true treatment effect in expectation conditional on \\(X\\):
 
-$$
 \begin{align*}
 E[Y^{TO}|X] &= E [ (T Y1 + (1-T) Y(0)) \frac{T-p_T}{p_T(1-p_T)} |X ]  \\
 &= \frac{1}{{p_T(1-p_T)}} E [ T Y_1 (T-p_T) + (1-T) Y_0 (T-p_T) |X ]  \\
@@ -85,7 +84,7 @@ E[Y^{TO}|X] &= E [ (T Y1 + (1-T) Y(0)) \frac{T-p_T}{p_T(1-p_T)} |X ]  \\
 &= E[Y_1|X] - E[Y_0|X] && | Overlap \\
 &= E[Y_1 -Y_0|X]
 \end{align*}
-$$
+
 
 ## So what's the connection?
 
