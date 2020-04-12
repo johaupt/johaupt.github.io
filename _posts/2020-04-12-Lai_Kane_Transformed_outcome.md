@@ -74,17 +74,18 @@ In the last step, we've rewritten the vector of observed outcomes \\(Y\\) as a s
 
 Let's confirm that the TO is equal to the true treatment effect in expectation conditional on \\(X\\):
 
-\begin{align}
-E[Y^{TO}|X] &= E [ (T Y1 + (1-T) Y(0)) \frac{T-p_T}{p_T(1-p_T)} |X ]  \\\\
-&= \frac{1}{{p_T(1-p_T)}} E [ T Y_1 (T-p_T) + (1-T) Y_0 (T-p_T) |X ]  \\\\
-&= \frac{1}{{p_T(1-p_T)}} E [ Y_1 T (1-p_T) +  Y_0 p_T (1-T) |X ]  && | T^2=T \\\\
-&= \frac{1}{{p_T(1-p_T)}} E [ Y_1 T (1-p_T) +  Y_0 p_T - T Y_0 p_T |X ] \\\\
-&= \frac{1}{{p_T(1-p_T)}} \big( E [Y_1|X]\; E[T|X] (1-p_T) +  E[Y_0|X] p_T - E[T|X]\; E[Y_0|X] p_T \big) && | Y_1, Y_0 \perp \!\! \perp T|X \\\\
-&= \frac{1}{{p_T(1-p_T)}} \big(E [Y_1|X] p_T (1-p_T) +  E[Y_0|X] p_T (1-p_T) &&| E[T|X]=p_T \big)\\\\
-&= E[Y_1|X] - E[Y_0|X] && | Overlap \\\\
+$$
+\begin{align*}
+E[Y^{TO}|X] &= E [ (T Y1 + (1-T) Y(0)) \frac{T-p_T}{p_T(1-p_T)} |X ]  \\
+&= \frac{1}{{p_T(1-p_T)}} E [ T Y_1 (T-p_T) + (1-T) Y_0 (T-p_T) |X ]  \\
+&= \frac{1}{{p_T(1-p_T)}} E [ Y_1 T (1-p_T) +  Y_0 p_T (1-T) |X ]  && | T^2=T \\
+&= \frac{1}{{p_T(1-p_T)}} E [ Y_1 T (1-p_T) +  Y_0 p_T - T Y_0 p_T |X ] \\
+&= \frac{1}{{p_T(1-p_T)}} \big( E [Y_1|X]\; E[T|X] (1-p_T) +  E[Y_0|X] p_T - E[T|X]\; E[Y_0|X] p_T \big) && | \text{Unconfoundedness} \\
+&= \frac{1}{{p_T(1-p_T)}} \big(E [Y_1|X] p_T (1-p_T) +  E[Y_0|X] p_T (1-p_T) &&| E[T|X]=p_T \big)\\
+&= E[Y_1|X] - E[Y_0|X] && | Overlap \\
 &= E[Y_1 -Y_0|X]
-\end{align}
-
+\end{align*}
+$$
 
 ## So what's the connection?
 
