@@ -14,7 +14,7 @@ categories:
 
 The outcome variable transformation approach to estimate observation-level uplift (a.k.a. the conditional average treatment effect CATE) is a transformation that turns the observed outcomes \\(Y_i \in \{0;1\}\\) and the treatment indicator \\(T_i \in \{0;1\}\\) into a single outcome. This single variable can the be used as a target variable for any popular machine learning model. That in itself is a great idea that has been shown to work well empirically and has been discussed and refined in a number of papers. 
 
-While the story is plausible and the empirical results are promising, the analytical discussion of the transformation approach is fragemented and, honestly, often confusing. An additional issue that the proposed transformation is only feasible for binary outcome variables, since it is explained as a recoding of profitable customers, (Converted\\(\land\\)Treated) \\(\lor\\) (Not-Converted\\(\land\\)Not-Treated), as class 1 and unprofitable customers, (Non-Converted\\(\land\\)Treated \\(\lor\\) Converted\\(\land\\)Not-Treated, as class 0. 
+While the story is plausible and the empirical results are promising, the analytical discussion of the transformation approach is fragemented and, honestly, often confusing. An additional issue that the proposed transformation is only feasible for binary outcome variables, since it is explained as a recoding of profitable customers, (Converted\\(\land\\)Treated) \\(\lor\\) (Not-Converted\\(\land\\)Not-Treated), as class 1 and unprofitable customers, (Non-Converted\\(\land\\)Treated) \\(\lor\\) (Converted\\(\land\\)Not-Treated), as class 0. 
 
 However, there is general approach to transform the outcome variable in the literature on causal inference. This approach seems different at first glance as we will see below. The purpose of this post is to show that the uplift transformation is in fact a rescaled special case of the more general outcome transformation approach, for which we have a solid analytical foundations and which works for categorical and continuous outcomes. 
 
@@ -43,10 +43,7 @@ $$
    Y^{Kane} = Y_i \cdot \frac{T_i}{p_T} + (1-Y_i) \cdot \frac{1-T_i}{1-p_T}
 $$
 
-where \\( 1-p_T=p_C \\) is the probability to be in the control group. The probability to receive treatment may dependent on characteristics \\( X \\) as in 
-$$ 
-p_T=p(T=1|X) 
-$$ 
+where \\( 1-p_T=p_C \\) is the probability to be in the control group. The probability to receive treatment may dependent on characteristics \\( X \\) as in \\( p_T=p(T=1 |X) \\).
 
 ## The CATE-generating Outcome Transformation
 
