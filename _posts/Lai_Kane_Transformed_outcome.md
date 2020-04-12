@@ -68,7 +68,7 @@ Y^{TO} &= Y \cdot \frac{T}{p_T} - Y \cdot \frac{1-T}{1-p_T} \\
 In the last step, we've rewritten the vector of observed outcomes \(Y\) as a sum of the potential outcomes \(Y_0, Y_1\) as \(Y=T Y_1 + (1-T) Y_0\).
 
 
-Let's confirm that the TO is equal to the true treatment effect in expectation conditional on $X$:
+Let's confirm that the TO is equal to the true treatment effect in expectation conditional on \(X\):
 
 \begin{align}
 E[Y^{TO}|X] &= E \left[ (T Y1 + (1-T) Y(0)) \frac{T-p_T}{p_T(1-p_T)} |X \right]  \\
@@ -91,7 +91,7 @@ E[Y^{Lai}|X] &= E[Y \cdot T + (1-Y) \cdot (1-T)|X] && | Y = TY_1 + (1-T)Y_0 \\
 &= (1-p_T)+ E[Y_1|X] p_T - E[Y_0|X](1-p_T) &&  |E[T|X]=p_T \\
 \end{align}
 
-Only in the simplest case when $p_T=1-p_T=0.5$ can we further simplify this to
+Only in the simplest case when \(p_T=1-p_T=0.5\) can we further simplify this to
 
 \begin{align}
  &= E[Y_1|X] p_T + (1-E[Y_0|X])(1-p_T) && |p_T=1-p_T=0.5 \\
@@ -99,7 +99,7 @@ Only in the simplest case when $p_T=1-p_T=0.5$ can we further simplify this to
 &= \frac{1+E[Y_1|X] -E[Y_0|X])}{2} &&\\
 \end{align}
 
-This is an intersting result, because papers discussing Lai's transformation have noted that $2 \cdot p(Y^{Lai}=1)-1$ gives an estimate of the true treatment effect in expectation. We can now see exactly why this holds only when there is a 50:50 treatment control split in the data. 
+This is an intersting result, because papers discussing Lai's transformation have noted that \(2 \cdot p(Y^{Lai}=1)-1\) gives an estimate of the true treatment effect in expectation. We can now see exactly why this holds only when there is a 50:50 treatment control split in the data. 
 
 Let's check the expectation of the Kane transformed outcome with an arbitrary probability of treatment:
 
@@ -109,11 +109,11 @@ E[Y^{Kane}|X] &= E[Y \cdot \frac{T}{p_T} + (1-Y) \cdot \frac{1-T}{1-p_T}|X] && \
 &= 1+E[Y_1|X] - E[Y_0|X] 
 \end{align}
 
-There we are! The estimates from a $Y^{Kane}$-based model are not the true treatment effect, because they are shifted upwards by a constant of 1. The constant of 1 is a direct result of using $(1-Y)$ for outcomes in the control group instead of $-Y$ as proposed in the statistical literature. 
+There we are! The estimates from a \(Y^{Kane}\)-based model are not the true treatment effect, because they are shifted upwards by a constant of 1. The constant of 1 is a direct result of using \((1-Y)\) for outcomes in the control group instead of \(-Y\) as proposed in the statistical literature. 
 
 ## Why does it matter?
 
-The original Lai transformation has an interesting property. Because the transformed outcome is either 0 or 1, we can use a classifier as model to predict the treatment effect. After the correction $2 \cdot p(Y^{Lai}=1)-1$, the estimates of the treatment effect will be bounded in [-1;1] as they should be for a binary outcome variable. As we see above, however, this approach is helpful only when the treatment probability is exactly 0.5 for all observations. 
+The original Lai transformation has an interesting property. Because the transformed outcome is either 0 or 1, we can use a classifier as model to predict the treatment effect. After the correction \(2 \cdot p(Y^{Lai}=1)-1\), the estimates of the treatment effect will be bounded in [-1;1] as they should be for a binary outcome variable. As we see above, however, this approach is helpful only when the treatment probability is exactly 0.5 for all observations. 
 
 In other cases, we are better off using the transformed outcome and train a regression model. The prediction of the regression model is not naturally bounded in [-1;1]. In practice, clipping the prediction to values within reasonable bounds may help to avoid implausible predictions, despite not being very elegant. 
 

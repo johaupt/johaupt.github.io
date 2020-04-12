@@ -5,10 +5,13 @@ title: Research
 
 Find me on [Github](https://github.com/johaupt/) and [ResearchGate](https://www.researchgate.net/profile/Johannes_Haupt)
 
+Haupt, J. & Lessmann, S. (2020).     
+[Targeting Customer under Response-Dependent Costs](https://arxiv.org/abs/2003.06271).     
+Under Review.
 
 Haupt, J., Jacob, D., Gubela, R., & Lessmann, S. (2019).     
 [Affordable Uplift: Supervised Randomization in Controlled Experiments](http://arxiv.org/abs/1910.00393).     
-Accepted at International Conference on Information Systems 2019.
+Proceedings of the International Conference on Information Systems 2019.
 
 Lessmann, S., Haupt, J., Coussement, K., & De Bock, K. W. (2019).     
 [Targeting customers for profit: An ensemble learning framework to support marketing decision making](https://doi.org/10.1016/j.ins.2019.05.027).     
