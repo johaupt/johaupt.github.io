@@ -43,7 +43,10 @@ $$
    Y^{Kane} = Y_i \cdot \frac{T_i}{p_T} + (1-Y_i) \cdot \frac{1-T_i}{1-p_T}
 $$
 
-where \\( 1-p_T=p_C \\) is the probability to be in the control group. The probability to receive treatment may dependent on characteristics \\( X \\) as in $$ p_T=p(T=1|X) $$ 
+where \\( 1-p_T=p_C \\) is the probability to be in the control group. The probability to receive treatment may dependent on characteristics \\( X \\) as in 
+$$ 
+p_T=p(T=1|X) 
+$$ 
 
 ## The CATE-generating Outcome Transformation
 
@@ -75,16 +78,16 @@ In the last step, we've rewritten the vector of observed outcomes \\(Y\\) as a s
 Let's confirm that the TO is equal to the true treatment effect in expectation conditional on \\(X\\):
 
 $$
-\begin{align}
-E[Y^{TO}|X] &= E \left[ (T Y1 + (1-T) Y(0)) \frac{T-p_T}{p_T(1-p_T)} |X \right]  \\
-&= \frac{1}{{p_T(1-p_T)}} E \left[ T Y_1 (T-p_T) + (1-T) Y_0 (T-p_T) |X \right]  \\
-&= \frac{1}{{p_T(1-p_T)}} E \left[ Y_1 T (1-p_T) +  Y_0 p_T (1-T) |X \right]  && | T^2=T \\
+\begin{align*}
+E[Y^{TO}|X] &= E [ (T Y1 + (1-T) Y(0)) \frac{T-p_T}{p_T(1-p_T)} |X ]  \\
+&= \frac{1}{{p_T(1-p_T)}} E [ T Y_1 (T-p_T) + (1-T) Y_0 (T-p_T) |X ]  \\
+&= \frac{1}{{p_T(1-p_T)}} E [ Y_1 T (1-p_T) +  Y_0 p_T (1-T) |X ]  && | T^2=T \\
 &= \frac{1}{{p_T(1-p_T)}} E [ Y_1 T (1-p_T) +  Y_0 p_T - T Y_0 p_T |X ] \\
 &= \frac{1}{{p_T(1-p_T)}} \big( E [Y_1|X]\; E[T|X] (1-p_T) +  E[Y_0|X] p_T - E[T|X]\; E[Y_0|X] p_T \big) && | Y_1, Y_0 \perp \!\! \perp T|X\\
 &= \frac{1}{{p_T(1-p_T)}} \big (E [Y_1|X] p_T (1-p_T) +  E[Y_0|X] p_T (1-p_T) &&| E[T|X]=p_T\\
 &= E[Y_1|X] - E[Y_0|X] && | Overlap \\
 &= E[Y_1 -Y_0|X]
-\end{align}
+\end{align*}
 $$
 
 ## So what's the connection?
@@ -92,11 +95,11 @@ $$
 Let's see that the expectation of the Lai transformed outcome is. 
 
 $$
-\begin{align}
+\begin{align*}
 E[Y^{Lai}|X] &= E[Y \cdot T + (1-Y) \cdot (1-T)|X] && | Y = TY_1 + (1-T)Y_0 \\
 &= E[Y_1|X] \cdot E[T|X] + (1-E[Y_0|X]) \cdot (1-E[T|X]) && \textit{|Unconfoundedness}\\
 &= (1-p_T)+ E[Y_1|X] p_T - E[Y_0|X](1-p_T) &&  |E[T|X]=p_T \\
-\end{align}
+\end{align*}
 $$
 
 Only in the simplest case when \\(p_T=1-p_T=0.5\\) can we further simplify this to
