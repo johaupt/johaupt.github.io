@@ -40,6 +40,7 @@ p_1 = \frac{e^{X\beta_1}}{e^{X\beta_0} + e^{X\beta_1}}$$
 
 Because there are only two classes 0 and 1, we can simplify the formula:
 
+$
 \begin{align*}
 p_1 &= \frac{e^{X\beta_1}}{e^{X\beta_0} + e^{X\beta_1}}\\
 &= \frac{e^{X\beta_1}}{e^{X\beta_0} + e^{X\beta_1}} \cdot \frac{e^{X\beta_1}}{e^{X\beta_1}}\\
@@ -47,6 +48,7 @@ p_1 &= \frac{e^{X\beta_1}}{e^{X\beta_0} + e^{X\beta_1}}\\
 & = \frac{1}{e^{X\beta_0 - X\beta_1} +1} \\
 & = \frac{1}{1+e^{X(\beta_0 -\beta_1)}} 
 \end{align*}
+$
 
 Now if we define a parameter vector $\beta = - (\beta_1 - \beta_0)$, we get the classic logistic regression formula
 
