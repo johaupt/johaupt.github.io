@@ -8,7 +8,7 @@ categories:
 ---
 
 
-*This post is a quick summary of the connection between the logistic link function, sigmoid activation, multinomial logistic regression and the softmax transformation. *
+*This post is a quick summary of the connection between the logistic link function, sigmoid activation, multinomial logistic regression and the softmax transformation.*
 
 The term *sigmoid* function, or activation for neural networks, is slightly misleading because it describes a [shape of function](https://en.wikipedia.org/wiki/Sigmoid_function) rather than a specific function. Sigmoid translates to *sigma*-shaped, but the sigma in question is not $\sigma$ but the obscure $\varsigma$ which actually looks like a modern *S*. It might well be that many problems in machine learning are the result of mathematicians choosing naming conventions based on some obscure insider knowledge and computer scientists laughing along without getting the joke. 
 
