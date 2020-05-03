@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Sigmoid Functions and Logistic Regression"
-date:   2020-05-03
+date:   2020-05-02
 categories:
     -summary
     -basics
