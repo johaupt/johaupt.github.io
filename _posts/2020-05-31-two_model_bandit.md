@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Causal Inference: Contextual Bandit vs. Randomized Trials"
-date:   2020-06-01
+date:   2020-05-31
 categories:
 - reinforcement learning
 - contextual bandit
