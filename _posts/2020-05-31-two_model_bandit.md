@@ -49,7 +49,7 @@ plt.show()
 ```
 
 
-![png](assets/img/selection_bias_linUCB/output_6_0.png)
+![png](assets/img/selection_bias_linUCB/output_6_0)
 
 
 In many situations our goals are 1. to make the right choice, sit it out or act, when new users come in *and* 2. to find out the return on the action, which is the factor $2.0 \cdot x$. These goals are clearly related. Once we know the return on the action with high confidence, we can pick the correct action easily. But even before we know the return *exactly*, we may be able to pick the right action most of the time.
