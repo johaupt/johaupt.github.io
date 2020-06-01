@@ -49,7 +49,7 @@ plt.show()
 ```
 
 
-![png](assets/img/selection_bias_linUCB/output_6_0)
+![png](img/selection_bias_linUCB/output_6_0.png)
 
 
 In many situations our goals are 1. to make the right choice, sit it out or act, when new users come in *and* 2. to find out the return on the action, which is the factor $2.0 \cdot x$. These goals are clearly related. Once we know the return on the action with high confidence, we can pick the correct action easily. But even before we know the return *exactly*, we may be able to pick the right action most of the time.
@@ -160,7 +160,7 @@ plt.show()
 ```
 
 
-![png](assets/img/selection_bias_linUCB/output_21_0.png)
+![png](img/selection_bias_linUCB/output_21_0.png)
 
 
 In both groups we have observed users with characteristics that are almost exactly the same and match the overall distribution of the characteristic.
@@ -392,7 +392,7 @@ plt.show()
 ```
 
 
-![png](assets/img/selection_bias_linUCB/output_39_0.png)
+![png](img/selection_bias_linUCB/output_39_0.png)
 
 
 The uncertainty is generally higher in the no-action group but we are more uncertain about some users than about others. Compare the 95%-confidence intervals for the regression on the control group (blue) against the regression on the control group from the A/B test. In the area to the right where we don't observe users, the uncertainty about the treatment effect is naturally larger. 
@@ -408,7 +408,7 @@ plt.show()
 ```
 
 
-![png](assets/img/selection_bias_linUCB/output_41_0.png)
+![png](img/selection_bias_linUCB/output_41_0.png)
 
 
 But that is not all. The characteristics of users that we observe in the control group are now completely different from the users in the treatment group. When we get into higher $x$ values, then the expected return in the treatment group is clearly higher and the control group gets explored less often. Conversely, for low x values, the bandit explores the treatment less often because the treatment is clearly not working here. When using this data as training data or for treatment effect estimation, the different distribution of x in the groups causes a selection bias. We violate the assumption that every user has some chance to see each action (user with X=4 are always treated) and the characteristics in each group are very different from the overall distribution of $X$.  
@@ -422,7 +422,7 @@ plt.show()
 ```
 
 
-![png](assets/img/selection_bias_linUCB/output_43_0.png)
+![png](img/selection_bias_linUCB/output_43_0.png)
 
 
 There are well-understood methods to correct for this imbalance between the groups, e.g. matching observations based on their characteristics or inverse propensity weighting. These work well for areas where we observe too few or too many of a group, like between 0 and 1. They don't work where we don't observe any user in a group, like treated users below an $X$ of 0 or untreated users above an $X$ of 2. For these users, we just don't have any information and can at best extrapolate from the observed cases.
