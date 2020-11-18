@@ -7,7 +7,7 @@ Find me on [Github](https://github.com/johaupt/) and [ResearchGate](https://www.
 
 Haupt, J. & Lessmann, S. (2020).     
 [Targeting Customer under Response-Dependent Costs](https://arxiv.org/abs/2003.06271).     
-Under Review.
+Under Revision.
 
 Haupt, J., Jacob, D., Gubela, R., & Lessmann, S. (2019).     
 [Affordable Uplift: Supervised Randomization in Controlled Experiments](http://arxiv.org/abs/1910.00393).     
