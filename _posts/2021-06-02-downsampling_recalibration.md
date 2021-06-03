@@ -52,7 +52,7 @@ We randomly sample some of the observations for which $y=0$ to create the target
 
 $$ p' = \frac{b'}{b' +\frac{P(x|y=0)}{P(x|y=1)} (1-b') } $$
 
-We can join these to expression by inserting $\frac{P(x|y=0)}{P(x|y=1)}$ into the expression for $p$. First we reformulate $p'$.
+We can join these to expression by inserting $\frac{P(x\|y=0)}{P(x\|y=1)}$ into the expression for $p$. First we reformulate $p'$.
 
 $$
 \begin{align*}
@@ -62,7 +62,7 @@ $$
 \end{align*}
 $$
 
-Then we replace $\frac{P(x|y=0)}{P(x|y=1)}$ in the equation for $p$
+Then we replace $\frac{P(x\|y=0)}{P(x\|y=1)}$ in the equation for $p$
 
 $$
 \begin{align*}
