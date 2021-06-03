@@ -48,7 +48,7 @@ Or with our simplified notation
 
 $$p = \frac{b}{b +\frac{P(x|y=0)}{P(x|y=1)} (1-b) }$$
 
-We randomly sample some of the observations for which $y=0$ to create the target, downsampled dataset. Within this dataset, the probability of $y$ given a set of features $x$ changes (there are now more $y=1$ after all, but the distribution of $X$ given $Y$ doesn't change. Hence \( P(y=1|x) \) and \( P(y=0|x) \) are different but \( P(x|y=1) \)  and \( P(x|y=0) \) are the same as in the original dataset and we can use this for
+We randomly sample some of the observations for which $y=0$ to create the target, downsampled dataset. Within this dataset, the probability of $y$ given a set of features $x$ changes (there are now more $y=1$ after all, but the distribution of $X$ given $Y$ doesn't change. Hence $P(y=1\|x)$ and $P(y=0\|x)$ are different but $P(x\|y=1)$ and $P(x\|y=0)$ are the same as in the original dataset and we can use this for
 
 $$ p' = \frac{b'}{b' +\frac{P(x|y=0)}{P(x|y=1)} (1-b') } $$
 
