@@ -36,11 +36,13 @@ A lot of the research around resampling comes from the literature around cost-se
 
 Start with Bayes theorem
 
+$$
 \begin{align*} 
 P(y=1|x) &= \frac{P(x|y=1)P(y=1)}{P(x)} \quad \text{expand P(x) for all (two) classes of y}\\
  &= \frac{P(x|y=1)P(y=1)}{P(x|y=1)P(y=1) + P(x|y=0)P(y=0) }  \quad \text{rearrange to}\\
  &= \frac{P(y=1)}{P(y=1)+\frac{P(x|y=0)}{P(x|y=1)} (1-P(y=1)) }
 \end{align*}
+$$
 
 Or with our simplified notation
 
@@ -52,14 +54,17 @@ $$p' = \frac{b'}{b' +\frac{P(x|y=0)}{P(x|y=1)} (1-b') }$$
 
 We can join these to expression by inserting $\frac{P(x|y=0)}{P(x|y=1)}$ into the expression for $p$. First we reformulate $p'$.
 
+$$
 \begin{align*}
 \frac{1}{p'} &= \frac{b' +\frac{P(x|y=0)}{P(x|y=1)} (1-b') }{b'}\\
 \frac{b'}{p'} -b' &= b' +\frac{P(x|y=0)}{P(x|y=1)} (1-b') \\
 \frac{b'-bp'}{p'(1-b')}  &= \frac{P(x|y=0)}{P(x|y=1)}  \\
 \end{align*}
+$$
 
 Then we replace $\frac{P(x|y=0)}{P(x|y=1)}$ in the equation for $p$
 
+$$
 \begin{align*}
 p &= \frac{b}{b +\frac{P(x|y=0)}{P(x|y=1)} (1-b) } \\
 &= \frac{b}{b +\frac{b'-bp'}{p'(1-b')} (1-b) } \quad \text{rearrange}\\
@@ -69,6 +74,7 @@ p &= \frac{b}{b +\frac{P(x|y=0)}{P(x|y=1)} (1-b) } \\
 &= \frac{1}{1 + \frac{1}{w}\frac{(1-p')}{p'}  } \\
 &= \frac{p'}{p' + \frac{(1-p')}{w}  }
 \end{align*}
+$$
 
 This is the recalibration formula from above and we see that it works for any downsampling ratio $w$ that we pick. It's common to downsample to a completely downsampled training dataset, i.e. with a target ratio of 1:1, for which $w = \frac{b}{1-b} \frac{0.5}{0.5} = \frac{b}{1-b}$. In practice, less downsampling often gives slightly better models because less data is discarded. 
 
