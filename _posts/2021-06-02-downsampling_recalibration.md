@@ -76,7 +76,7 @@ p &= \frac{b}{b +\frac{P(x|y=0)}{P(x|y=1)} (1-b) } \\
 \end{align*}
 $$
 
-This is the recalibration formula from above and we see that it works for any downsampling ratio $w$ that we pick. It's common to downsample to a completely downsampled training dataset, i.e. with a target ratio of 1:1, for which $w = \frac{b}{1-b} \frac{0.5}{0.5} = \frac{b}{1-b}$. In practice, less downsampling often gives slightly better models because less data is discarded. 
+This is the recalibration formula from above and we see that it works for any downsampling ratio $w$ that we pick. It's common to downsample to a completely balanced training dataset, i.e. with a target ratio of 1:1, for which $w = \frac{b}{1-b} \frac{0.5}{0.5} = \frac{b}{1-b}$. In practice, less downsampling often gives slightly better models because less data is discarded. 
 
 ## Example
 
