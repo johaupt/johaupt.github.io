@@ -57,7 +57,7 @@ We can join these to expression by inserting $\frac{P(x\|y=0)}{P(x\|y=1)}$ into 
 $$
 \begin{align*}
 \frac{1}{p'} &= \frac{b' +\frac{P(x|y=0)}{P(x|y=1)} (1-b') }{b'}\\
-\frac{b'}{p'} -b' &= b' +\frac{P(x|y=0)}{P(x|y=1)} (1-b') \\
+\frac{b'}{p'} -b' &= \frac{P(x|y=0)}{P(x|y=1)} (1-b') \\
 \frac{b'-bp'}{p'(1-b')}  &= \frac{P(x|y=0)}{P(x|y=1)}  \\
 \end{align*}
 $$
