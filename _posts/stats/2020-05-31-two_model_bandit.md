@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Causal Inference: Contextual Bandit vs. Randomized Trials"
 date:   2020-05-31
 tags:

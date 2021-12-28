@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Modularization: Saving Model Predictions under Cross-Validation"
 date:   2020-02-01
 tags:

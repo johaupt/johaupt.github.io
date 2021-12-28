@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Outcome Transformations for Uplift Modeling and Treatment Effect Estimation"
 date:   2020-04-12
 tags:

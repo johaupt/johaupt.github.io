@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Profitable Customer Targeting For Churn Campaigns"
 date:   2020-03-16
 tags:

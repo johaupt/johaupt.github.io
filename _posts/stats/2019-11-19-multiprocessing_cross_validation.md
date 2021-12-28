@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Parallelizing Model Selection Using the Multiprocessing Library in Python"
 date:   2019-11-19
 tags:

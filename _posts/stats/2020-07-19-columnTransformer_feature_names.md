@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Extracting Column Names from the ColumnTransformer"
 date:   2020-07-19
 tags:

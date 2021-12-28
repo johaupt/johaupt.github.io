@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: projects
+category: projects
 title:  "String Art Starter Tutorial"
 date:   2021-09-19
 tags:

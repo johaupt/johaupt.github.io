@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Logistic Regression as a Choice Model"
 date:   2018-08-05
 tags:

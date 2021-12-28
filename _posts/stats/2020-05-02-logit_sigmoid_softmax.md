@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Sigmoid Functions and Logistic Regression"
 date:   2020-05-02
 tags:

@@ -4,7 +4,7 @@ title: Hobby Projects
 ---
 <ul class="posts">
   {% for post in site.posts %}
-    {% if post.blog contains 'projects' %}
+    {% if post.category contains 'projects' %}
        {% comment %}
         {% unless post.next %}
           <h3>{{ post.date | date: '%Y' }}</h3>

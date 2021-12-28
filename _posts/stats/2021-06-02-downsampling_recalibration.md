@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Recalibration after Negative Sampling"
 date:   2021-06-02
 tags:

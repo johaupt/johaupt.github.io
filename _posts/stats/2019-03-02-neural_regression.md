@@ -1,6 +1,6 @@
 ---
 layout: post
-blog: stats
+category: blog
 title:  "Linear Regression with Stochastic Gradient Descent in Pytorch"
 date:   2019-03-02
 tags:
