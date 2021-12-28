@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Modularization: Saving Model Predictions under Cross-Validation"
 date:   2020-02-01
-categories:
+tags:
   - infrastructure
   - pandas
   - numpy

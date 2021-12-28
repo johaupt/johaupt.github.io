@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Causal Machine Learning: Individualized Treatment Effects and Uplift Modeling"
 date:   2019-11-17
-categories:
+tags:
   - causal machine learning
 ---
 

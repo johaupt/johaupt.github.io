@@ -1,10 +1,11 @@
 ---
 layout: post
+blog: stats
 title:  "Outcome Transformations for Uplift Modeling and Treatment Effect Estimation"
 date:   2020-04-12
-categories:
+tags:
   - causal inference
-  - uplift modeling
+  - causal machine learning
   - outcome transformation
 ---
 

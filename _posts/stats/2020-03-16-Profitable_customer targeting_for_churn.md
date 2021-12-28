@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Profitable Customer Targeting For Churn Campaigns"
 date:   2020-03-16
-categories:
+tags:
   - econometrics
   - decision making
   - causal inference

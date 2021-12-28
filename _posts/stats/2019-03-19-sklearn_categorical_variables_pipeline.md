@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Categorical Variables and ColumnTransformer in scikit-learn"
 date:   2019-03-10
-categories:
+tags:
   - scikit-learn
   - tutorial
   - python

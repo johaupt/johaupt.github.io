@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Optimizing Neural Networks with LFBGS in PyTorch"
 date:   2019-10-03
-categories:
+tags:
   - python
   - pytorch
   - neural network

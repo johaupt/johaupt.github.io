@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Parallelizing Model Selection Using the Multiprocessing Library in Python"
 date:   2019-11-19
-categories:
+tags:
   - python
   - parallel processing
   - cross-validation

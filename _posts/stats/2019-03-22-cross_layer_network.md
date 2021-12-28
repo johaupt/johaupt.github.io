@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Pytorch Implementation of Cross aka Interaction Layers: Cross and Deep Network"
 date:   2019-03-22
-categories:
+tags:
   - python
   - pytorch
   - neural network

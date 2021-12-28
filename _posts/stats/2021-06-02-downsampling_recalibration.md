@@ -1,10 +1,12 @@
 ---
 layout: post
+blog: stats
 title:  "Recalibration after Negative Sampling"
 date:   2021-06-02
-categories:
+tags:
 - calibration
 - sampling
+- causal machine learning
 ---
 
 _This post shows the transformation function that calibrates predictions from a model trained on downsampled data back to the original data. We'll do the derivation of the transformation and a scikit-learn example with simulated data._

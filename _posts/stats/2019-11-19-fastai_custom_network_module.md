@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "How to put a custom pytorch module into the fastai Learner framework"
 date:   2019-11-19
-categories:
+tags:
   - python
   - fastai
   - pytorch

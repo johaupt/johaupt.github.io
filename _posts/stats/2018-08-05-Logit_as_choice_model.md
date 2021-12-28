@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Logistic Regression as a Choice Model"
 date:   2018-08-05
-categories:
+tags:
   - customer choice
   - logistic regression
   - statistical modeling

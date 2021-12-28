@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Sigmoid Functions and Logistic Regression"
 date:   2020-05-02
-categories:
+tags:
     -summary
     -basics
 ---

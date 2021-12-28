@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "Extracting Column Names from the ColumnTransformer"
 date:   2020-07-19
-categories:
+tags:
   - scikit-learn
   - tutorial
   - python

@@ -1,8 +1,9 @@
 ---
 layout: post
+blog: stats
 title:  "How to Copy a Python Dictionary"
 date:   2021-04-01
-categories:
+tags:
 - python
 ---
 
