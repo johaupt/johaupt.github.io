@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Blog
+title: Data Science Blog
 ---
 <ul class="posts">
   {% for post in site.posts %}
