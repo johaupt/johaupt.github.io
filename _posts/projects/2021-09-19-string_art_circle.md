@@ -85,7 +85,9 @@ Tips:
 
 Wrap the string around the nails to create the pattern. You can find instructions in templates for sale like the one I linked above or on Youtube, so I won't go into the pattern itself here. Stringing the piece to less time than I expected, around 90 minutes not counting breaks in between and this being our first try.
 
-To begin, tie the string around the first nail in a double granny knot. Keep the string taunt and wrap it around the nails in the order of the pattern. When you begin, carefully check if you wrap your string around the nail from the outer or inner side and then follow the same pattern for the rest of the piece. The direction will determin if and how the string crosses when coming back towards its starting point and the completed pattern will look noticeably different. I had to check the instructions multiple times and it helped to look at the pictures very carefully, compare the pictures to my own and to try a few iterations to see if it looked right. 
+<img src="/assets/img/stringart/stringing.jpeg" width="70%" alt="closeup of how to wrap the string around the nails"/>
+
+To begin, tie the string around the first nail in a double granny knot. Keep the string taunt and wrap it around the nails in the order of the pattern. When you begin, carefully check if you wrap your string around the nail from the outer or inner side and then follow the same pattern for the rest of the piece. The direction will determine if and how the string crosses when coming back towards its starting point and the completed pattern will look noticeably different. I had to check the instructions multiple times and it helped to look at the pictures very carefully, compare the pictures to my own and to try a few iterations to see if it looked right. 
 
 While strining, it helped me to lead and pull the string with one hand to keep it taunt while pulling it around each nail with a toothpick and later a crochet needle. I drew the string from the spool where possible without cutting off a piece to avoid having to restart.
 
@@ -94,5 +96,11 @@ If the pattern has several levels for a 3D effect, these can be created by addin
 ## The End
 
 My wife and I really enjoyed the process of creating our own string art. Looking at the final piece of art, I would now pick a background color with more contrast to the string. As a follow-up project, I am also looking into how to create a frame around the pattern because it improves the final piece from a do-it-yourself craft to the art pieces you can find on Etsy. 
+
+<img src="/assets/img/stringart/2nd_pattern.jpeg" width="49%" alt="picture of my second final string art piece with a clover pattern"/>
+
+<img src="/assets/img/stringart/final_art.jpeg" width="49%" alt="picture of myself and final string art piece"/>
+
+
 
 
