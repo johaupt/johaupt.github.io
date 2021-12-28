@@ -28,14 +28,14 @@ Tools:
 - Wood paint and paint roller
 - Optional: Awl
 
-<p align="center">
+<p>
     <img src="/assets/img/stringart/string1.jpeg" width="49%" alt="string package front"/>
     <img src="/assets/img/stringart/string2.jpeg" width="49%" alt="string package back"/>
 </p>
 
-<p align="center">
-    <img src="/assets/img/stringart/woodpanel.jpeg" width="49%" alt="wood panel description"/>
-    <img src="/assets/img/stringart/nails.jpeg" width="49%" alt="nails box description"/>
+<p>
+    <img src="/assets/img/stringart/woodpanel.jpeg" width="49%" alt="wood panel description" style="vertical-align:middle"/>
+    <img src="/assets/img/stringart/nails.jpeg" width="49%" alt="nails box description" style="vertical-align:middle"/>
 </p>
 
 
@@ -97,10 +97,14 @@ If the pattern has several levels for a 3D effect, these can be created by addin
 
 My wife and I really enjoyed the process of creating our own string art. Looking at the final piece of art, I would now pick a background color with more contrast to the string. As a follow-up project, I am also looking into how to create a frame around the pattern because it improves the final piece from a do-it-yourself craft to the art pieces you can find on Etsy. 
 
-<img src="/assets/img/stringart/2nd_pattern.jpeg" width="49%" class="center" alt="picture of my second final string art piece with a clover pattern"/>
-
-<img src="/assets/img/stringart/final_art.jpeg" width="49%" class="center" alt="picture of myself and final string art piece"/>
-
+<p>
+    <img src="/assets/img/stringart/2nd_pattern.jpeg" width="49%" class="center" 
+    style="vertical-align:middle"
+    alt="picture of my second final string art piece with a clover pattern"/>
+    <img src="/assets/img/stringart/final_art.jpeg" width="49%" class="center" 
+    style="vertical-align:middle"
+    alt="picture of myself and final string art piece"/>
+</p>
 
 
 
