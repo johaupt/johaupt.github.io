@@ -28,10 +28,11 @@ Tools:
 - Wood paint and paint roller
 - Optional: Awl
 
+<img src="/assets/img/stringart/string1.jpeg" width="60%" alt="string package front"/>
 
 ![string package front](/assets/img/stringart/string1.jpeg)
 ![string package back](/assets/img/stringart/string2.jpeg)
-![wood panel description](/assets/img/stringart/woddpanel.jpeg)
+![wood panel description](/assets/img/stringart/woodpanel.jpeg)
 ![nail box description](/assets/img/stringart/nails.jpeg)
 
 
