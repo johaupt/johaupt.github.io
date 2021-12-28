@@ -28,10 +28,10 @@ Tools:
 - Optional: Awl
 
 
-![](/assets/img/stringart/string1.jpeg)
-![](/assets/img/stringart/string2.jpeg)
-![](/assets/img/stringart/woddpanel.jpeg)
-![](/assets/img/stringart/string1.jpeg)
+![string package front](/assets/img/stringart/string1.jpeg)
+![string package back](/assets/img/stringart/string2.jpeg)
+![wood panel description](/assets/img/stringart/woddpanel.jpeg)
+![nail box description](/assets/img/stringart/nails.jpeg)
 
 
 ## Prepare the Frame
