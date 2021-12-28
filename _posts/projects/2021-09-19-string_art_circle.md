@@ -28,12 +28,15 @@ Tools:
 - Wood paint and paint roller
 - Optional: Awl
 
-<img src="/assets/img/stringart/string1.jpeg" width="60%" alt="string package front"/>
+<p align="middle">
+    <img src="/assets/img/stringart/string1.jpeg" width="49%" alt="string package front"/>
+    <img src="/assets/img/stringart/string2.jpeg" width="49%" alt="string package back"/>
+</p>
 
-![string package front](/assets/img/stringart/string1.jpeg)
-![string package back](/assets/img/stringart/string2.jpeg)
-![wood panel description](/assets/img/stringart/woodpanel.jpeg)
-![nail box description](/assets/img/stringart/nails.jpeg)
+<p align="middle">
+    <img src="/assets/img/stringart/woodpanel.jpeg" width="49%" alt="wood panel description"/>
+    <img src="/assets/img/stringart/nails.jpeg" width="49%" alt="nails box description"/>
+</p>
 
 
 ## Prepare the Frame
