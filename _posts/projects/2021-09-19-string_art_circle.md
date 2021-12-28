@@ -28,12 +28,12 @@ Tools:
 - Wood paint and paint roller
 - Optional: Awl
 
-<p align="middle">
+<p align="center">
     <img src="/assets/img/stringart/string1.jpeg" width="49%" alt="string package front"/>
     <img src="/assets/img/stringart/string2.jpeg" width="49%" alt="string package back"/>
 </p>
 
-<p align="middle">
+<p align="center">
     <img src="/assets/img/stringart/woodpanel.jpeg" width="49%" alt="wood panel description"/>
     <img src="/assets/img/stringart/nails.jpeg" width="49%" alt="nails box description"/>
 </p>
@@ -85,7 +85,7 @@ Tips:
 
 Wrap the string around the nails to create the pattern. You can find instructions in templates for sale like the one I linked above or on Youtube, so I won't go into the pattern itself here. Stringing the piece to less time than I expected, around 90 minutes not counting breaks in between and this being our first try.
 
-<img src="/assets/img/stringart/stringing.jpeg" width="70%" alt="closeup of how to wrap the string around the nails"/>
+<img src="/assets/img/stringart/stringing.jpeg" width="70%" class="center" alt="closeup of how to wrap the string around the nails"/>
 
 To begin, tie the string around the first nail in a double granny knot. Keep the string taunt and wrap it around the nails in the order of the pattern. When you begin, carefully check if you wrap your string around the nail from the outer or inner side and then follow the same pattern for the rest of the piece. The direction will determine if and how the string crosses when coming back towards its starting point and the completed pattern will look noticeably different. I had to check the instructions multiple times and it helped to look at the pictures very carefully, compare the pictures to my own and to try a few iterations to see if it looked right. 
 
@@ -97,9 +97,9 @@ If the pattern has several levels for a 3D effect, these can be created by addin
 
 My wife and I really enjoyed the process of creating our own string art. Looking at the final piece of art, I would now pick a background color with more contrast to the string. As a follow-up project, I am also looking into how to create a frame around the pattern because it improves the final piece from a do-it-yourself craft to the art pieces you can find on Etsy. 
 
-<img src="/assets/img/stringart/2nd_pattern.jpeg" width="49%" alt="picture of my second final string art piece with a clover pattern"/>
+<img src="/assets/img/stringart/2nd_pattern.jpeg" width="49%" class="center" alt="picture of my second final string art piece with a clover pattern"/>
 
-<img src="/assets/img/stringart/final_art.jpeg" width="49%" alt="picture of myself and final string art piece"/>
+<img src="/assets/img/stringart/final_art.jpeg" width="49%" class="center" alt="picture of myself and final string art piece"/>
 
 
 
