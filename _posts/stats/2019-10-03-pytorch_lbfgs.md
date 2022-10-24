@@ -36,7 +36,7 @@ for input, target in dataset:
         loss.backward()
         return loss
     optimizer.step(closure)
-    ```
+```
 
 Note how the function `closure()` contains the same steps we typically use before taking a step with SGD or Adam. In other words, if the optimizer needs the gradient once, like SGD or Adam, it's simple to calculate the gradient with `.backward()` and pass it to the optimizer. If the optimizer needs to calculate the gradient itself, like LBFGS, then we pass instead a function that wraps the steps we typically do once for others optimizers. 
 
