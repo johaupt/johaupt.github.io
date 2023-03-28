@@ -355,7 +355,7 @@ I want to optimize my bid based on the associated win rate and the item value, b
 
 What is a win rate or the probability to win an auction with a bid of $v$, like 5 euros? Winning an auction means that my bid was higher than what everyone else bid, which is the clearing price if I hadn't participated. So I win when $\text{market price} < v$. The probability of that happening is $p(\text{market price} < \text{bid})$. And this is almost the definition of the cumulative distribution function of the market price, whic his $\text{cdf}(\text{market price})=p(\text{market price)}\leq v)$. I don't think it matters much in practice to assume that I'm lucky and will get the item if I bid exactly the expected clearing price.
 
-The model predicts is $p(\text{market price} = v | X)$, the probability density of the price being as high as $v$, but I can use the mean and $\sigma^2$ that the model predicts and plug them into the cdf of the Normal distribution.
+The model predicts $p(\text{market price} = v \mid X)$, the probability density of the price being as high as $v$, but I can use the mean and $\sigma^2$ that the model predicts and plug them into the cdf of the Normal distribution.
 
 
 ```python
