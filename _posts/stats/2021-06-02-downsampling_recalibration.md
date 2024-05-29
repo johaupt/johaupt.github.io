@@ -9,7 +9,7 @@ tags:
 - causal machine learning
 ---
 
-_This post shows the transformation function that calibrates predictions from a model trained on downsampled data back to the original data. We'll do the derivation of the transformation and a scikit-learn example with simulated data._
+_This post shows the transformation function that calibrates predictions from a model trained on downsampled data back to the original data. We'll get an intuition, do the derivation of the transformation, and a scikit-learn example with simulated data._
 
 ## Negative Sampling
 
@@ -19,8 +19,7 @@ When negative cases are so abundant and overall data size is large, it can be he
 
 A common way to do that is by randomly sampling just a part of the negative cases, while keeping all positive cases in the data. Effectively throwing away negative cases at random decreases the data size, so model estimation generally speeds up. However, by changing the ratio between positive and negative cases, any model estimated on the data (without any correction) will overestimate the probability of positive cases occuring. While we can reasonably expect the model to do distinguish between positive and negative cases equally well (e.g. the AUC doesn't change), we should expect it to be badly calibrated (e.g. high average probability for positive cases even though they are overall very rare and log-loss decreases on test data which is not sampled).
 
-
-It is possible to re-calibrate the model predictions to match the original data before resampling. For convenience, I'll denote the baserate of positive cases $P(y=1)$ in the original data by $b$ and in the re-sampled data by $b'$. The model predictions based on the resampled training data are $p'$, while the predictions that are calibrated for the original data and that we want to use in practice are $p$. 
+It is possible to re-calibrate the model predictions to match the original data before resampling. For convenience, I'll denote the baserate of positive cases $P(y=1)$ in the original data by $b$ and in the re-sampled data by $b'$. The model predictions based on the resampled training data are $p'$, while the predictions that are calibrated for the original data and that we want to use in practice are $p$.
 
 The formulas to know are
 
@@ -30,7 +29,52 @@ $$ w = \frac{\text{original ratio}}{\text{target ratio}} = \frac{b}{1-b} \cdot \
 2. The **transformation for the model predictions $p'$** which recalibrates them to calibrated predictions $p$ that match the average occurence rate in the original data
 $$p = \frac{p'}{p'+\frac{1-p'}{w}} $$
 
-The rest of the post shows how we derive these formulas and what the assumptions are on the way and then shows an example with scikit-learn. 
+The rest of the post shows how we derive these formulas and what the assumptions are on the way and then shows an example with scikit-learn.
+
+## Intuition
+We'll start with a sloppy intuition of how to correct change the estimate on resampled data to match the unsampled data. Imagine a simple case: You've downsampled the negative class keeping each negative case with $p=0.5$, then trained a decision tree. Now zoom into any one end leaf. The prediction function $\hat{p}$ on the data in the leaf $L$ is the number positive class cases $N_1$ in the leaf $N_1^L$ divided by the total number of cases.
+$$
+\begin{align*} 
+\hat{p} &= \frac{N^L_1}{N^L_1+N^L_0}
+\end{align*}
+$$
+
+Imagine we have a leaf with 10 positive cases and 90 negative cases during training, so we are working with the resampled data. What would the leaf look like if we sent the unsampled data through the tree?
+I would expect the same number of positive cases, since we didn't touch those. I would expect 50% more negative cases. We removed 50% of negative cases during downsampling and since we removed them randomly I would expect roughly 50% of negative cases missing no matter which leaf I am looking at. 
+
+Since I know how many negative cases I removed, we could fix the number of negative cases in the prediction function from the actual 90 in the resampled data to the expected 180 in the unsampled data. 
+
+$$
+\begin{align*} 
+\hat{p}^L &= \frac{10}{10+ 90 \cdot 2} \quad \text{where we multiply by 2 to correct for removing 50\% of cases}\\
+\hat{p}^L &= \frac{10}{10+ 90 \cdot 1/50\%} 
+\end{align*}
+$$
+
+
+That's it, we could use this as a new prediction function within our tree.    
+As food for thought, note that I used the downsampling ratio for the full data for the correction $\frac{N'_0}{N_0}$, not the empirical ratio in the leaf $\frac{N'^L_0}{N^L_0}$ which I could get by passing the unsampled data through the tree splits. These are the same in expectation but the actual ratio in the leaf will be different due to the randomness of the sampling. 
+
+Practically though, implementations often don't expose the level of prediction function or implement class weights. Instead, what if we had only the predictions from the model trained on the downsampled data $p'$?
+
+Let's try to expand our formula above to turn the counts into probabilities. I use $N'_0$ as count of negative cases in the sampled data.
+$$
+\begin{align*} 
+\hat{p}^L &= \frac{N^L_1}{N^L_1+ N^L_0 \cdot \frac{N_0}{N'_0}} \quad \text{divide by total count}\\
+\hat{p}^L &= \frac{\frac{N^L_1}{N^L}}{\frac{N^L_1}{N^L}+ \frac{N^L_0}{{N^L}} \cdot \frac{N_0}{N'_0}}\\
+\hat{p}^L &= \frac{p^L_1}{p^L_1+ p^L_0 \cdot \frac{N_0/N_1}{N'_0/N_1}} \quad \text{note: } N_1=N'_1\\
+\hat{p}^L &= \frac{p^L_1}{p^L_1+ p^L_0 \cdot \frac{N_0/N_1}{N'_0/N'_1}}
+\end{align*}
+$$
+
+This is the same as the common formula after some rearrangement that makes the correction less intuitive
+$$
+\begin{align*} 
+w & = \frac{N_1/N}{N_0/N} \cdot \frac{N'_0/N'}{N'_1/N'} \\
+&= \frac{N_1}{N_0} \cdot \frac{N'_0}{N'_1} \\
+&= \left(\frac{N_0}{N_1} \cdot \frac{N'_1}{N'_0} \right)^{-1}\\
+\end{align*}
+$$
 
 ## Derivation of the Re-Calibration Formula
 
