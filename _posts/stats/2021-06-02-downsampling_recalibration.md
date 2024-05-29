@@ -64,7 +64,7 @@ Let's try to expand our formula above to turn the counts into probabilities. I u
 $$
 \begin{align*} 
 \hat{p}^L &= \frac{N^L_1}{N^L_1+ N^L_0 \cdot \frac{N_0}{N'_0}} \quad \text{divide by total count}\\
-\hat{p}^L &= \frac{\frac{N^L_1}{N^L}}{\frac{N^L_1}{N^L}+ \frac{N^L_0}{{N^L}} \cdot \frac{N_0}{N'_0}}\\
+\hat{p}^L &= \frac{\frac{N^L_1}{N^L}}{\frac{N^L_1}{N^L}+ \frac{N^L_0}{N^L} \cdot \frac{N_0}{N'_0}}\\
 \hat{p}^L &= \frac{p^L_1}{p^L_1+ p^L_0 \cdot \frac{N_0/N_1}{N'_0/N_1}} \quad \text{note: } N_1=N'_1\\
 \hat{p}^L &= \frac{p^L_1}{p^L_1+ p^L_0 \cdot \frac{N_0/N_1}{N'_0/N'_1}}
 \end{align*}
