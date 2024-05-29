@@ -33,6 +33,7 @@ The rest of the post shows how we derive these formulas and what the assumptions
 
 ## Intuition
 We'll start with a sloppy intuition of how to correct change the estimate on resampled data to match the unsampled data. Imagine a simple case: You've downsampled the negative class keeping each negative case with $p=0.5$, then trained a decision tree. Now zoom into any one end leaf. The prediction function $\hat{p}$ on the data in the leaf $L$ is the number positive class cases $N_1$ in the leaf $N_1^L$ divided by the total number of cases.
+
 $$
 \begin{align*} 
 \hat{p} &= \frac{N^L_1}{N^L_1+N^L_0}
@@ -58,6 +59,7 @@ As food for thought, note that I used the downsampling ratio for the full data f
 Practically though, implementations often don't expose the level of prediction function or implement class weights. Instead, what if we had only the predictions from the model trained on the downsampled data $p'$?
 
 Let's try to expand our formula above to turn the counts into probabilities. I use $N'_0$ as count of negative cases in the sampled data.
+
 $$
 \begin{align*} 
 \hat{p}^L &= \frac{N^L_1}{N^L_1+ N^L_0 \cdot \frac{N_0}{N'_0}} \quad \text{divide by total count}\\
@@ -68,6 +70,7 @@ $$
 $$
 
 This is the same as the common formula after some rearrangement that makes the correction less intuitive
+
 $$
 \begin{align*} 
 w & = \frac{N_1/N}{N_0/N} \cdot \frac{N'_0/N'}{N'_1/N'} \\
