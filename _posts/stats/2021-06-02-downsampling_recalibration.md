@@ -43,18 +43,19 @@ $$
 Imagine we have a leaf with 10 positive cases and 90 negative cases during training, so we are working with the resampled data. What would the leaf look like if we sent the unsampled data through the tree?
 I would expect the same number of positive cases, since we didn't touch those. I would expect 50% more negative cases. We removed 50% of negative cases during downsampling and since we removed them randomly I would expect roughly 50% of negative cases missing no matter which leaf I am looking at. 
 
-Since I know how many negative cases I removed, we could fix the number of negative cases in the prediction function from the actual 90 in the resampled data to the expected 180 in the unsampled data. 
+Since I know how many negative cases I removed, we could fix the number of negative cases in the prediction function from the actual 90 in the resampled data to the expected 180 in the unsampled data. We double with factor 2 because we removed half of the negative cases.
 
 $$
 \begin{align*} 
-\hat{p}^L &= \frac{10}{10+ 90 \cdot 2} \quad \text{where we multiply by 2 to correct for removing 50\% of cases}\\
+\hat{p}^L &= \frac{10}{10+ 90 \cdot 2} \\
 \hat{p}^L &= \frac{10}{10+ 90 \cdot 1/50\%} 
 \end{align*}
 $$
 
 
-That's it, we could use this as a new prediction function within our tree.    
-As food for thought, note that I used the downsampling ratio for the full data for the correction $\frac{N'_0}{N_0}$, not the empirical ratio in the leaf $\frac{N'^L_0}{N^L_0}$ which I could get by passing the unsampled data through the tree splits. These are the same in expectation but the actual ratio in the leaf will be different due to the randomness of the sampling. 
+That's it, we could use this as a new prediction function within our tree.
+
+As food for thought, note that I used the downsampling ratio for the full data for the correction $N'_0/N_0$, not the empirical ratio in the leaf $N'^L_0/N^L_0$ which I could get by passing the unsampled data through the tree splits. These are the same in expectation but the actual ratio in the leaf will be different due to the randomness of the sampling. 
 
 Practically though, implementations often don't expose the level of prediction function or implement class weights. Instead, what if we had only the predictions from the model trained on the downsampled data $p'$?
 
